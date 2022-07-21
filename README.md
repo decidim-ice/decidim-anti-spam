@@ -24,7 +24,7 @@ An automation to verify and signaler users spammers, sponsored by the [Participe
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-verifications-simple_impersonation", git: "https://github.com/octree-gva/decidim-verifications-simple_impersonation"
+gem "decidim-spam_signal", git: "https://github.com/octree-gva/decidim-module-spam_signal"
 ```
 
 Then execute:
