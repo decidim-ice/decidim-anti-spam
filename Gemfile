@@ -2,10 +2,14 @@
 
 source "https://rubygems.org"
 
-ruby RUBY_VERSION
+base_path = ""
+base_path = "../../" if File.basename(__dir__) == "dummy"
+require_relative "#{base_path}lib/decidim/spam_signal/version"
 
-gem "decidim", "~> 0.24.3"
-gem "decidim-spam_signal", path: "./decidim-module-spam_signal"
+DECIDIM_VERSION = Decidim::SpamSignal.version
+
+gem "decidim", DECIDIM_VERSION
+gem "decidim-spam_signal", path: "."
 
 gem "puma", ">= 4.3"
 gem "bootsnap", "~> 1.4"

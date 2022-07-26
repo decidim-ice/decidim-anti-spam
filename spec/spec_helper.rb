@@ -6,7 +6,6 @@ ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 
 require "decidim/dev"
 
-
 Decidim::Dev.dummy_app_path = File.expand_path(File.join(__dir__, "dummy"))
 
 require "decidim/dev/test/base_spec_helper"

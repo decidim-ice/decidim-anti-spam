@@ -20,19 +20,4 @@ Gem::Specification.new do |s|
 
   s.require_paths = ["lib"]
   s.add_dependency "decidim-core", Decidim::SpamSignal.version
-  s.add_dependency "decidim", Decidim::SpamSignal.version
-  s.add_dependency "rails"
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "rspec_junit_formatter"
-  s.add_development_dependency "decidim-dev", Decidim::SpamSignal.version
-  s.add_development_dependency "decidim-consultations", Decidim::SpamSignal.version
-  s.add_development_dependency "decidim-participatory_processes", Decidim::SpamSignal.version
-  s.add_development_dependency "decidim-proposals", Decidim::SpamSignal.version
-  s.add_development_dependency "decidim", Decidim::SpamSignal.version
-
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "bootsnap"
-  s.add_development_dependency "puma"
-  s.add_development_dependency "uglifier"
-  s.add_development_dependency "codecov"
 end

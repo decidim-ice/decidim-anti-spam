@@ -820,7 +820,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
-  decidim (~> 0.24.3)
+  decidim (= 0.24.3)
   decidim-dev (~> 0.24.3)
   decidim-spam_signal!
   faker (~> 2.14)
@@ -832,9 +832,6 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0)
   uglifier (~> 4.1)
   web-console (~> 3.5)
-
-RUBY VERSION
-   ruby 2.7.1p83
 
 BUNDLED WITH
    2.1.4
