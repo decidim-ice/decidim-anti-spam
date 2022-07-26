@@ -31,6 +31,8 @@ Then execute:
 
 ```bash
 bundle
+bundle exec rails decidim_spam_signal:install:migrations 
+bundle exec rails db:migrate
 ```
 
 ## Config ENVs

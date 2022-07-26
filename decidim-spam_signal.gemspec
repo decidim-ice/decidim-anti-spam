@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   s.require_paths = ["lib"]
   s.add_dependency "decidim-core", Decidim::SpamSignal.version
+  s.add_dependency "decidim-admin", Decidim::SpamSignal.version
 end

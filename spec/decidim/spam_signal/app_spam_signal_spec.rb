@@ -5,7 +5,7 @@ require "spec_helper"
 describe "SpamSignal::AppSpamSignal" do
   context "#run!" do
 
-    let(:user) { class_double("Decidim::User")}
+    let(:user) { class_double("Decidim::User") }
 
     it "take_or_create_user_bot" do
       spam_signal = Decidim::SpamSignal::AppSpamSignal.new

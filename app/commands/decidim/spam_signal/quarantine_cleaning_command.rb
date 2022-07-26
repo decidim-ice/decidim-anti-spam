@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Decidim
   module SpamSignal
     ##
     # Decidim::SpamSignal::QuarantineCleaningCommand.call
-    module QuarantineCleaningCommand < Decidim::Command
+    class QuarantineCleaningCommand < ::Rectify::Command
       def call
         # Remove all user banned for more than x days
       end
