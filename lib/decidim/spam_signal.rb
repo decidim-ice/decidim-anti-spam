@@ -5,6 +5,7 @@ require_relative "spam_signal/engine"
 require_relative "spam_signal/admin_engine"
 
 require_relative "spam_signal/spam_signal/app_spam_signal"
+require_relative "spam_signal/spam_signal/profile_spam_validator"
 
 module Decidim
   # This namespace holds the logic of the `SpamSignal` component. This component
