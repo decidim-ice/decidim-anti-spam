@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 module Decidim
   module SpamSignal
     class SpamSignalJob < ApplicationJob
-            
-      def perform()
+      def perform
         invoke!
       end
 
@@ -12,8 +13,6 @@ module Decidim
           spam_signal = Decidim::SpamSignal::AppSpamSignal.new
           spam_signal.run!
         end
-
-        
     end
   end
 end

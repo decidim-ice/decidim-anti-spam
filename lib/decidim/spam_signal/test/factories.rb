@@ -3,5 +3,5 @@
 require "decidim/core/test/factories"
 
 FactoryBot.define do
-  
+
 end

@@ -1,9 +1,10 @@
-require 'uri'
+# frozen_string_literal: true
+
+require "uri"
 
 module Decidim
   module SpamSignal
     class AppSpamSignal
-
       attr_reader :user_bot_email, :uncheckable_email_domain
       attr_accessor :user_bot, :organization, :regex, :reports, :moderation
 
@@ -16,11 +17,11 @@ module Decidim
         user_bot = take_or_create_user_bot
         regex = /#{take_regex}/i
 
-        Decidim::UserModeration.unblocked.where(decidim_users: {email: users_to_check}).includes(:reports).where("decidim_reports.moderation_id": nil).each do |moderation|
-          user = moderation.user
-          # do your checks
+        Decidim::UserModeration.unblocked.where(decidim_users: { email: users_to_check }).includes(:reports).where("decidim_reports.moderation_id": nil).each do |moderation|
+           user = moderation.user
+           # do your checks
          end
-        
+
         users_to_check.each do |user|
           unless user_signaled?(user) || user.blocked?
             signal_spammer(user) if user_about_uri?(user) && user_about_text?(user)
@@ -28,12 +29,11 @@ module Decidim
         end
       end
 
-      private 
+      private
         def take_or_create_user_bot
-            
           user_bot = Decidim::User.find_or_create_by_email(email: user_bot_email) do |usr|
-            usr.name = 'bot',
-            usr.nickname = 'bot',
+            usr.name = "bot",
+            usr.nickname = "bot",
             usr.password = usr.password_confirmation = Devise.friendly_token
             usr.organization = organization,
             usr.confirmed_at = Time.current,
@@ -43,7 +43,6 @@ module Decidim
 
           user_bot.update(blocked: false) if user_bot.blocked?
           user_bot
-          
         end
 
         def organization
@@ -53,21 +52,19 @@ module Decidim
         def take_regex
           Regexp.union(regex_string)
         end
-        
+
         def regex_string
-          
-          [ "seo", "sex", "escort", "mmda", "$$$", "#1", "0%", "99.9%", "100%", "50% OFF", 
-            "Access for free", "Access now", "Access right away", 
-            "Act now", "Apply NOW", "Apply Online", "Buy Now", 
-            "Buy direct", "Cancel at any time", "Make Money", "Best offer", 
-            "Best price", "Earn $", "Earn extra cash", "Free investment", 
-            "JACKPOT", "Lose weight", "Lose weight instantly", "Recover your debt", 
+          [ "seo", "sex", "escort", "mmda", "$$$", "#1", "0%", "99.9%", "100%", "50% OFF",
+            "Access for free", "Access now", "Access right away",
+            "Act now", "Apply NOW", "Apply Online", "Buy Now",
+            "Buy direct", "Cancel at any time", "Make Money", "Best offer",
+            "Best price", "Earn $", "Earn extra cash", "Free investment",
+            "JACKPOT", "Lose weight", "Lose weight instantly", "Recover your debt",
             "Unlimited", "You will not believe your eyes", "Zero percent", "Affordable",
-            "Cheap", "Confidential", "Viagra", "Valium", "VIP", "babes", "Rolex", 
-            "Marketing", "Meet women", "Mortgage", "Miracle", "Meet singles", "porn", 
+            "Cheap", "Confidential", "Viagra", "Valium", "VIP", "babes", "Rolex",
+            "Marketing", "Meet women", "Mortgage", "Miracle", "Meet singles", "porn",
             "Stock alert", "Call Girl", "Sexy", "Extra offering", "Call Service", "unlimited pleasure", ""
           ]
-        
         end
 
         def users_to_check
@@ -91,7 +88,7 @@ module Decidim
           moderation!(user)
           report!
           update_report_count!
-          send_notification_to_admins!(user, 'spam')
+          send_notification_to_admins!(user, "spam")
         end
 
         def moderation!(user)
@@ -100,10 +97,10 @@ module Decidim
 
         def report
           Decidim::UserReport.create!(
-            moderation: moderation, 
+            moderation: moderation,
             user: user_bot,
-            reason: 'spam',
-            details: 'Signeled by bot'
+            reason: "spam",
+            details: "Signeled by bot"
           )
         end
 
