@@ -6,10 +6,12 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
   let(:organization) { create :organization }
   let(:spam_cop) { create(:user, :admin, organization: organization) }
   let(:spammer) { create(:user, organization: organization) }
+  let(:user) { create(:user, organization: organization) }
   let(:participatory_process) { create(:participatory_process, organization: organization) }
   let(:component) { create(:component, participatory_space: participatory_process) }
-  let(:dummy_resource) { create(:dummy_resource, component: component, author: spammer) }
-  let(:spamming_content) { dummy_resource }
+  let(:dummy_resource) { create(:dummy_resource, component: component, author: user) }
+  let(:target_content) { dummy_resource }
+  let!(:comment) { create(:comment, commentable: target_content, author: spammer) }
 
   context "when putting a user in quarantine" do
     it "blocks the user" do
@@ -41,5 +43,19 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
         .with(spammer, I18n.t("decidim.spam_signal.spam_block_justification"))
       Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
     end
+
+    it "reportes comments the user posted" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { comment.reload.reported? }.from(false).to(true)
+    end
+    it "hides comments the user posted" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { comment.reload.hidden? }.from(false).to(true)
+    end
+
+
+
   end
 end
