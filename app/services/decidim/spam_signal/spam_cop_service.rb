@@ -2,18 +2,25 @@
 
 module Decidim
   module SpamSignal
-    module SpamCopService
-      def get
-        user_bot = Decidim::User.find_or_create_by_email(email: user_bot_email) do |usr|
-          usr.name = "bot",
-          usr.nickname = "bot",
-          usr.password = usr.password_confirmation = Devise.friendly_token
-          usr.organization = organization,
-          usr.confirmed_at = Time.current,
-          usr.locale = I18n.default_locale,
-          admin = false
-        end
+    class SpamCopService
 
+      def self.get(organization)
+        user_bot = Decidim::User.find_or_create_by!(
+          email: ENV.fetch("USER_BOT_EMAIL", "bot@decidim.com")
+        ) do |usr|
+          usr.name = "bot"
+          usr.nickname = "bot"
+          usr.password = usr.password_confirmation = Devise.friendly_token
+          usr.organization = organization
+          usr.confirmed_at = Time.current
+          usr.locale = I18n.default_locale
+          usr.admin = true
+          usr.tos_agreement = true
+          usr.personal_url = ""
+          usr.about = ""
+          usr.accepted_tos_version = organization.tos_version
+          usr.admin_terms_accepted_at = Time.current
+        end
         user_bot.update(blocked: false) if user_bot.blocked?
         user_bot
       end

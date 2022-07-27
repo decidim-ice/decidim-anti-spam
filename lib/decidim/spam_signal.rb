@@ -4,7 +4,6 @@ require_relative "spam_signal/admin"
 require_relative "spam_signal/engine"
 require_relative "spam_signal/admin_engine"
 
-require_relative "spam_signal/spam_signal/app_spam_signal"
 require_relative "spam_signal/spam_signal/profile_spam_validator"
 
 module Decidim
