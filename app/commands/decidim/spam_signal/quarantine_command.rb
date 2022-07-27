@@ -27,23 +27,23 @@ module Decidim
       private
         def sinalize!
           moderation = Decidim::UserModeration.find_or_create_by!(user: suspicious_user)
-          Decidim::UserReport.create!(
-            moderation: moderation,
-            user: admin_reporter,
-            reason: "spam",
-            details: I18n.t("decidim.spam_signal.spam_signal_justification")
-          )
+          Decidim::UserReport.find_or_create_by!(moderation: moderation)  do |report| 
+            report.moderation = moderation
+            report.user = admin_reporter
+            report.reason = "spam"
+            report.details = I18n.t("decidim.spam_signal.spam_signal_justification")
+          end
           suspicious_comments.each do |comment|
             moderation = Decidim::Moderation.find_or_create_by!(reportable: comment) do |moderation|
               moderation.participatory_space = comment.component.participatory_space
               moderation.report_count = 1
             end
-            Decidim::Report.create!(
-              moderation: moderation,
-              user: admin_reporter,
-              reason: "spam",
-              details: I18n.t("decidim.spam_signal.spam_signal_justification")
-            )
+            Decidim::Report.find_or_create_by!(moderation: moderation) do |report|
+              report.moderation = moderation
+              report.user = admin_reporter
+              report.reason = "spam"
+              report.details = I18n.t("decidim.spam_signal.spam_signal_justification")
+            end
           end
         end
 

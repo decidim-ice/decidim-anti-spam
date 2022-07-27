@@ -27,11 +27,13 @@ describe Decidim::SpamSignal::QuarantineCleaningCommand::class do
     it "destroys the user" do
       ban_user_list = Decidim::SpamSignal::BannedUser.to_ban
       to_ban = ban_user_list.first
+      to_ban_id = to_ban.banned_user.id
       to_ban_email = to_ban.banned_user.email
       to_ban_count = ban_user_list.count
       expect do 
         Decidim::SpamSignal::QuarantineCleaningCommand.call()
       end.to change(Decidim::User.all, :count).by(-1*to_ban_count)
+      
       to_ban.reload
       expect(to_ban.banned_user).to be_nil
       expect(to_ban.banned_email).to eq(to_ban_email)

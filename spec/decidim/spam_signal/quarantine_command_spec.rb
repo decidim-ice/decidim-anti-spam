@@ -55,13 +55,11 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
         Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
       end.to change { comment.reload.reported? }.from(false).to(true)
     end
+    
     it "hides comments the user posted" do
       expect do
         Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
       end.to change { comment.reload.hidden? }.from(false).to(true)
     end
-
-
-
   end
 end

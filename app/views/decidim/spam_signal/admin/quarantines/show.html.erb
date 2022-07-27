@@ -1,0 +1,93 @@
+
+
+<style>
+.spam_signal__section{
+  margin-top: 2rem;
+}
+</style>
+<div class="content section">
+  <div class="grid-x grid-margin-x">
+    <div class="cell small-6">
+      <div class="card">
+        <div class="card-divider">
+          <h5>Reported By</h5>
+        </div>
+        <div class="card-section">
+          <dl>
+            <dd><%= spam_cop.name %> &lt;<%= spam_cop.email %>&gt;</dd>
+            <dt>Reported At</dt>
+            <dd><%= l report.notified_at, format: :short %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <div class="cell small-6">
+      <div class="card">
+        <div class="card-divider">
+          <h5>Suspicious User</h5>
+        </div>
+        <div class="card-section">
+          <dl>
+          <dl>
+            <dd><%= spammer.name %> &lt;<%= spammer.email %>&gt;</dd>
+            <dt>Last Sign In Ip</dt>
+            <dd><%= spammer.last_sign_in_ip %></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content section spam_signal__section">
+  <h2>Suspicious Content</h2>
+    <div class="grid-x grid-margin-x">
+    <% if spammer.about.present? || spammer.personal_url.present?  %>
+      <div class="cell small-4">
+          <strong>User Profile</strong>
+        <% if spammer.about.present? %>
+          <label>About
+            <textarea disabled="disabled" rows="5"><%= spammer.about %></textarea>
+          </label>
+        <% end %>
+        <% if spammer.personal_url.present? %>
+          <label>Personal URL
+            <input disabled="disabled" value="<%= spammer.personal_url %>" />
+          </label>
+        <% end %>
+      </div>
+    <% end %>
+      <% spammer_comments.each do |comment| %>
+      <div class="cell small-4">
+        <%= link_to(decidim_comments.comments_path(commentable_gid: comment.commentable.to_signed_global_id.to_s)) do %><strong>Comment</strong><% end %>
+        <% current_organization.available_locales.each do |language| %>
+          <label><%=language %>
+            <textarea disabled="disabled" rows="5"><%= comment.body[language] %></textarea>
+          </label>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+
+</div >
+
+<div class="content section spam_signal__section">
+    <div class="grid-x grid-margin-x" id="review-quarantine">
+      <div class="cell small-12 callout">
+        <h2>Rescue him from quarantine?</h2>
+        <p>
+          The user will be unblocked, and all his comments will be visible again.
+        </p>
+        <div class="grid-x grid-margin-x">
+          <div class="cell small-6">
+            <%= link_to("Yes", quarantine_path(report), method: :delete, class: "button hollow expanded button--sc mt-s")%>
+          </div>
+          <div class="cell small-6">
+            <%= next_report.present? ? 
+              link_to("No, see the next one", quarantine_path(next_report), class: "button hollow expanded button--sc mt-s") : 
+              link_to("No, go back", spam_filter_reports_path, class: "button expanded button--sc mt-s") %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
