@@ -17,7 +17,7 @@ module Decidim
         end
 
         def about_valid?
-          about.empty? || !Decidim::SpamReport::SpamDetectionService.valid?(about)
+          about.empty? || !Decidim::SpamSignal::DefaultSpamDetectionService.valid?(about)
         end
       end
     end
