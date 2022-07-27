@@ -10,7 +10,6 @@ module Decidim
         end
 
         def invalid?(content)
-          return false if content_has_go_list_tlds?(content)
           return true if content_has_stop_list_tlds?(content)
           content_has_uri?(content) && content_has_stop_list_worlds?(content)
         end
@@ -26,10 +25,6 @@ module Decidim
 
           def content_has_stop_list_tlds?(content)
             content.match(/#{regex(stop_list_tlds)}/i).to_s.present? unless content.nil?
-          end
-
-          def content_has_go_list_tlds?(content)
-            content.match(/#{regex(go_list_tlds)}/i).to_s.present? unless content.nil?
           end
 
           def regex(patterns)
@@ -52,10 +47,6 @@ module Decidim
 
           def stop_list_tlds
             ["blackdomain.gg"]
-          end
-
-          def go_list_tlds
-            ["lausanne.ch"]
           end
 
       end
