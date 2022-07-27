@@ -11,22 +11,35 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
   let(:dummy_resource) { create(:dummy_resource, component: component, author: spammer) }
   let(:spamming_content) { dummy_resource }
 
+  context "when putting a user in quarantine" do
+    it "blocks the user" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { spammer.reload.blocked? }.from(false).to(true)
+    end
 
-  it "blocks the user" do
-    expect do
-     Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
-   end.to change { spammer.blocked_at}.from(nil)
-  end
-  it "moderates the user" do
-    expect do
+    it "moderates the user" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { Decidim::UserModeration.count }.by(1)
+    end
+
+    it "adds it in the quarantine list" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { Decidim::SpamSignal::BannedUser.quarantine_users.count }.by(1)
+    end
+
+    it "doesn't add it in the banned list" do
+      expect do
+        Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
+      end.to change { Decidim::SpamSignal::BannedUser.banned_users.count }.by(0)
+    end
+
+    it "notifies the user about the blocking" do
+      expect(::Decidim::BlockUserJob).to receive(:perform_later)
+        .with(spammer, I18n.t("decidim.spam_signal.spam_block_justification"))
       Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
-    end.to change {Decidim::UserModeration.count}.by(1)
+    end
   end
-  it "add it in the quarantine list" do
-    expect do
-      Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
-    end.to change {Decidim::SpamSignal::BannedUser.count}.by(1)
-  end
-
-
 end

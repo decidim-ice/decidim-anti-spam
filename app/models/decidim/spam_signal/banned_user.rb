@@ -10,7 +10,7 @@ module Decidim
       validates :banned_user, presence: true
       validates :admin_reporter, presence: true
       scope :banned_users, -> { where.not(removed_at: nil) }
-      scope :quarantine_users, -> { where.not(notified_at: nil) }
+      scope :quarantine_users, -> { where(removed_at: nil).where.not(notified_at: nil) }
 
       def banned?
         removed_at?

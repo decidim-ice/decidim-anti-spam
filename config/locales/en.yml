@@ -1,6 +1,16 @@
 ---
 en:
   decidim:
-    components:
-      spam_signal:
-        name: SpamSignal
+    spam_signal:
+      spam_block_justification:
+        | 
+          Your recent activities as been detected by our spam filter as suspicious.
+          You have been put in a five day quarantine, after your account and activity
+          will be removed from the plateform. 
+
+          If you want to appeal this decision, please drop an email at hello [at] domain.com. 
+
+          For more information, please read our /terms-and-conditions.
+      spam_signal_justification:
+        | 
+          The spam filter have identified a spamming content.

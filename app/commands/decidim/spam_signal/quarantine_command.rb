@@ -31,21 +31,20 @@ module Decidim
             moderation: moderation,
             user: admin_reporter,
             reason: "spam",
-            details: "Spam Filter reported abuse of the plateform Uses and Conditions."
+            details: I18n.t("decidim.spam_signal.spam_signal_justification")
           )
         end
 
         def block!
           Decidim::Admin::BlockUser.call(
             Decidim::Admin::BlockUserForm.from_params({
-              justification: "Spam Filter blocked the user according the platform's Uses and Conditions.",
+              justification: I18n.t("decidim.spam_signal.spam_block_justification"),
               user_id: banned_user.id
             }).with_context(
               current_organization: banned_user.organization,
               current_user: admin_reporter
             )
           )
-          banned_user.update!(blocked_at: DateTime.now)
       end
 
         def quarantine!
