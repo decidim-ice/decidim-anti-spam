@@ -12,7 +12,7 @@ module Decidim
   module SpamSignal
     include ActiveSupport::Configurable
 
-    config_accessor :time_before_delete do
+    config_accessor :days_before_delete do
       5.days
     end
   end

@@ -1,5 +1,20 @@
 
-<div class="content">
+<style>
+.spam_signal__metric {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: Courrier, monospace;
+}
+.spam_signal__section {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
+.spam_signal__actions {
+  margin-top: 4rem;
+}
+</style>
+
+<div class="content spam_signal__section">
   <div class="card">
     <h2 class="card-title card-divider">
       Spam Filter
@@ -25,34 +40,42 @@
     </div>
   </div>
 </div>
-<style>
-.spam_signal__metric {
-  font-size: 2rem;
-  font-weight: bold;
-  font-family: Courrier, monospace;
-}
-</style>
-<div class="content">
-  <h2>Spam activities</h2>
+
+<div class="content spam_signal__section">
   <div class="grid-x grid-margin-x">
-        <div class="cell small-4 callout">
-          <h5>Quarantine</h5>
-          <div class="spam_signal__metric"><%= quarantine.count %></div>
-            <% if quarantine.count > 0 %><a href="#review-quarantine">Get the list</a><% end %>
+    <div class="cell small-12 medium-6">
+      <h2>Spam Filter configuration</h2>
+      <%= decidim_form_for(@form_configuration, url: config_path(@form_configuration.id), method: :patch, html: {class: "callout"}) do |f| %>
+        <%= render partial: "form", object: f %>
+        <div class="form-actions spam_signal__actions">
+          <%= f.submit "Save Config" %>
+          <button class="button hollow" type="reset">Cancel</button>
         </div>
-        <div class="cell small-4 callout">
-          <h5>To ban</h5>
-          <div class="spam_signal__metric"><%= to_ban.count %></div>
-          <% if to_ban.count > 0 %> <a href="#">Review to clean</a><% end %>
+      <% end %>
+    </div>
+    <div class="cell small-12 medium-6">
+      <h2>Spam activities</h2>
+      <div class="grid-x grid-margin-x">
+          <div class="cell small-4 callout">
+            <h5>Quarantine</h5>
+            <div class="spam_signal__metric"><%= quarantine.count %></div>
+              <% if quarantine.count > 0 %><a href="#review-quarantine">Get the list</a><% end %>
+          </div>
+          <div class="cell small-4 callout">
+            <h5>To ban</h5>
+            <div class="spam_signal__metric"><%= to_ban.count %></div>
+            <% if to_ban.count > 0 %> <a href="#">Review to clean</a><% end %>
+          </div>
+          <div class="cell small-4 callout">
+            <h5>Banned</h5>
+            <div class="spam_signal__metric"><%= banned.count %></div>
+            <% if banned.count > 0 %> <a href="#">Banned list</a><% end %>
+          </div>
         </div>
-        <div class="cell small-4 callout">
-          <h5>Banned</h5>
-          <div class="spam_signal__metric"><%= banned.count %></div>
-          <% if banned.count > 0 %> <a href="#">Banned list</a><% end %>
-        </div>
+    </div>
   </div>
   <% if quarantine.count > 0 %>
-  <div class="grid-x grid-margin-x" id="review-quarantine">
+  <div class="grid-x grid-margin-x spam_signal__section" id="review-quarantine">
       <div class="cell small-12">
         <h2>Quarantine</h2>
       

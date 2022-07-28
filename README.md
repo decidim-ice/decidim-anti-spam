@@ -36,9 +36,9 @@ bundle exec rails db:migrate
 ```
 
 ## Config ENVs
+
 ```bash
 export USER_BOT_EMAIL='bot@example.ch' # user-bot used for signaling the spammers
-export UNCHECKABLE_EMAIL_DOMAIN='@example.ch' # email domain from administrators 
 ```
 
 ## Testing

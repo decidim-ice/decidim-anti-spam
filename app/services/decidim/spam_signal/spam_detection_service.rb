@@ -4,7 +4,6 @@ module Decidim
   module SpamSignal
     module SpamDetectionService
       class << self
-
         def valid?(content)
           !invalid?(content)
         end
@@ -48,7 +47,6 @@ module Decidim
           def stop_list_tlds
             ["blackdomain.gg"]
           end
-
       end
     end
   end

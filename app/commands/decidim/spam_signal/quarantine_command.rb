@@ -5,12 +5,14 @@ module Decidim
     ##
     # Decidim::SpamSignal::QuarantineCommand.call(suspicious_user, admin_reporter)
     class QuarantineCommand < ::Rectify::Command
-      attr_accessor :suspicious_user,
-        :admin_reporter
+      attr_reader :suspicious_user,
+                  :admin_reporter,
+                  :justification
 
-      def initialize(suspicious_user, admin_reporter)
+      def initialize(suspicious_user, admin_reporter, justification = nil)
         @suspicious_user = suspicious_user
         @admin_reporter = admin_reporter
+        @justification = justification
       end
 
       def call
@@ -27,7 +29,7 @@ module Decidim
       private
         def sinalize!
           moderation = Decidim::UserModeration.find_or_create_by!(user: suspicious_user)
-          Decidim::UserReport.find_or_create_by!(moderation: moderation)  do |report| 
+          Decidim::UserReport.find_or_create_by!(moderation: moderation)  do |report|
             report.moderation = moderation
             report.user = admin_reporter
             report.reason = "spam"
@@ -69,12 +71,13 @@ module Decidim
             removed_at: nil,
             notified_at: Time.current,
             banned_user: suspicious_user,
-            admin_reporter: admin_reporter
+            admin_reporter: admin_reporter,
+            justification: justification
           )
         end
 
         def suspicious_comments
-            @suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
+          @suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
         end
     end
   end

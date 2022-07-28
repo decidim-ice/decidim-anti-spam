@@ -12,7 +12,7 @@ describe Decidim::SpamSignal::QuarantineCleaningCommand::class do
   let(:dummy_resource) { create(:dummy_resource, component: component, author: user) }
   let(:target_content) { dummy_resource }
   let!(:comment) { create(:comment, commentable: target_content, author: spammer) }
-  let!(:suspicious_users) { create_list(:banned_user, rand(2..9), :suspicious, organization: organization ) }
+  let!(:suspicious_users) { create_list(:banned_user, rand(2..9), :suspicious, organization: organization) }
   let!(:to_ban_users) { create_list(:banned_user, rand(2..9), :to_ban, organization: organization) }
 
   context "when a user is in quarantine for more than 5 days" do
@@ -30,10 +30,10 @@ describe Decidim::SpamSignal::QuarantineCleaningCommand::class do
       to_ban_id = to_ban.banned_user.id
       to_ban_email = to_ban.banned_user.email
       to_ban_count = ban_user_list.count
-      expect do 
+      expect do
         Decidim::SpamSignal::QuarantineCleaningCommand.call()
-      end.to change(Decidim::User.all, :count).by(-1*to_ban_count)
-      
+      end.to change(Decidim::User.all, :count).by(-1 * to_ban_count)
+
       to_ban.reload
       expect(to_ban.banned_user).to be_nil
       expect(to_ban.banned_email).to eq(to_ban_email)

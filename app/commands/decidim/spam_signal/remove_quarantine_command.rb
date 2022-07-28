@@ -24,22 +24,22 @@ module Decidim
       end
         private
 
-        def un_block!
-          # Un block the User
-          Decidim::Admin::UnblockUser.call(suspicious_user, admin_reporter)
-          # Block the comment he posted
-          suspicious_comments.each do |spam|
-            Decidim::Admin::UnhideResource.call(spam, admin_reporter)
+          def un_block!
+            # Un block the User
+            Decidim::Admin::UnblockUser.call(suspicious_user, admin_reporter)
+            # Block the comment he posted
+            suspicious_comments.each do |spam|
+              Decidim::Admin::UnhideResource.call(spam, admin_reporter)
+            end
+        end
+
+          def remove_quarantine!
+            @banned_user_report.destroy
           end
-      end
 
-        def remove_quarantine!
-          @banned_user_report.destroy
-        end
-
-        def suspicious_comments
+          def suspicious_comments
             @suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
-        end
+          end
     end
   end
 end

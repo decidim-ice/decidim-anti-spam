@@ -7,8 +7,10 @@ module Decidim
       isolate_namespace Decidim::SpamSignal::Admin
       routes do
         resources :spam_filter_reports
+        resources :config, only: [:update]
         resources :quarantines, only: [:show, :destroy]
       end
+
       initializer "decidim_spam_signal.admin_mount_routes" do
         Decidim::Core::Engine.routes do
           mount Decidim::SpamSignal::AdminEngine, at: "/admin/spam_signal", as: "decidim_admin_spam_signal"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Decidim
   module SpamSignal
     module Admin
@@ -16,7 +18,7 @@ module Decidim
 
           def find_report!
             @report ||= Decidim::SpamSignal::BannedUser.find(params.require(:id))
-          end 
+          end
       end
     end
   end

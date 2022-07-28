@@ -12,9 +12,12 @@ module Decidim
           errors.add(:about, I18n.t("decidim.spam_signal.errors.spam"))
           Decidim::SpamSignal::QuarantineCommand.call(
             self,
-            Decidim::SpamSignal::SpamCopService.get(organization)
+            Decidim::SpamSignal::SpamCopService.get(organization),
+            about
           )
         end
+
+  
 
         def about_valid?
           about.empty? || Decidim::SpamSignal::SpamDetectionService.valid?(about)

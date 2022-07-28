@@ -32,7 +32,7 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
       end.to change { Decidim::SpamSignal::BannedUser.quarantine_users.count }.by(1)
     end
 
-    it "saves the user email separately" do 
+    it "saves the user email separately" do
       Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
       new_quarantine = Decidim::SpamSignal::BannedUser.quarantine_users.last
       expect(new_quarantine.banned_email).to eq(spammer.email)
@@ -55,7 +55,7 @@ describe Decidim::SpamSignal::QuarantineCommand::class do
         Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
       end.to change { comment.reload.reported? }.from(false).to(true)
     end
-    
+
     it "hides comments the user posted" do
       expect do
         Decidim::SpamSignal::QuarantineCommand.call(spammer, spam_cop)
