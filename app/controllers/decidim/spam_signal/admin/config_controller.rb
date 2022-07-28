@@ -24,7 +24,7 @@ module Decidim
 
         private
           def get_config
-            @current_config = Config.get_config
+            @current_config = Config.get_config(current_organization)
           end
       end
     end

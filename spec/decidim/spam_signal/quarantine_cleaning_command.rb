@@ -17,21 +17,21 @@ describe Decidim::SpamSignal::QuarantineCleaningCommand::class do
 
   context "when a user is in quarantine for more than 5 days" do
     it "set users as banned" do
-      to_ban_count = Decidim::SpamSignal::BannedUser.to_ban.count
+      to_ban_count = Decidim::SpamSignal::BannedUser.to_ban(organization).count
       expect do
-        Decidim::SpamSignal::QuarantineCleaningCommand.call()
+        Decidim::SpamSignal::QuarantineCleaningCommand.call(organization)
       end.to change(Decidim::SpamSignal::BannedUser.banned_users.all, :count).from(0).to(to_ban_count)
-      expect(Decidim::SpamSignal::BannedUser.to_ban.count).to eq(0)
+      expect(Decidim::SpamSignal::BannedUser.to_ban(organization).count).to eq(0)
     end
 
     it "destroys the user" do
-      ban_user_list = Decidim::SpamSignal::BannedUser.to_ban
+      ban_user_list = Decidim::SpamSignal::BannedUser.to_ban(organization)
       to_ban = ban_user_list.first
       to_ban_id = to_ban.banned_user.id
       to_ban_email = to_ban.banned_user.email
       to_ban_count = ban_user_list.count
       expect do
-        Decidim::SpamSignal::QuarantineCleaningCommand.call()
+        Decidim::SpamSignal::QuarantineCleaningCommand.call(organization)
       end.to change(Decidim::User.all, :count).by(-1 * to_ban_count)
 
       to_ban.reload

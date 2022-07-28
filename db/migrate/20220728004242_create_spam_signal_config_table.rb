@@ -5,8 +5,15 @@ class CreateSpamSignalConfigTable < ActiveRecord::Migration[5.2]
                 foreign_key: true,
                 index: { name: "index_decidim_awesome_on_decidim_organization_id" }
       t.integer :days_before_delete
-      t.boolean :validate_profile
-      t.boolean :validate_comments
+      
+      t.string :profile_scan
+      t.string :comment_scan
+
+      t.string :profile_obvious_cop
+      t.string :profile_suspicious_cop
+      t.string :comment_obvious_cop
+      t.string :comment_suspicious_cop
+
       t.text :stop_list_tlds
       t.text :stop_list_words
       t.timestamps

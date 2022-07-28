@@ -13,7 +13,7 @@ module Decidim
           return broadcast(:invalid) if attributes.blank?
 
           begin
-            @config = Config.get_config.update(
+            @config = Config.get_config(@form.organization).update(
               attributes
             )
             broadcast(:ok, @config)
