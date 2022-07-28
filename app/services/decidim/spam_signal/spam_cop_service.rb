@@ -20,7 +20,12 @@ module Decidim
           usr.accepted_tos_version = organization.tos_version
           usr.admin_terms_accepted_at = Time.current
         end
-        user_bot.update(blocked: false) if user_bot.blocked?
+        user_bot.update(
+          blocked: false,
+          admin: true,
+          accepted_tos_version: organization.tos_version,
+          admin_terms_accepted_at: Time.current
+        )
         user_bot
       end
     end

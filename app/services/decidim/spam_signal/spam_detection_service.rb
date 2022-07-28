@@ -5,9 +5,11 @@ module Decidim
     class SpamDetectionService
       attr_reader :config
       class_attribute :_instances
+      
       def self.instances
         self._instances ||= {}
       end
+
       def self.instance(config)
         key = config.id
         self.instances[key] = self.new(config) unless self.instances.key?(key)
