@@ -10,10 +10,5 @@ module Decidim
   # This namespace holds the logic of the `SpamSignal` component. This component
   # allows users to create spam_signal in a participatory space.
   module SpamSignal
-    include ActiveSupport::Configurable
-
-    config_accessor :days_before_delete do
-      5.days
-    end
   end
 end

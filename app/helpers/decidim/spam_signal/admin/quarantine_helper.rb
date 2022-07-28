@@ -5,7 +5,7 @@ module Decidim::SpamSignal::Admin
     include ActionView::Helpers::DateHelper
     def days_to_ban
       distance_of_time_in_words_to_now(
-        report.notified_at + Decidim::SpamSignal.config.days_before_delete + 1.minute
+        report.notified_at + Decidim::SpamSignal::Config.get_config.days_before_delete.days + 1.minute
       )
     end
     def report

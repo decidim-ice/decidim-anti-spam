@@ -10,17 +10,19 @@ module Decidim
         def spam_signal_about_validation
           return if about_valid?
           errors.add(:about, I18n.t("decidim.spam_signal.errors.spam"))
-          Decidim::SpamSignal::QuarantineCommand.call(
+          QuarantineCommand.call(
             self,
-            Decidim::SpamSignal::SpamCopService.get(organization),
+            SpamCopService.get(organization),
             about
           )
         end
 
-  
-
         def about_valid?
-          about.empty? || Decidim::SpamSignal::SpamDetectionService.valid?(about)
+          about.empty? || SpamDetectionService.instance(config).valid?(about)
+        end
+
+        def config
+          Config.get_config(organization)
         end
       end
     end

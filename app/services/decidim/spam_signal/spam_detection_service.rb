@@ -2,52 +2,56 @@
 
 module Decidim
   module SpamSignal
-    module SpamDetectionService
-      class << self
-        def valid?(content)
-          !invalid?(content)
-        end
-
-        def invalid?(content)
-          return true if content_has_stop_list_tlds?(content)
-          content_has_uri?(content) && content_has_stop_list_worlds?(content)
-        end
-
-        private
-          def content_has_uri?(content)
-            content.match?(URI.regexp) unless content.nil?
-          end
-
-          def content_has_stop_list_worlds?(content)
-            content.match(/#{regex(stop_list_worlds)}/i).to_s.present? unless content.nil?
-          end
-
-          def content_has_stop_list_tlds?(content)
-            content.match(/#{regex(stop_list_tlds)}/i).to_s.present? unless content.nil?
-          end
-
-          def regex(patterns)
-            Regexp.union(patterns)
-          end
-
-          def stop_list_worlds
-            [ "seo", "sex", "escort", "mmda", "$$$", "#1", "0%", "99.9%", "100%", "50% OFF",
-              "Access for free", "Access now", "Access right away",
-              "Act now", "Apply NOW", "Apply Online", "Buy Now",
-              "Buy direct", "Cancel at any time", "Make Money", "Best offer",
-              "Best price", "Earn $", "Earn extra cash", "Free investment",
-              "JACKPOT", "Lose weight", "Lose weight instantly", "Recover your debt",
-              "Unlimited", "You will not believe your eyes", "Zero percent", "Affordable",
-              "Cheap", "Confidential", "Viagra", "Valium", "VIP", "babes", "Rolex",
-              "Marketing", "Meet women", "Mortgage", "Miracle", "Meet singles", "porn",
-              "Stock alert", "Call Girl", "Sexy", "Extra offering", "Call Service", "unlimited pleasure"
-            ]
-          end
-
-          def stop_list_tlds
-            ["blackdomain.gg"]
-          end
+    class SpamDetectionService
+      attr_reader :config
+      class_attribute :_instances
+      def self.instances
+        self._instances ||= {}
       end
+      def self.instance(config)
+        key = config.id
+        self.instances[key] = self.new(config) unless self.instances.key?(key)
+        self.instances[key]
+      end
+
+      def initialize(config)
+        @config = config
+      end
+
+
+      def valid?(content)
+        !invalid?(content)
+      end
+
+      def invalid?(content)
+        return true if content_has_stop_list_tlds?(content)
+        content_has_uri?(content) && content_has_stop_list_words?(content)
+      end
+
+      private
+        def content_has_uri?(content)
+          content.match?(URI.regexp) unless content.nil?
+        end
+
+        def content_has_stop_list_words?(content)
+          content.match(/#{regex(stop_list_words)}/i).to_s.present? unless content.nil?
+        end
+
+        def content_has_stop_list_tlds?(content)
+          content.match(/#{regex(stop_list_tlds)}/i).to_s.present? unless content.nil?
+        end
+
+        def regex(patterns)
+          Regexp.union(patterns).source
+        end
+
+        def stop_list_words
+          config.stop_list_words.split(",").map(&:strip)
+        end
+
+        def stop_list_tlds
+          config.stop_list_tlds.split(",").map(&:strip)
+        end
     end
   end
 end
