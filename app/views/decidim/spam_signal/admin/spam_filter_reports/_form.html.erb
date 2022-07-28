@@ -1,10 +1,12 @@
 <div class="field" id="config-form">
   <%= form.text_field :days_before_delete %>
 
-  <h5>Protect user's profile</h5>
+  <h2>Protect user's profile</h2>
+  
   <%= form.select :profile_scan, scanners_list, include_blank: false %>
-  <h5>Protect comments</h5>
-  <h5>Quarantine Cop Settings</h5>
+  <h2>Protect comments</h2>
+  <%= form.select :profile_scan, scanners_list, include_blank: false %>
+  <h2>Quarantine Cop Settings</h2>
   <%= form.text_area :stop_list_tlds %>
   <%= form.text_area :stop_list_words %>
 </div>

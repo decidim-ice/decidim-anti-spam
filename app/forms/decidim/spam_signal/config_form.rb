@@ -5,8 +5,7 @@ module Decidim
     class ConfigForm < Decidim::Form
       mimic :config
       attribute :days_before_delete, Integer
-      attribute :validate_profile, Boolean
-      attribute :validate_comments, Boolean
+      attribute :profile_scan, String
       attribute :stop_list_tlds, String
       attribute :stop_list_words, String
 

@@ -6,7 +6,7 @@ module Decidim::SpamSignal::Admin
       @quarantine
     end
     def scanners_list
-      options_for_select SpamScannerStrategiesService.instance.services.map do |key, value|
+      options_for_select SpamScannerStrategiesService.instance.strategies.map do |key, value|
         [value.name, key]
       end
     end
