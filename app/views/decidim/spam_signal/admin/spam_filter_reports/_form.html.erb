@@ -2,11 +2,11 @@
   <%= form.text_field :days_before_delete %>
 
   <h2>Protect user's profile</h2>
-  
-  <%= form.select :profile_scan, scanners_list, include_blank: false %>
+  <%= form.select :profile_scan, scanners_list(form.object.profile_scan), include_blank: false %>
+  <%= form.select :profile_obvious_cop, cops_list(form.object.profile_obvious_cop), include_blank: false %>
+  <%= form.select :profile_suspicious_cop, cops_list(form.object.profile_suspicious_cop), include_blank: false %>
   <h2>Protect comments</h2>
-  <%= form.select :profile_scan, scanners_list, include_blank: false %>
-  <h2>Quarantine Cop Settings</h2>
-  <%= form.text_area :stop_list_tlds %>
-  <%= form.text_area :stop_list_words %>
+  <%= form.select :comment_scan, scanners_list(form.object.comment_scan), include_blank: false %>
+  <%= form.select :comment_obvious_cop, cops_list(form.object.comment_obvious_cop), include_blank: false %>
+  <%= form.select :comment_suspicious_cop, cops_list(form.object.comment_suspicious_cop), include_blank: false %>
 </div>

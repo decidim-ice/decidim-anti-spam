@@ -73,30 +73,6 @@
           </div>
         </div>
     </div>
-    <% @scanner_forms.each do |form| %>
-      <div class="cell small-12 medium-6 callout">
-        <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamStrategyFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
-          <h2><%= form.handler_name.humanize %><br /><span class="label warning">SCAN</span></h2>
-          <%= f.all_fields %>
-          <div>
-            <%= f.submit "Save Config" %>
-            <button class="button hollow" type="reset">Cancel</button>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    <% @cop_forms.each do |form| %>
-      <div class="cell small-12 medium-6 callout">
-        <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamStrategyFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
-          <h2><%= form.handler_name.humanize %><br /><span class="label alert">COP</span></h2>
-          <%= f.all_fields %>
-          <div>
-            <%= f.submit "Save Config" %>
-            <button class="button hollow" type="reset">Cancel</button>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
   </div>
   <% if quarantine.count > 0 %>
   <div class="grid-x grid-margin-x spam_signal__section" id="review-quarantine">

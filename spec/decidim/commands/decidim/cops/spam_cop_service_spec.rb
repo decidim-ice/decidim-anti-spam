@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::SpamSignal::SpamCopService::class do
   let(:organization) { create(:organization) }
   let(:spam_cop) { create(:user, :admin, organization: organization) }
-  context "#get" do 
+  context "#get" do
     it "create a bot user from USER_BOT_EMAIL" do
       expect do
         ENV["USER_BOT_EMAIL"] = "test@decidim.com"
@@ -22,14 +22,14 @@ describe Decidim::SpamSignal::SpamCopService::class do
       end.to change(Decidim::User, :count).by(0)
     end
 
-    it "unblock the bot user if was blocked" do 
+    it "unblock the bot user if was blocked" do
       cop = Decidim::SpamSignal::SpamCopService.get(organization)
       cop.update(blocked: true)
       expect do
         Decidim::SpamSignal::SpamCopService.get(organization)
       end.to change { cop.reload.blocked? }.from(true).to(false)
     end
-    it "set the bot user as admin if he was removed" do 
+    it "set the bot user as admin if he was removed" do
       cop = Decidim::SpamSignal::SpamCopService.get(organization)
       cop.update(admin: false)
       expect do

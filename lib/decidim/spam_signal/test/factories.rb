@@ -6,14 +6,26 @@ require "decidim/dev"
 require "decidim/core/test/factories"
 FactoryBot.define do
   factory :spam_signal_config, class: "Decidim::SpamSignal::Config" do
-      organization { create(:organization) }
-      days_before_delete { rand(2..9) }
-      validate_profile { true }
-      validate_comments { true }
-      stop_list_tlds { "sex,drug" }
-      stop_list_words { "blackdomain.gg" }
+    organization { create(:organization) }
+    profile_scan {"none" }
+    comment_scan {"none" }
+
+    profile_obvious_cop {"none" }
+    profile_suspicious_cop {"none" }
+    comment_obvious_cop {"none" }
+    comment_suspicious_cop {"none" }
+
+    scan_settings {{ 
+      "none": {},
+      "word_and_links": {},
+    }}
+
+    cops_settings {{ 
+      "none": {},
+      "quarantine": {}
+    }}
   end
-  
+
   factory :banned_user, class: "Decidim::SpamSignal::BannedUser" do
     transient do
       organization { create(:organization) }

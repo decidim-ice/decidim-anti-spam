@@ -11,7 +11,7 @@ module Decidim
       validates :admin_reporter, presence: true
       scope :banned_users, -> { where.not(removed_at: nil) }
       scope :quarantine_users, -> { where(removed_at: nil).where.not(notified_at: nil) }
-      scope :to_ban, -> (organization){ quarantine_users.where("notified_at < ?", (Decidim::SpamSignal::Config.get_config(organization).days_before_delete.days + 1.minute).ago) }
+      scope :to_ban, -> (organization) { quarantine_users.where("notified_at < ?", (Decidim::SpamSignal::Config.get_config(organization).days_before_delete.days + 1.minute).ago) }
 
       def banned?
         removed_at?

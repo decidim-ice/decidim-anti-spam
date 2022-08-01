@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'singleton'
+
+require "singleton"
 
 module Decidim
   module SpamSignal
@@ -11,8 +12,8 @@ module Decidim
       def initialize
         # Default strategies, can add others through set_strategy
         @strategies = {
-          none: Cops::NoneCopCommand.class,
-          quarantine: Cops::QuarantineCopCommand.class
+          none: Cops::NoneCopCommand,
+          quarantine: Cops::QuarantineCopCommand
         }
       end
 
@@ -23,13 +24,13 @@ module Decidim
       def unset_strategy(strategy)
         key = strategy.to_sym
         raise Error, "Can not remove :none strategy" if key == :none
-        raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.has? key
+        raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.key? key
         @strategies.except!(key)
       end
 
       def strategy(strategy)
         key = strategy.to_sym
-        return @strategies[key] if @strategies.has? key
+        return @strategies[key] if @strategies.key? key
         @strategies[:none]
       end
     end

@@ -4,6 +4,7 @@ services:
     volumes:
       - pg-data-test:/var/lib/postgresql/data
     environment:
+      # trunk-ignore(gitleaks/generic-api-key)
       - POSTGRES_PASSWORD=TEST-baeGhi4Ohtahcee5eejoaxaiwaezaiGo
       - POSTGRES_USER=decidim
       - POSTGRES_DB=decidim_test

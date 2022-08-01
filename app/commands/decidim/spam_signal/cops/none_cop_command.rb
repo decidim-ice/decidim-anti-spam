@@ -3,7 +3,10 @@
 module Decidim
   module SpamSignal
     module Cops
-      class NoneCopCommand < ::Rectify::Command
+      class NoneCopCommand < CopHandler
+        def self.form
+          nil
+        end
         def call
           broadcast(:ok)
         end

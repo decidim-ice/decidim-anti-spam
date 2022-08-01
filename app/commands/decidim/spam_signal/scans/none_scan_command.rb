@@ -2,8 +2,12 @@
 
 module Decidim
   module SpamSignal
-    module Scanners
-      class NoneScanCommand < ::Rectify::Command
+    module Scans
+      class NoneScanCommand < SpamSignalHandler
+        def self.form
+          nil
+        end
+
         def call
           broadcast(:ok)
         end

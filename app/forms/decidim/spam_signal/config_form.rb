@@ -6,10 +6,11 @@ module Decidim
       mimic :config
       attribute :days_before_delete, Integer
       attribute :profile_scan, String
-      attribute :stop_list_tlds, String
-      attribute :stop_list_words, String
-
-      validates :stop_list_words, presence: true
+      attribute :comment_scan, String
+      attribute :profile_obvious_cop, String
+      attribute :profile_suspicious_cop, String
+      attribute :comment_obvious_cop, String
+      attribute :comment_suspicious_cop, String
     end
   end
 end

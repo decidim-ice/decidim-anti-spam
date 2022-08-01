@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'singleton'
+
+require "singleton"
 
 module Decidim
   module SpamSignal
@@ -8,11 +9,12 @@ module Decidim
     class SpamScannerStrategiesService
       include Singleton
       attr_reader :strategies
+
       def initialize
         # Default strategies, can add others through set_strategy
         @strategies = {
-          none: Scanners::NoneScanCommand.class,
-          word_and_links: Scanners::WordAndLinksScanCommand.class,
+          none: Scans::NoneScanCommand,
+          word_and_links: Scans::WordAndLinksScanCommand,
         }
       end
 
@@ -23,13 +25,13 @@ module Decidim
       def unset_strategy(strategy)
         key = strategy.to_sym
         raise Error, "Can not remove :none strategy" if key == :none
-        raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.has? key
+        raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.key? key
         @strategies.except!(key)
       end
 
       def strategy(strategy)
         key = strategy.to_sym
-        return @strategies[key] if @strategies.has? key
+        return @strategies[key] if @strategies.key? key
         @strategies[:none]
       end
     end

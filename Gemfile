@@ -10,13 +10,13 @@ DECIDIM_VERSION = Decidim::SpamSignal.version
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-spam_signal", path: "."
-
 gem "puma", ">= 4.3"
 gem "bootsnap", "~> 1.4"
 gem "uglifier", "~> 4.1"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
+  gem "rubocop", require: false
 
   gem "decidim-dev", "~> 0.24.3"
 end

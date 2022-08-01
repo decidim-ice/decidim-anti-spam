@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+
+module Decidim
+  module SpamSignal
+    class SpamStrategyFormBuilder < Decidim::AuthorizationFormBuilder
+      def input_field(name, type)
+        return hidden_field(name) if name.to_s == "handler_name"
+
+        case type
+        when :date, :datetime, :time, :"decidim/attributes/localized_date"
+          date_field name
+        when :integer, Integer
+          number_field name
+        else
+          return text_area name,  rows: 5 if name.to_s.ends_with? "_csv"
+          return number_field name if name.to_s.starts_with? "num_"
+          return check_box name if name.to_s.starts_with? "is_"
+          text_field name
+        end
+      end
+    end
+  end
+end

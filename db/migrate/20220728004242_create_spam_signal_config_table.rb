@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSpamSignalConfigTable < ActiveRecord::Migration[5.2]
   def change
     create_table :spam_signal_config_tables do |t|
@@ -5,7 +7,7 @@ class CreateSpamSignalConfigTable < ActiveRecord::Migration[5.2]
                 foreign_key: true,
                 index: { name: "index_decidim_awesome_on_decidim_organization_id" }
       t.integer :days_before_delete
-      
+
       t.string :profile_scan
       t.string :comment_scan
 
@@ -14,8 +16,8 @@ class CreateSpamSignalConfigTable < ActiveRecord::Migration[5.2]
       t.string :comment_obvious_cop
       t.string :comment_suspicious_cop
 
-      t.text :stop_list_tlds
-      t.text :stop_list_words
+      t.jsonb :cops_settings
+      t.jsonb :scan_settings
       t.timestamps
     end
   end

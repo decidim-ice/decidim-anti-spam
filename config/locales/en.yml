@@ -1,16 +1,39 @@
 ---
 en:
+  activerecord:
+    models:
+      decidim/spam_signal/config:
+        one: "Spam Filter Configuration"
+        other: "Spam Filter Configurations"
+  activemodel:
+    attributes:
+      config:
+        profile_scan: "Spam-Scanner (profile)"
+        comment_scan: "Spam-Scanner (comments)"
+        profile_obvious_cop: "Obvious Cop (profile)"
+        profile_suspicious_cop: "Suspicious Cop (profile)"
+        comment_obvious_cop: "Obvious Cop (comments)"
+        comment_suspicious_cop: "Suspicious Cop (comments)"
+
   decidim:
     spam_signal:
-      spam_block_justification:
-        | 
-          Your recent activities as been detected by our spam filter as suspicious.
-          You have been put in a five day quarantine, after your account and activity
-          will be removed from the plateform. 
+      spam_block_justification: |
+        Your recent activities as been detected by our spam filter as suspicious.
+        You have been put in a five day quarantine, after your account and activity
+        will be removed from the platform.
 
-          If you want to appeal this decision, please drop an email at hello [at] domain.com. 
+        If you want to appeal this decision, please drop an email at hello [at] domain.com.
 
-          For more information, please read our /terms-and-conditions.
-      spam_signal_justification:
-        | 
-          The spam filter have identified a spamming content.
+        For more information, please read our /terms-and-conditions.
+      spam_signal_justification: |
+        The spam filter have identified a spamming content.
+      scanners:
+        none_scan_command:
+          name: "None"
+        word_and_links_scan_command:
+          name: "Dictionnary"
+      cops:
+        none_cop_command:
+          name: "None"
+        quarantine_cop_command:
+          name: "Quarantine"
