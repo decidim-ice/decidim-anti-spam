@@ -2,7 +2,7 @@
 
 module Decidim
   module SpamSignal
-    class SpamCopBot
+    class CopBot
       def self.get(organization)
         user_bot = Decidim::User.find_or_create_by!(
           email: ENV.fetch("USER_BOT_EMAIL", "bot@decidim.com")

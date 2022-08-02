@@ -15,7 +15,7 @@ module Decidim
           @suspicious_user = suspicious_user
           @config = config
           @justification = justification
-          @admin_reporter = admin_reporter || SpamCopBot.get(suspicious_user.organization)
+          @admin_reporter = admin_reporter || CopBot.get(suspicious_user.organization)
         end
 
         def self.i18n_key

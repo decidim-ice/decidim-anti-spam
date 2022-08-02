@@ -40,19 +40,19 @@ module Decidim
         end
 
         def spam_scan
-          ScansRepository.instance.strategy(
+          Scans::ScansRepository.instance.strategy(
             spam_config.comment_scan
           )
         end
 
         def obvious_spam_cop
-          CopsRepository.instance.strategy(
+          Cops::CopsRepository.instance.strategy(
             spam_config.comment_obvious_cop
           )
         end
 
         def suspicious_spam_cop
-          CopsRepository.instance.strategy(
+          Cops::CopsRepository.instance.strategy(
             spam_config.comment_suspicious_cop
           )
         end
