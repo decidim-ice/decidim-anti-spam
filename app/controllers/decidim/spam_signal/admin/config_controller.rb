@@ -20,7 +20,7 @@ module Decidim
             @scanner_forms,
             @cop_forms
           ) do
-            on(:ok) do |config|
+            on(:ok) do
               flash[:sucess] = "Configuration updated"
               redirect_to decidim_admin_spam_signal.spam_filter_reports_path
             end
@@ -38,7 +38,7 @@ module Decidim
             strategies << current_config.profile_scan
             strategies << current_config.comment_scan
             strategies.uniq.map do |s|
-              form = SpamScannerStrategiesService.instance.strategy(s).form || nil
+              form = ScansRepository.instance.strategy(s).form || nil
               form.from_params(params[s.to_sym] || {}) unless form.nil?
             end.reject { |f| f.nil? }
           end
@@ -49,7 +49,7 @@ module Decidim
             strategies << current_config.comment_obvious_cop
             strategies << current_config.comment_suspicious_cop
             strategies.uniq.map do |s|
-              form = SpamCopStrategiesService.instance.strategy(s).form || nil
+              form = CopsRepository.instance.strategy(s).form || nil
               form.from_params(params[s.to_sym] || {}) unless form.nil?
             end.reject { |f| f.nil? }
           end

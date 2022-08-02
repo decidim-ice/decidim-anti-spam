@@ -5,21 +5,26 @@ module Decidim::SpamSignal::Admin
     include ActionView::Helpers::DateHelper
     def days_to_ban
       distance_of_time_in_words_to_now(
-        report.notified_at + @current_config.days_before_delete.days + 1.minute
+        report.notified_at + (@cop_config[:num_days_of_quarantine] || 5).days + 1.minute
       )
     end
+
     def report
       @report
     end
+
     def decidim
       Decidim::Core::Engine.routes.url_helpers
     end
+
     def decidim_comments
       Decidim::Comments::Engine.routes.url_helpers
     end
+
     def spammer_comments
       Decidim::Comments::Comment.where(author: spammer)
     end
+
     def spammer
       @report.banned_user
     end
@@ -35,6 +40,7 @@ module Decidim::SpamSignal::Admin
         "id > ?", @report.id
       ).first
     end
+
     def previous_report
       Decidim::SpamSignal::BannedUser.quarantine_users.order(
         notified_at: :asc

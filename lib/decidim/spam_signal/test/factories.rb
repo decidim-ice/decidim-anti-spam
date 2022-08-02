@@ -7,20 +7,20 @@ require "decidim/core/test/factories"
 FactoryBot.define do
   factory :spam_signal_config, class: "Decidim::SpamSignal::Config" do
     organization { create(:organization) }
-    profile_scan {"none" }
-    comment_scan {"none" }
+    profile_scan { "none" }
+    comment_scan { "none" }
 
-    profile_obvious_cop {"none" }
-    profile_suspicious_cop {"none" }
-    comment_obvious_cop {"none" }
-    comment_suspicious_cop {"none" }
+    profile_obvious_cop { "none" }
+    profile_suspicious_cop { "none" }
+    comment_obvious_cop { "none" }
+    comment_suspicious_cop { "none" }
 
-    scan_settings {{ 
+    scan_settings { {
       "none": {},
       "word_and_links": {},
     }}
 
-    cops_settings {{ 
+    cops_settings { {
       "none": {},
       "quarantine": {}
     }}
@@ -30,6 +30,7 @@ FactoryBot.define do
     transient do
       organization { create(:organization) }
       configuration { create(:spam_signal_config, organization: organization) }
+      num_days_of_quarantine { rand(2..5) }
     end
     banned_user { create(:user, organization: organization) }
     admin_reporter { create(:user, :admin, organization: organization) }
@@ -39,7 +40,7 @@ FactoryBot.define do
       notified_at { Time.current }
     end
     trait :to_ban do
-      notified_at { Time.current - configuration.days_before_delete.days - 30.minutes }
+      notified_at { Time.current - num_days_of_quarantine.days - 30.minutes }
     end
   end
 end

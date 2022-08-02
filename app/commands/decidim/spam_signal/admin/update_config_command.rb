@@ -36,15 +36,18 @@ module Decidim
           def current_config
             @config ||= Config.get_config(current_organization)
           end
+
           def find_form
             return form unless form_blank?(form)
             return scanner_form unless form_blank?(scanner_form)
             return cop_form unless form_blank?(cop_form)
-            form
+            raise Error, "nothing submitted"
           end
+
           def current_form
             @current_form ||= find_form
           end
+
           def form_attributes
             return attributes unless form_blank?(form)
             return { scan_settings: new_scan_settings } unless form_blank?(scanner_form)

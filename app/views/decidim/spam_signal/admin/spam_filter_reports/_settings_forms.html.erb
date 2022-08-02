@@ -1,0 +1,27 @@
+<!-- START /decidim/spam_signal/admin/spam_filter_reports/settings_form -->
+<% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
+<% scanner_forms.each do |form| %>
+  <div class="cell small-12 medium-6 callout secondary">
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
+      <h2><%= form.handler_name %><br /><span class="label warning">SCAN</span></h2>
+      <%= f.all_fields %>
+      <div>
+        <%= f.submit  t("actions.save", scope: i18n_scope)  %>
+        <button class="button hollow" type="reset"><%= t("actions.cancel", scope: i18n_scope)%></button>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<% cop_forms.each do |form| %>
+  <div class="cell small-12 medium-6 callout secondary">
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
+      <h2><%= form.handler_name.humanize %><br /><span class="label alert">COP</span></h2>
+      <%= f.all_fields %>
+      <div>
+        <%= f.submit  t("actions.save", scope: i18n_scope)  %>
+        <button class="button hollow" type="reset"><%= t("actions.cancel", scope: i18n_scope)%></button>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+<!-- END /decidim/spam_signal/admin/spam_filter_reports/settings_form -->

@@ -5,10 +5,12 @@ require_relative "spam_signal/engine"
 require_relative "spam_signal/admin_engine"
 
 require_relative "spam_signal/validators/profile_spam_validator"
+require_relative "spam_signal/validators/comment_spam_validator"
 
 module Decidim
   # This namespace holds the logic of the `SpamSignal` component. This component
   # allows users to create spam_signal in a participatory space.
   module SpamSignal
+    class Error < StandardError; end
   end
 end

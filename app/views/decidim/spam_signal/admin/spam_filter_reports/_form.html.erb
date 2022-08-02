@@ -1,12 +1,13 @@
+<!-- START /decidim/spam_signal/admin/spam_filter_reports/form -->
+<% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
 <div class="field" id="config-form">
-  <%= form.text_field :days_before_delete %>
-
-  <h2>Protect user's profile</h2>
+  <h2><%= t("headings.profile_flow", scope: i18n_scope) %></h2>
   <%= form.select :profile_scan, scanners_list(form.object.profile_scan), include_blank: false %>
   <%= form.select :profile_obvious_cop, cops_list(form.object.profile_obvious_cop), include_blank: false %>
   <%= form.select :profile_suspicious_cop, cops_list(form.object.profile_suspicious_cop), include_blank: false %>
-  <h2>Protect comments</h2>
+  <h2><%= t("headings.comment_flow", scope: i18n_scope) %></h2>
   <%= form.select :comment_scan, scanners_list(form.object.comment_scan), include_blank: false %>
   <%= form.select :comment_obvious_cop, cops_list(form.object.comment_obvious_cop), include_blank: false %>
   <%= form.select :comment_suspicious_cop, cops_list(form.object.comment_suspicious_cop), include_blank: false %>
 </div>
+<!-- END /decidim/spam_signal/admin/spam_filter_reports/form -->

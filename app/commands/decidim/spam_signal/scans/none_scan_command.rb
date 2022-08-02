@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Scans
-      class NoneScanCommand < SpamSignalHandler
+      class NoneScanCommand < ScanHandler
         def self.form
           nil
         end

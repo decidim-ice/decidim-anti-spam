@@ -6,8 +6,6 @@ class CreateSpamSignalConfigTable < ActiveRecord::Migration[5.2]
       t.integer :decidim_organization_id,
                 foreign_key: true,
                 index: { name: "index_decidim_awesome_on_decidim_organization_id" }
-      t.integer :days_before_delete
-
       t.string :profile_scan
       t.string :comment_scan
 

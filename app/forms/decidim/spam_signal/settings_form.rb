@@ -2,7 +2,7 @@
 
 module Decidim
   module SpamSignal
-    class StrategyForm < Decidim::Form
+    class SettingsForm < Decidim::Form
       def form_attributes
         attributes.except(:id).keys
       end
@@ -12,8 +12,11 @@ module Decidim
       def handler_name
         self.class.handler_name
       end
-      def self.mimic
-        handler_name
+      def self.model_name
+        ActiveModel::Name.new(self, Decidim::SpamSignal, handler_name)
+      end
+      def model_name
+        self.class.model_name
       end
     end
   end

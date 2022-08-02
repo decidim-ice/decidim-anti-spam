@@ -1,0 +1,22 @@
+<!-- START /decidim/spam_signal/admin/spam_filter_reports/metrics -->
+<% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
+<div class="cell small-12 medium-6">
+  <h2><%= t("headings.metrics", scope: i18n_scope) %></h2>
+  <div class="grid-x grid-margin-x">
+      <div class="cell small-4 callout">
+        <h5><%= t("headings.quarantine_metric", scope: i18n_scope) %></h5>
+        <div class="spam_signal__metric"><%= quarantine.count %></div>
+      </div>
+      <div class="cell small-4 callout">
+        <h5><%= t("headings.to_ban_metric", scope: i18n_scope) %></h5>
+        <div class="spam_signal__metric"><%= to_ban.count %></div>
+        <% if to_ban.count > 0 %> <a href="#">Review to clean</a><% end %>
+      </div>
+      <div class="cell small-4 callout">
+        <h5><%= t("headings.banned_metric", scope: i18n_scope) %></h5>
+        <div class="spam_signal__metric"><%= banned.count %></div>
+        <% if banned.count > 0 %> <a href="#">Banned list</a><% end %>
+      </div>
+    </div>
+</div>
+<!-- END /decidim/spam_signal/admin/spam_filter_reports/metrics -->

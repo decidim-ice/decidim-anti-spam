@@ -5,7 +5,8 @@ module Decidim
     module Admin
       class QuarantinesController < Decidim::SpamSignal::Admin::ApplicationController
         helper QuarantineHelper
-        before_action :find_report!
+        before_action :find_report!, :get_config
+
         def show; end
 
         def destroy
@@ -15,6 +16,10 @@ module Decidim
         end
 
         private
+          def get_config
+            @current_config = Config.get_config(current_organization)
+            @cop_config = @current_config.for_cop("quarantine")
+          end
 
           def find_report!
             @report ||= Decidim::SpamSignal::BannedUser.find(params.require(:id))

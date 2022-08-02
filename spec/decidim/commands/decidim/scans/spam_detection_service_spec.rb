@@ -10,17 +10,17 @@ describe Decidim::SpamSignal::Scans::WordAndLinksScanCommand::class do
       scan_settings: {
         "none": {},
         "word_and_links": {
-          "stop_list_tlds": "blackdomain.gg",
-          "stop_list_words": "sex,callgirl"
+          "stop_list_tlds_csv": "blackdomain.gg",
+          "stop_list_words_csv": "sex,callgirl"
         }
       }
     )
   end
   def scan(content)
     Decidim::SpamSignal::Scans::WordAndLinksScanCommand.call(
-      content, 
+      content,
       config
-    ) do 
+    ) do
       on(:ok) { return :ok }
       on(:spam) { return :spam }
       on(:suspicious) { return :suspicious }

@@ -1,0 +1,39 @@
+<!-- START /decidim/spam_signal/admin/spam_filter_reports/quarantine_list -->
+<% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
+<div class="cell small-12">
+  <h2><%= t("headings.quarantine_list", scope: i18n_scope) %></h2>
+
+  <div class="table-scroll">
+    <table class="table-list">
+      <thead>
+        <tr>
+          <th>Reported at</th>
+          <th>Reported Contact</th>
+          <th>Suspicious User Contact</th>
+          <th>Account Confirmed ?</th>
+          <th><%= t("models.user.fields.created_at", scope: "decidim.admin") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% quarantine.each do |report| %>
+          <% user = report.banned_user %>
+          <tr data-user-id="<%= user.id %>">
+            <td><%= l report.notified_at, format: :short %></td>
+            <td><%= report.admin_reporter.name %> &lt;<%= report.admin_reporter.email %>&gt;</td>
+            <td><%= user.name %> &lt;<%= user.email %>&gt;</td>
+            <td>
+              <%= user.confirmed? ? "✓" : "⨯" %>
+            </td>
+            <td><%= l user.created_at, format: :short %></td>
+            <td class="table-list__actions">
+              <%= link_to(t("actions.review", scope: i18n_scope), quarantine_path(report), class: "button hollow expanded button--sc mt-s") %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate quarantine, theme: "decidim" %>
+  </div>
+</div>
+<!-- END /decidim/spam_signal/admin/spam_filter_reports/quarantine_list -->

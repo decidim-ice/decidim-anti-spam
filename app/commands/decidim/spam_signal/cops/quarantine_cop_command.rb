@@ -5,7 +5,7 @@ module Decidim
     module Cops
       class QuarantineCopCommand < CopHandler
         def self.form
-          QuarantineCopForm
+          QuarantineSettingsForm
         end
 
         def call
@@ -14,7 +14,7 @@ module Decidim
           quarantine!
           broadcast(:ok)
         end
-        
+
         private
           def sinalize!
             moderation = Decidim::UserModeration.find_or_create_by!(user: suspicious_user)
@@ -55,19 +55,19 @@ module Decidim
             end
         end
 
-        def quarantine!
-          Decidim::SpamSignal::BannedUser.create!(
-            removed_at: nil,
-            notified_at: Time.current,
-            banned_user: suspicious_user,
-            admin_reporter: admin_reporter,
-            justification: justification
-          )
-        end
+          def quarantine!
+            Decidim::SpamSignal::BannedUser.create!(
+              removed_at: nil,
+              notified_at: Time.current,
+              banned_user: suspicious_user,
+              admin_reporter: admin_reporter,
+              justification: justification
+            )
+          end
 
-        def suspicious_comments
-          @suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
-        end
+          def suspicious_comments
+            @suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
+          end
       end
     end
   end

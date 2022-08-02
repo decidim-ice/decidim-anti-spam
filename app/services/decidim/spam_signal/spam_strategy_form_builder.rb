@@ -2,7 +2,7 @@
 
 module Decidim
   module SpamSignal
-    class SpamStrategyFormBuilder < Decidim::AuthorizationFormBuilder
+    class SpamSettingsFormBuilder < Decidim::AuthorizationFormBuilder
       def input_field(name, type)
         return hidden_field(name) if name.to_s == "handler_name"
 

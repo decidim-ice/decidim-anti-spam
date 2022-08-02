@@ -8,11 +8,10 @@ module Decidim
       validates :organization, presence: true
       validate :valid_cops
       validate :valid_scanners
+      before_save :none_scan_coherency
 
       def self.get_config(organization)
         @instance ||= Config.find_or_create_by(organization: organization) do |conf|
-          conf.days_before_delete = 5
-
           conf.profile_scan = "none"
           conf.comment_scan = "none"
 
@@ -33,6 +32,15 @@ module Decidim
         end
       end
 
+      def none_scan_coherency
+        if profile_scan == "none"
+          self.profile_obvious_cop = self.profile_suspicious_cop = "none"
+        end
+        if comment_scan == "none"
+          self.comment_obvious_cop = self.comment_suspicious_cop = "none"
+        end
+      end
+
       def for_scan(scan_name)
         scan_key = "#{scan_name}"
         return {} if scan_settings.empty?
@@ -41,7 +49,7 @@ module Decidim
           scan_settings[scan_key]
         )
       end
-      
+
       def for_cop(scan_name)
         scan_key = "#{scan_name}"
         return {} if cops_settings.empty?

@@ -5,7 +5,7 @@ module Decidim
     module Scans
       class WordAndLinksScanCommand < ScanHandler
         def self.form
-          WordAndLinksScanForm
+          WordAndLinksSettingsForm
         end
 
         def call
@@ -39,13 +39,13 @@ module Decidim
 
           def stop_list_words
             @stop_list_words ||= (
-              config[:stop_list_words] || ""
+              config[:stop_list_words_csv] || ""
             ).split(",").map(&:strip)
           end
 
           def stop_list_tlds
             @stop_list_tlds ||= (
-              config[:stop_list_tlds] || ""
+              config[:stop_list_tlds_csv] || ""
             ).split(",").map(&:strip)
           end
       end

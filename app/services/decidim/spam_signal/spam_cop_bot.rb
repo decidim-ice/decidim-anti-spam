@@ -2,7 +2,7 @@
 
 module Decidim
   module SpamSignal
-    class SpamCopService
+    class SpamCopBot
       def self.get(organization)
         user_bot = Decidim::User.find_or_create_by!(
           email: ENV.fetch("USER_BOT_EMAIL", "bot@decidim.com")
@@ -14,6 +14,7 @@ module Decidim
           usr.confirmed_at = Time.current
           usr.locale = I18n.default_locale
           usr.admin = true
+
           usr.tos_agreement = true
           usr.personal_url = ""
           usr.about = ""

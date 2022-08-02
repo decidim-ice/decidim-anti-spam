@@ -2,35 +2,36 @@
 
 module Decidim
   module SpamSignal
-    module ProfileSpamValidator
+    module CommentSpamValidator
       extend ActiveSupport::Concern
 
       included do
-        validate :scan_spam, on: :update, if: :about_changed?
+        validate :scan_spam
         def scan_spam
-          return if about.empty?
-          tested_content = Extractors::ProfileExtractor.extract(self, spam_config)
+          return if body.empty?
+
+          tested_content = Extractors::CommentExtractor.extract(self, spam_config)
           spam_scan.call(
             tested_content,
             spam_config
           ) do
             on(:spam) do
               obvious_spam_cop.call(
-                self,
+                author,
                 spam_config,
                 tested_content
               )
               errors.add(
-                :about,
+                :body,
                 I18n.t("errors.spam",
                   scope: "decidim.spam_signal",
-                  default: "This looks like spam."
+                  default: "this looks like spam."
                 )
               )
             end
             on(:suspicious) do
               suspicious_spam_cop.call(
-                self,
+                author,
                 spam_config,
                 tested_content
               )
@@ -40,19 +41,19 @@ module Decidim
 
         def spam_scan
           ScansRepository.instance.strategy(
-            spam_config.profile_scan
+            spam_config.comment_scan
           )
         end
 
         def obvious_spam_cop
           CopsRepository.instance.strategy(
-            spam_config.profile_obvious_cop
+            spam_config.comment_obvious_cop
           )
         end
 
         def suspicious_spam_cop
           CopsRepository.instance.strategy(
-            spam_config.profile_suspicious_cop
+            spam_config.comment_suspicious_cop
           )
         end
 

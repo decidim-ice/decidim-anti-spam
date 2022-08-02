@@ -10,6 +10,7 @@ module Decidim
       isolate_namespace Decidim::SpamSignal
       config.to_prepare do
         Decidim::User.include(ProfileSpamValidator)
+        Decidim::Comments::Comment.include(CommentSpamValidator)
       end
     end
   end
