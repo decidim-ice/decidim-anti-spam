@@ -822,6 +822,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (~> 1.4)
   byebug (~> 11.0)
+  capybara (~> 3.24)
   decidim (= 0.24.3)
   decidim-dev (~> 0.24.3)
   decidim-spam_signal!
@@ -831,6 +832,7 @@ DEPENDENCIES
   puma (>= 4.3)
   rspec-rails (~> 3.9.1)
   rubocop
+  selenium-webdriver
   spring (~> 2.0)
   spring-watcher-listen (~> 2.0)
   uglifier (~> 4.1)

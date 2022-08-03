@@ -7,7 +7,7 @@ module Decidim::SpamSignal::Admin
     end
 
     def scanners_list(selected_value)
-      options = Decidim::SpamSignal::ScansRepository.instance.strategies.map do |key, value|
+      options = Decidim::SpamSignal::Scans::ScansRepository.instance.strategies.map do |key, value|
         [t(value.i18n_key), key]
       end
       selected = options.find { |value, key| "#{key}" == selected_value }.last

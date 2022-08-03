@@ -11,7 +11,7 @@ module Decidim
       before_save :none_scan_coherency
 
       def self.get_config(organization)
-        @instance ||= Config.find_or_create_by(organization: organization) do |conf|
+        Config.find_or_create_by!(organization: organization) do |conf|
           conf.profile_scan = "none"
           conf.comment_scan = "none"
 

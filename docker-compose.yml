@@ -10,6 +10,10 @@ services:
       - POSTGRES_DB=decidim_test
     ports:
       - 5432:5432
+  chrome:
+    image: selenium/standalone-chrome
+    ports:
+      - 4444:4444
 
 volumes:
   pg-data-test: {}

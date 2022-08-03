@@ -23,7 +23,7 @@ module Decidim
             strategies << current_config.comment_scan
             strategies.uniq.map do |s|
               form = Decidim::SpamSignal::Scans::ScansRepository.instance.strategy(s).form || nil
-              form.new(current_config.scan_settings[s] || {}) unless form.nil?
+              form.new(current_config.scan_settings[s] || {}).with_context(handler_name: s) unless form.nil?
             end.reject { |f| f.nil? }
           end
 
@@ -35,7 +35,7 @@ module Decidim
             strategies << current_config.comment_suspicious_cop
             strategies.uniq.map do |s|
               form = Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(s).form || nil
-              form.new(current_config.cops_settings[s] || {}) unless form.nil?
+              form.new(current_config.cops_settings[s] || {}).with_context(handler_name: s) unless form.nil?
             end.reject { |f| f.nil? }
           end
 

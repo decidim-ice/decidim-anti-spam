@@ -5,12 +5,7 @@ module Decidim::SpamSignal::Admin
   describe SpamFilterReportsController, type: :controller do
     routes { Decidim::SpamSignal::AdminEngine.routes }
 
-    let(:organization) do
-      create(
-        :organization,
-        available_authorizations: ["dummy_authorization_handler"]
-      )
-    end
+    let(:organization) { create(:organization) }
     let(:current_user) { create(:user, :admin, :confirmed, organization: organization) }
 
     before do

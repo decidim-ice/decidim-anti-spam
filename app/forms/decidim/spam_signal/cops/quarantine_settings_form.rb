@@ -3,7 +3,8 @@
 module Decidim
   module SpamSignal
     module Cops
-      class QuarantineSettingsForm < SettingsForm
+      class QuarantineSettingsForm < Decidim::Form
+        include Decidim::SpamSignal::SettingsForm
         attribute :num_days_of_quarantine, Integer
 
         validate :valid_days_of_quarantine

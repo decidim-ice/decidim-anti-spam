@@ -14,8 +14,8 @@ module Decidim
           @scanner_forms = scanner_forms
           @cop_forms = cop_forms
           @quarantine = quarantine_users.page(params[:page]).per(15)
-
           UpdateConfigCommand.call(
+            current_config,
             @form_configuration,
             @scanner_forms,
             @cop_forms
@@ -38,8 +38,8 @@ module Decidim
             strategies << current_config.profile_scan
             strategies << current_config.comment_scan
             strategies.uniq.map do |s|
-              form = ScansRepository.instance.strategy(s).form || nil
-              form.from_params(params[s.to_sym] || {}) unless form.nil?
+              form = Decidim::SpamSignal::Scans::ScansRepository.instance.strategy(s).form || nil
+              form.from_params(params[s.to_sym] || {}).with_context(handler_name: s) unless form.nil?
             end.reject { |f| f.nil? }
           end
           def cop_forms
@@ -49,13 +49,16 @@ module Decidim
             strategies << current_config.comment_obvious_cop
             strategies << current_config.comment_suspicious_cop
             strategies.uniq.map do |s|
-              form = CopsRepository.instance.strategy(s).form || nil
-              form.from_params(params[s.to_sym] || {}) unless form.nil?
+              form = Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(s).form || nil
+              form.from_params(params[s.to_sym] || {}).with_context(handler_name: s) unless form.nil?
             end.reject { |f| f.nil? }
           end
 
           def get_config
-            @current_config = Config.get_config(current_organization)
+            @current_config = Decidim::SpamSignal::Config.where(
+              id: params.require(:id), 
+              organization: current_organization
+            ).first!
           end
 
           def quarantine_users

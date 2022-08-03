@@ -10,7 +10,8 @@ module Decidim
                     :current_config,
                     :current_form
 
-        def initialize(form, scanner_forms, cop_forms)
+        def initialize(config, form, scanner_forms, cop_forms)
+          @current_config = config
           @form = form
           raise ArgumentError, "scanner_forms.length > 1" if scanner_forms.length > 1
           raise ArgumentError, "cop_forms.length > 1" if cop_forms.length > 1
@@ -23,7 +24,7 @@ module Decidim
           return broadcast(:invalid) if attributes.blank?
 
           begin
-            current_config.update(
+            current_config.update!(
               form_attributes
             )
             broadcast(:ok, current_config)
@@ -33,10 +34,6 @@ module Decidim
         end
 
         private
-          def current_config
-            @config ||= Config.get_config(current_organization)
-          end
-
           def find_form
             return form unless form_blank?(form)
             return scanner_form unless form_blank?(scanner_form)
@@ -65,6 +62,7 @@ module Decidim
             settings
           end
           def form_blank?(form)
+            return true if form.nil?
             form.attributes.filter { |_i, v| v.present? }.blank?
           end
           def attributes

@@ -2,9 +2,9 @@
 <% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
 <div class="field" id="config-form">
   <h2><%= t("headings.profile_flow", scope: i18n_scope) %></h2>
-  <%= form.select :profile_scan, scanners_list(form.object.profile_scan), include_blank: false, {id: "ProfileScan"} %>
-  <%= form.select :profile_obvious_cop, cops_list(form.object.profile_obvious_cop), include_blank: false, {id: "ProfileObviousCop"} %>
-  <%= form.select :profile_suspicious_cop, cops_list(form.object.profile_suspicious_cop), include_blank: false, {id: "ProfileSuspiciousCop"} %>
+  <%= form.select :profile_scan, scanners_list(form.object.profile_scan), include_blank: false %>
+  <%= form.select :profile_obvious_cop, cops_list(form.object.profile_obvious_cop), include_blank: false %>
+  <%= form.select :profile_suspicious_cop, cops_list(form.object.profile_suspicious_cop), include_blank: false %>
   <h2><%= t("headings.comment_flow", scope: i18n_scope) %></h2>
   <%= form.select :comment_scan, scanners_list(form.object.comment_scan), include_blank: false %>
   <%= form.select :comment_obvious_cop, cops_list(form.object.comment_obvious_cop), include_blank: false %>

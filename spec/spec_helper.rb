@@ -11,14 +11,39 @@ Decidim::Dev.dummy_app_path = File.expand_path(File.join(__dir__, "dummy"))
 require "decidim/dev/test/base_spec_helper"
 require "decidim/core/test/factories"
 require "decidim/spam_signal/test/factories"
+require "selenium/webdriver"
 
+Capybara.register_driver :remote_browser do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    "goog:chromeOptions": { args: %w(headless disable-gpu no-sandbox) }
+  )
+  Capybara::Selenium::Driver.new(app, 
+    browser: :remote, 
+    url: "http://0.0.0.0:4444",
+    desired_capabilities: capabilities
+  )
+end
+Capybara.configure do |config|
+  config.server_host = IPSocket.getaddress(Socket.gethostname)
+  config.server_port = 3000
 
+  config.javascript_driver = :remote_browser
+  config.default_driver = :remote_browser
+  config.app_host = "http://localhost:3000"
+  config.run_server = true
+end
 RSpec.configure do |config|
+  config.before :each, type: :system do
+    driven_by(:remote_browser)
+    switch_to_default_host
+    domain = (try(:organization) || try(:current_organization))&.host
+  end
   config.before do
     config.include Devise::Test::IntegrationHelpers, type: :request
     # Reset the locales to Decidim defaults before each test.
     # Some tests may change this which is why this is important.
     I18n.available_locales = [:en, :ca, :es]
+
 
     # Revert back to the simple backend before every test because otherwise the
     # tests may be interfered by the backend set by the specific tests. You
