@@ -17,8 +17,8 @@ Capybara.register_driver :remote_browser do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     "goog:chromeOptions": { args: %w(headless disable-gpu no-sandbox) }
   )
-  Capybara::Selenium::Driver.new(app, 
-    browser: :remote, 
+  Capybara::Selenium::Driver.new(app,
+    browser: :remote,
     url: "http://0.0.0.0:4444",
     desired_capabilities: capabilities
   )

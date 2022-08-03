@@ -56,7 +56,7 @@ module Decidim
 
           def get_config
             @current_config = Decidim::SpamSignal::Config.where(
-              id: params.require(:id), 
+              id: params.require(:id),
               organization: current_organization
             ).first!
           end

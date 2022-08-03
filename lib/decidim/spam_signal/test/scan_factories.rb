@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpamScan < Decidim::SpamSignal::Scans::ScanHandler
   def call
     broadcast(:spam)

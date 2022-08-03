@@ -5,7 +5,7 @@ module Decidim
     module SettingsForm
       extend ActiveSupport::Concern
 
-      included do 
+      included do
         def form_attributes
           attributes.except(:id).keys
         end

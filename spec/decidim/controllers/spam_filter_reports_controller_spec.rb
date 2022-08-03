@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 
-# Decidim::SpamSignal::Admin::SpamFilterReportsController
 require "spec_helper"
 module Decidim::SpamSignal::Admin
   describe SpamFilterReportsController, type: :controller do
@@ -18,10 +18,10 @@ module Decidim::SpamSignal::Admin
       expect(subject).to render_template(:index)
     end
 
-    it "create a configuration for the organization" do 
+    it "create a configuration for the organization" do
       expect do
         get :index
-      end.to change {Decidim::SpamSignal::Config.count}.by(1)
+      end.to change { Decidim::SpamSignal::Config.count }.by(1)
     end
   end
 end
