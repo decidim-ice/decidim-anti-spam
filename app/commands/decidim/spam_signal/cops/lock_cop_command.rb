@@ -5,7 +5,7 @@ module Decidim
     module Cops
       class LockCopCommand < CopHandler
         def self.form
-          nil
+          LockSettingsForm
         end
 
         def call
@@ -26,7 +26,9 @@ module Decidim
           end
 
           def lock!
-            suspicious_user.lock
+            suspicious_user.lock_access!(
+              send_instructions: config.fetch(:is_email_unlockable,  true)
+            )
           end
       end
     end
