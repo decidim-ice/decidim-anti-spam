@@ -17,7 +17,7 @@ module Decidim::SpamSignal::Cops
       it "set the handler_name to quarantine" do
         expect(QuarantineCopCommand.handler_name).to eq("quarantine")
       end
-      
+
       it "blocks the user" do
         expect do
           QuarantineCopCommand.call(spammer, spam_cop)
