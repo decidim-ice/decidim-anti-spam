@@ -2,7 +2,7 @@
 <% i18n_scope = "decidim.spam_signal.admin.spam_filter_reports.index" %>
 <% scanner_forms.each do |form| %>
   <div class="cell small-12 medium-6 callout secondary">
-    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch, html: {id: "ScanSettings#{form.handler_name.camelize}"}) do |f| %>
       <h2><%= form.handler_name %><br /><span class="label warning">SCAN</span></h2>
       <%= f.all_fields %>
       <div>
@@ -14,7 +14,7 @@
 <% end %>
 <% cop_forms.each do |form| %>
   <div class="cell small-12 medium-6 callout secondary">
-    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch) do |f| %>
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch, html: {id: "CopSettings#{form.handler_name.camelize}"}) do |f| %>
       <h2><%= form.handler_name.humanize %><br /><span class="label alert">COP</span></h2>
       <%= f.all_fields %>
       <div>

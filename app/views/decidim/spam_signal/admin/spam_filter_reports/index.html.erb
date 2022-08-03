@@ -46,7 +46,7 @@
   <div class="grid-x grid-margin-x">
     <div class="cell small-12 medium-6">
       <h2><%= t(".headings.spam_flow") %></h2>
-      <%= decidim_form_for(@form_configuration, url: config_path(@form_configuration.id), method: :patch, html: {class: "callout"}) do |f| %>
+      <%= decidim_form_for(@form_configuration, url: config_path(@form_configuration.id), method: :patch, html: {class: "callout", id: "ConfigurationForm"}) do |f| %>
         <%= render partial: "#{partial_dir}/form",
                    locals: { form: f} %>
         <div class="form-actions spam_signal__actions">

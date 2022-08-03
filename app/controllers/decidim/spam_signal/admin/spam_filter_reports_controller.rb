@@ -22,7 +22,7 @@ module Decidim
             strategies << current_config.profile_scan
             strategies << current_config.comment_scan
             strategies.uniq.map do |s|
-              form = ScansRepository.instance.strategy(s).form || nil
+              form = Decidim::SpamSignal::Scans::ScansRepository.instance.strategy(s).form || nil
               form.new(current_config.scan_settings[s] || {}) unless form.nil?
             end.reject { |f| f.nil? }
           end
@@ -34,13 +34,13 @@ module Decidim
             strategies << current_config.comment_obvious_cop
             strategies << current_config.comment_suspicious_cop
             strategies.uniq.map do |s|
-              form = CopsRepository.instance.strategy(s).form || nil
+              form = Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(s).form || nil
               form.new(current_config.cops_settings[s] || {}) unless form.nil?
             end.reject { |f| f.nil? }
           end
 
           def get_config
-            @current_config = Config.get_config(current_organization)
+            @current_config = Decidim::SpamSignal::Config.get_config(current_organization)
           end
 
           def quarantine_users
