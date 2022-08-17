@@ -51,7 +51,7 @@ module Decidim
         end
 
         def suspicious_spam_cop
-          CopsRepository.instance.strategy(
+          ::Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(
             spam_config.profile_suspicious_cop
           )
         end
