@@ -14,7 +14,8 @@ module Decidim
           # Default strategies, can add others through set_strategy
           @strategies = {
             none: Cops::NoneCopCommand,
-            quarantine: Cops::QuarantineCopCommand
+            quarantine: Cops::QuarantineCopCommand,
+            lock: Cops::LockCopCommand
           }
         end
 
