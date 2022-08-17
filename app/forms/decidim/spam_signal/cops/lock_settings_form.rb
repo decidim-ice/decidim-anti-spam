@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Cops
-      class QuarantineSettingsForm < Decidim::Form
+      class LockSettingsForm < Decidim::Form
         include Decidim::SpamSignal::SettingsForm
         attribute :is_email_unlockable, Boolean
       end
