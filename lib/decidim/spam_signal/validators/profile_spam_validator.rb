@@ -39,13 +39,13 @@ module Decidim
         end
 
         def spam_scan
-          ScansRepository.instance.strategy(
+          ::Decidim::SpamSignal::Scans::ScansRepository.instance.strategy(
             spam_config.profile_scan
           )
         end
 
         def obvious_spam_cop
-          CopsRepository.instance.strategy(
+          ::Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(
             spam_config.profile_obvious_cop
           )
         end
