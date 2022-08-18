@@ -16,7 +16,7 @@ module Decidim
           ) do
             on(:spam) do
               obvious_spam_cop.call(
-                self,
+                current_user,
                 spam_config,
                 tested_content
               )
@@ -30,7 +30,7 @@ module Decidim
             end
             on(:suspicious) do
               suspicious_spam_cop.call(
-                self,
+                current_user,
                 spam_config,
                 tested_content
               )
