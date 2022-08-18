@@ -5,7 +5,7 @@ module Decidim
     module ProfileSpamValidator
       extend ActiveSupport::Concern
 
-      included do
+      included do 
         validate :scan_spam, on: :update, if: :about_changed?
         def scan_spam
           return if about.empty?
@@ -16,7 +16,7 @@ module Decidim
           ) do
             on(:spam) do
               obvious_spam_cop.call(
-                current_user,
+                self,
                 spam_config,
                 tested_content
               )
@@ -30,7 +30,7 @@ module Decidim
             end
             on(:suspicious) do
               suspicious_spam_cop.call(
-                current_user,
+                self,
                 spam_config,
                 tested_content
               )
