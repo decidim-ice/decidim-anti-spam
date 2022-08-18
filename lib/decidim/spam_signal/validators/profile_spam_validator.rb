@@ -9,6 +9,7 @@ module Decidim
         validate :scan_spam, on: :update, if: :about_changed?
         def scan_spam
           return if about.empty?
+          current_user = self
           tested_content = Extractors::ProfileExtractor.extract(self, spam_config)
           spam_scan.call(
             tested_content,
@@ -16,7 +17,7 @@ module Decidim
           ) do
             on(:spam) do
               obvious_spam_cop.call(
-                self,
+                current_user,
                 spam_config,
                 tested_content
               )
@@ -30,7 +31,7 @@ module Decidim
             end
             on(:suspicious) do
               suspicious_spam_cop.call(
-                self,
+                current_user,
                 spam_config,
                 tested_content
               )
