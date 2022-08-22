@@ -50,7 +50,10 @@ module Decidim
             strategies << current_config.comment_suspicious_cop
             strategies.uniq.map do |s|
               form = Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(s).form || nil
-              form.from_params(params[s.to_sym] || {}).with_context(handler_name: s) unless form.nil?
+              form_params = params[s.to_sym] || {}
+              unless form.nil? || form_params.empty?
+                form.from_params(params[s.to_sym] || {}).with_context(handler_name: s)
+              end
             end.reject { |f| f.nil? }
           end
 
