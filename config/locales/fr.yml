@@ -43,37 +43,34 @@ fr:
           name: "ø"
         word_and_links:
           name: "Mots-clés"
-          readme_html:
-            |
-              Définit des mots clés interdits et détermine le status d'un contenu entre <code>ok</code>, <code>suspicious</code> ou <code>spam</code>.
-              <ul>
-                <li>Est un <code>spam</code> si: 
-                  <ul>
-                    <li>Si un lien est trouvé avec un nom de domaines présents dans les TLDS interdit. </li>
-                    <li>Si un mot clé ET un lien est trouvé dans le contenu</li>
-                  </ul>
-                </li>
-                <li>Est un <code>suspicious</code> si: 
-                  <ul>
-                    <li>Si un mot clé est trouvé, mais pas un lien</li>
-                  </ul>
-                </li>
-              </ul>
+          readme_html: |
+            Définit des mots clés interdits et détermine le status d'un contenu entre <code>ok</code>, <code>suspicious</code> ou <code>spam</code>.
+            <ul>
+              <li>Est un <code>spam</code> si: 
+                <ul>
+                  <li>Si un lien est trouvé avec un nom de domaines présents dans les TLDS interdit. </li>
+                  <li>Si un mot clé ET un lien est trouvé dans le contenu</li>
+                </ul>
+              </li>
+              <li>Est un <code>suspicious</code> si: 
+                <ul>
+                  <li>Si un mot clé est trouvé, mais pas un lien</li>
+                </ul>
+              </li>
+            </ul>
       cops:
         none:
           name: "None"
         lock:
           name: "Vérouillage"
-          readme_html:
-            |
-              Déconnecte et interdit la re-connexion durant 15min. Un email de déverouillage sera envoyé à l'utilisateur avec des instructions de déverouillages<br />
-              Toutes les activités de l'utilisateur seront signaliées aux administrateurs.
+          readme_html: |
+            Déconnecte et interdit la re-connexion durant 15min. Un email de déverouillage sera envoyé à l'utilisateur avec des instructions de déverouillages<br />
+            Toutes les activités de l'utilisateur seront signaliées aux administrateurs.
         quarantine:
           name: "Quarantaine"
-          readme_html:
-            |
-              Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
-              Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
+          readme_html: |
+            Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
+            Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
 
           errors:
             num_days_of_quarantine: "Le nombre de jours de quarantaine doit être supérieur à 0."
@@ -90,49 +87,47 @@ fr:
               to_ban_metric: "Prêt à être bannis"
               banned_metric: "Bannis"
               quarantine_list: "Utilisateurs en quarantaine"
-            readme_html:
-              |
-                <p>
-                  Salut, tu trouvera ici les configurations du filtre anti-spam <br />
-                  Le filtre agit à certains endroit de la plateforme:
-                </p>
-                <ul>
-                  <li>Lorsqu'un utilisateur édite son profil</li>
-                  <li>Lorsqu'un utilisateur crée un nouveau commentaire</li>
-                </ul>
+            readme_html: |
+              <p>
+                Salut, tu trouvera ici les configurations du filtre anti-spam <br />
+                Le filtre agit à certains endroit de la plateforme:
+              </p>
+              <ul>
+                <li>Lorsqu'un utilisateur édite son profil</li>
+                <li>Lorsqu'un utilisateur crée un nouveau commentaire</li>
+              </ul>
 
-                <h3>Comment ça marche?</h3>
-                <p>Le processus est simple: extraire les donnée à vérifier, les scanner, et réagir à la détection de spam.<br />
-                Les scanners de contenus ont trois résultats possibles:</p>
-                <ol>
-                  <li><strong>ok</strong>: Tout bon, on peut y aller</li>
-                  <li><strong>suspicious</strong>: C'est peut-être un spam, mais ce n'est pas sûr</li>
-                  <li><strong>spam</strong>: Presque sûr que c'est du spam<li>
-                </ol>
+              <h3>Comment ça marche?</h3>
+              <p>Le processus est simple: extraire les donnée à vérifier, les scanner, et réagir à la détection de spam.<br />
+              Les scanners de contenus ont trois résultats possibles:</p>
+              <ol>
+                <li><strong>ok</strong>: Tout bon, on peut y aller</li>
+                <li><strong>suspicious</strong>: C'est peut-être un spam, mais ce n'est pas sûr</li>
+                <li><strong>spam</strong>: Presque sûr que c'est du spam<li>
+              </ol>
 
-                Pour les résultats <code>suspicious</code> et <code>spam</code>, un <strong>agent</strong> est appelé.
-                Cet agent fait invariablement les mêmes actions avec le compte utilisateur que le scanner lui transmet.
-                Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
+              Pour les résultats <code>suspicious</code> et <code>spam</code>, un <strong>agent</strong> est appelé.
+              Cet agent fait invariablement les mêmes actions avec le compte utilisateur que le scanner lui transmet.
+              Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
+              <hr />
+              <h3>Note sur RGPD/LPD</h3>
+              Merci de vérifier que vos <a href="/terms-and-conditions">Conditions générales</a> sont transparentes sur
+              la stratégie de filtre anti-spam, afin d'être en accord avec les lois de votre pays.
+              Les utilisateurs doivent savoir le risque de mise en quarantaine ou de vérouillage en lisant vos conditions générales.
+            cops_readme_html: |
+              <h3>Agent de vérouillage</h3>
+              L'agent de vérouillage va bloquer l'utilisateur pour 15minutes, et envoyer des instructions
+              de déverouillages à l'utilisateur par email.<br />
+              Ceci va aussi signaliser tous les contenus que l'utilisateur à écrit jusqu'à présent.
+              <ol>
+                <li>L'utilisateur est déconnecté</li>
+                <li>L'utilisateur reçoit des instructions de déverouillages</li>
+                <li>Le contenu de l'utilisateur est signalisé aux administrateurs</li>
+              </ol>
 
-                <h3>Agent de vérouillage</h3>
-                L'agent de vérouillage va bloquer l'utilisateur pour 15minutes, et envoyer des instructions
-                de déverouillages à l'utilisateur par email.<br />
-                Ceci va aussi signaliser tous les contenus que l'utilisateur à écrit jusqu'à présent.
-                <ol>
-                  <li>L'utilisateur est déconnecté</li>
-                  <li>L'utilisateur reçoit des instructions de déverouillages</li>
-                  <li>Le contenu de l'utilisateur est signalisé aux administrateurs</li>
-                </ol>
-
-                <h3>Agent de quarantaine</h3>
-                Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
-                Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
-
-                <hr />
-                <h3>Note sur RGPD/LPD</h3>
-                Merci de vérifier que vos <a href="/terms-and-conditions">Conditions générales</a> sont transparentes sur
-                la stratégie de filtre anti-spam, afin d'être en accord avec les lois de votre pays.
-                Les utilisateurs doivent savoir le risque de mise en quarantaine ou de vérouillage en lisant vos conditions générales.
+              <h3>Agent de quarantaine</h3>
+              Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
+              Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
 
             actions:
               save: "Enregistrer"
