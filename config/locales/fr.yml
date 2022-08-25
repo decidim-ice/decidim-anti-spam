@@ -60,45 +60,6 @@ en:
               to_ban_metric: "To Ban"
               banned_metric: "Banned"
               quarantine_list: "Users in Quarantine"
-            readme_html:
-              |
-                <p>
-                  Welcome to your spam prevention panel. <br />
-                  You will be able to control spam on the following situations:
-                </p>
-                <ul>
-                  <li>When a user edit his profile</li>
-                  <li>When a user post a new comment</li>
-                </ul>
-
-                <h3>How does it work?<h3>
-                The process is simple: extract content to verifies, scan it, and react from spam detection.<br />
-                Spam Scanning have three possible results:
-                <ol>
-                  <li><strong>ok</strong>: All good, the user can proceed</li>
-                  <li><strong>suspicious</strong>: We don't know if it's a spam, but it looks like one</li>
-                  <li><strong>spam</strong>: Almost sure it's a spam</li>
-                </ol>
-
-                For the <code>suspicious</code> and <code>spam</code> results, a <strong>cop</strong> is called.
-                This cop will do some actions, like creating an error, signaling or block the user and its content.
-
-                <h3>Available Cops</h3>
-                <h4>Lock</h4>
-                The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
-                It will also signalise the content the user have posted, to be sure admin review them.
-                <ol>
-                  <li>The user get disconnected</li>
-                  <li>The user receive unlock instructions by email</li>
-                  <li>User's content is signaled to admins</li>
-                </ol>
-
-                <h4>Quarantine</h4>
-                <h3>Note on RGPD/LPD</h3>
-                Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
-                process, to be compliant with the European regulations. Users should be noticed on the the conditions that their
-                account and data may be deleted if the Automatic Spam Filter detects suspicious activities.
-
             actions:
               save: "Save"
               cancel: "Cancel"
