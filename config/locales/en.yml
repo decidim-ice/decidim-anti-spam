@@ -16,6 +16,8 @@ en:
         comment_suspicious_cop: "Suspicious Cop (comments)"
       quarantine:
         num_days_of_quarantine: "Days of quarantine"
+      lock:
+        is_email_unlockable: "Can unlock its account by email"
       word_and_links:
         stop_list_tlds_csv: "Suspicious TLDS, comma-separated"
         stop_list_words_csv: "Suspicious Words, comma-separated"

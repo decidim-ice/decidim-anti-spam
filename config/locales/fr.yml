@@ -16,6 +16,8 @@ fr:
         comment_suspicious_cop: "Agent pour les Suspects (commentaires)"
       quarantine:
         num_days_of_quarantine: "Nombre de jour de quarantaine"
+      lock:
+        is_email_unlockable: "Peut dévérouiller son compte par email"
       word_and_links:
         stop_list_tlds_csv: "Liste de TLDS interdits, séparé par des virgules"
         stop_list_words_csv: "Liste de mots interdits, séparé par des virgules"
@@ -41,6 +43,22 @@ fr:
           name: "ø"
         word_and_links:
           name: "Mots-clés"
+          readme_html:
+            |
+              Définit des mots clés interdits et détermine le status d'un contenu entre <code>ok</code>, <code>suspicious</code> ou <code>spam</code>.
+              <ul>
+                <li>Est un <code>spam</code> si: 
+                  <ul>
+                    <li>Si un lien est trouvé avec un nom de domaines présents dans les TLDS interdit. </li>
+                    <li>Si un mot clé ET un lien est trouvé dans le contenu</li>
+                  </ul>
+                </li>
+                <li>Est un <code>suspicious</code> si: 
+                  <ul>
+                    <li>Si un mot clé est trouvé, mais pas un lien</li>
+                  </ul>
+                </li>
+              </ul>
       cops:
         none:
           name: "None"
@@ -97,27 +115,26 @@ fr:
                 Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
 
                 <h3>Agent de vérouillage</h3>
-
-                **TODO translate this**
-
-                
-                The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
-                It will also signalise the content the user have posted, to be sure admin review them.
+                L'agent de vérouillage va bloquer l'utilisateur pour 15minutes, et envoyer des instructions
+                de déverouillages à l'utilisateur par email.<br />
+                Ceci va aussi signaliser tous les contenus que l'utilisateur à écrit jusqu'à présent.
                 <ol>
-                  <li>The user get disconnected</li>
-                  <li>The user receive unlock instructions by email</li>
-                  <li>User's content is signaled to admins</li>
+                  <li>L'utilisateur est déconnecté</li>
+                  <li>L'utilisateur reçoit des instructions de déverouillages</li>
+                  <li>Le contenu de l'utilisateur est signalisé aux administrateurs</li>
                 </ol>
 
-                <h3>Quarantine Cop</h3>
+                <h3>Agent de quarantaine</h3>
+                Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
+                Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
 
                 <hr />
-                <h3>Note on RGPD/LPD</h3>
-                Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
-                process, to be compliant with the European regulations. Users should be noticed on the the conditions that their
-                account and data may be deleted if the Automatic Spam Filter detects suspicious activities.
+                <h3>Note sur RGPD/LPD</h3>
+                Merci de vérifier que vos <a href="/terms-and-conditions">Conditions générales</a> sont transparentes sur
+                la stratégie de filtre anti-spam, afin d'être en accord avec les lois de votre pays.
+                Les utilisateurs doivent savoir le risque de mise en quarantaine ou de vérouillage en lisant vos conditions générales.
 
             actions:
-              save: "Save"
-              cancel: "Cancel"
-              review: "Review"
+              save: "Enregistrer"
+              cancel: "Annuler"
+              review: "Consulter"
