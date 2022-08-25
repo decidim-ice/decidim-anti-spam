@@ -3,8 +3,8 @@ en:
   activerecord:
     models:
       decidim/spam_signal/config:
-        one: "Spam Filter Configuration"
-        other: "Spam Filter Configurations"
+        one: "Anti-Spam Configuration"
+        other: "Anti-Spam Configurations"
   activemodel:
     attributes:
       config:
@@ -43,8 +43,19 @@ en:
       cops:
         none:
           name: "None"
+        lock:
+          name: "Lock"
+          readme_html:
+            |
+              Disconnect, forbid access for 15minutes and send an email with unlocking instructions.<br />
+              All user's activities will be signaled to administrator.
         quarantine:
           name: "Quarantine"
+          readme_html:
+            |
+              Disconnect, block the user, hide all his content, and put it in a quarantine list.<br />
+              After some days, the users in the quarantine list will definitely deleted.
+
           errors:
             num_days_of_quarantine: "Numbers of days in quarantine must be positive."
       admin:
@@ -53,8 +64,8 @@ en:
             headings:
               title: "Spam Report"
               spam_flow: "Filter Configuration"
-              profile_flow: "Profile Protection"
-              comment_flow: "Comment Protection"
+              profile_flow: "Editing User's Profile"
+              comment_flow: "Creating a new Comment"
               metrics: "Spam Activities"
               quarantine_metric: "In Quarantine"
               to_ban_metric: "To Ban"
@@ -71,9 +82,9 @@ en:
                   <li>When a user post a new comment</li>
                 </ul>
 
-                <h3>How does it work?<h3>
-                The process is simple: extract content to verifies, scan it, and react from spam detection.<br />
-                Spam Scanning have three possible results:
+                <h3>How does it work?</h3>
+                <p>The process is simple: extract content to verifies, scan it, and react from spam detection.<br />
+                Spam Scanning have three possible results:</p>
                 <ol>
                   <li><strong>ok</strong>: All good, the user can proceed</li>
                   <li><strong>suspicious</strong>: We don't know if it's a spam, but it looks like one</li>
@@ -83,8 +94,7 @@ en:
                 For the <code>suspicious</code> and <code>spam</code> results, a <strong>cop</strong> is called.
                 This cop will do some actions, like creating an error, signaling or block the user and its content.
 
-                <h3>Available Cops</h3>
-                <h4>Lock</h4>
+                <h3>Lock Cop</h3>
                 The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
                 It will also signalise the content the user have posted, to be sure admin review them.
                 <ol>
@@ -93,7 +103,9 @@ en:
                   <li>User's content is signaled to admins</li>
                 </ol>
 
-                <h4>Quarantine</h4>
+                <h3>Quarantine Cop</h3>
+
+                <hr />
                 <h3>Note on RGPD/LPD</h3>
                 Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
                 process, to be compliant with the European regulations. Users should be noticed on the the conditions that their

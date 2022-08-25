@@ -3,7 +3,8 @@
 <% scanner_forms.each do |form| %>
   <div class="cell small-12 medium-6 callout secondary">
     <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch, html: {id: "ScanSettings#{form.handler_name.camelize}"}) do |f| %>
-      <h2><%= form.handler_name %><br /><span class="label warning">SCAN</span></h2>
+      <h2><%= t("decidim.spam_signal.scans.#{form.handler_name}.name") %><br /><span class="label warning">SCAN</span></h2>
+      <%= t("decidim.spam_signal.scans.#{form.handler_name}.readme_html", default: "") %>
       <%= f.all_fields %>
       <div>
         <%= f.submit  t("actions.save", scope: i18n_scope)  %>
@@ -15,7 +16,8 @@
 <% cop_forms.each do |form| %>
   <div class="cell small-12 medium-6 callout secondary">
     <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: config_path(@current_config.id), method: :patch, html: {id: "CopSettings#{form.handler_name.camelize}"}) do |f| %>
-      <h2><%= form.handler_name.humanize %><br /><span class="label alert">COP</span></h2>
+      <h2><%= t("decidim.spam_signal.cops.#{form.handler_name}.name") %><br /><span class="label alert">COP</span></h2>
+      <%= t("decidim.spam_signal.cops.#{form.handler_name}.readme_html", default: "") %>
       <%= f.all_fields %>
       <div>
         <%= f.submit  t("actions.save", scope: i18n_scope)  %>

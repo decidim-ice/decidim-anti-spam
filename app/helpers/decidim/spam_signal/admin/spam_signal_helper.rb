@@ -8,14 +8,14 @@ module Decidim::SpamSignal::Admin
 
     def scanners_list(selected_value)
       options = Decidim::SpamSignal::Scans::ScansRepository.instance.strategies.map do |key, value|
-        [t(value.i18n_key), key]
+        [t("#{value.i18n_key}.name"), key]
       end
       selected = options.find { |value, key| "#{key}" == selected_value }.last
       options_for_select(options, selected: selected)
     end
     def cops_list(selected_value)
       options = Decidim::SpamSignal::Cops::CopsRepository.instance.strategies.map do |key, value|
-        [t(value.i18n_key), key]
+        [t("#{value.i18n_key}.name"), key]
       end
       selected = options.find { |value, key| "#{key}" == selected_value }.last
       options_for_select(options, selected: selected)
