@@ -104,13 +104,13 @@ fr:
               <ol>
                 <li><strong>ok</strong>: Tout bon, on peut y aller</li>
                 <li><strong>suspicious</strong>: C'est peut-être un spam, mais ce n'est pas sûr</li>
-                <li><strong>spam</strong>: Presque sûr que c'est du spam<li>
+                <li><strong>spam</strong>: Presque sûr que c'est du spam</li>
               </ol>
 
               Pour les résultats <code>suspicious</code> et <code>spam</code>, un <strong>agent</strong> est appelé.
               Cet agent fait invariablement les mêmes actions avec le compte utilisateur que le scanner lui transmet.
               Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
-              
+
               <h3>Note sur RGPD/LPD</h3>
               Merci de vérifier que vos <a href="/terms-and-conditions">Conditions générales</a> sont transparentes sur
               la stratégie de filtre anti-spam, afin d'être en accord avec les lois de votre pays.
