@@ -1,0 +1,123 @@
+---
+fr:
+  activerecord:
+    models:
+      decidim/spam_signal/config:
+        one: "Configuration Anti-Spam"
+        other: "Configuration Anti-Spams"
+  activemodel:
+    attributes:
+      config:
+        profile_scan: "Scanner de spam (profil)"
+        comment_scan: "Scanner de spam (commentaires)"
+        profile_obvious_cop: "Agent pour les Spams (profil)"
+        profile_suspicious_cop: "Agent pour les Suspects (profil)"
+        comment_obvious_cop: "Agent pour les Spams (commentaires)"
+        comment_suspicious_cop: "Agent pour les Suspects (commentaires)"
+      quarantine:
+        num_days_of_quarantine: "Nombre de jour de quarantaine"
+      word_and_links:
+        stop_list_tlds_csv: "Liste de TLDS interdits, séparé par des virgules"
+        stop_list_words_csv: "Liste de mots interdits, séparé par des virgules"
+  decidim:
+    account:
+      locked: Votre compte est vérouillé, consulter votre email pour lire les instructions de déverouillages
+    spam_signal:
+      spam_block_justification: |
+        Votre activité récente sur la plateforme à été détectée comme suspecte par notre
+        filtre anti-spam.
+        Vous avez été mis en quarantaine, votre compte et son activité va être supprimé
+        sous 15jours.
+
+        Si vous voulez faire appel à cette decisision, merci de nous laisser un email à hello [at] domain.com.
+
+        Pour plus d'informations, rendez-vous sur /terms-and-conditions.
+      spam_signal_justification: |
+        Notre filtre anti-spam a détecté votre activité comme suspecte.
+      errors:
+        spam: Ce contenu est contraire à notre charte.
+      scans:
+        none:
+          name: "ø"
+        word_and_links:
+          name: "Mots-clés"
+      cops:
+        none:
+          name: "None"
+        lock:
+          name: "Vérouillage"
+          readme_html:
+            |
+              Déconnecte et interdit la re-connexion durant 15min. Un email de déverouillage sera envoyé à l'utilisateur avec des instructions de déverouillages<br />
+              Toutes les activités de l'utilisateur seront signaliées aux administrateurs.
+        quarantine:
+          name: "Quarantaine"
+          readme_html:
+            |
+              Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
+              Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
+
+          errors:
+            num_days_of_quarantine: "Le nombre de jours de quarantaine doit être supérieur à 0."
+      admin:
+        spam_filter_reports:
+          index:
+            headings:
+              title: "Rapport de Spam"
+              spam_flow: "Configuration du filtre"
+              profile_flow: "Edition de profil"
+              comment_flow: "Ajout de commentaires"
+              metrics: "Activité du filtre anti-spam"
+              quarantine_metric: "En Quarantaine"
+              to_ban_metric: "Prêt à être bannis"
+              banned_metric: "Bannis"
+              quarantine_list: "Utilisateurs en quarantaine"
+            readme_html:
+              |
+                <p>
+                  Salut, tu trouvera ici les configurations du filtre anti-spam <br />
+                  Le filtre agit à certains endroit de la plateforme:
+                </p>
+                <ul>
+                  <li>Lorsqu'un utilisateur édite son profil</li>
+                  <li>Lorsqu'un utilisateur crée un nouveau commentaire</li>
+                </ul>
+
+                <h3>Comment ça marche?</h3>
+                <p>Le processus est simple: extraire les donnée à vérifier, les scanner, et réagir à la détection de spam.<br />
+                Les scanners de contenus ont trois résultats possibles:</p>
+                <ol>
+                  <li><strong>ok</strong>: Tout bon, on peut y aller</li>
+                  <li><strong>suspicious</strong>: C'est peut-être un spam, mais ce n'est pas sûr</li>
+                  <li><strong>spam</strong>: Presque sûr que c'est du spam<li>
+                </ol>
+
+                Pour les résultats <code>suspicious</code> et <code>spam</code>, un <strong>agent</strong> est appelé.
+                Cet agent fait invariablement les mêmes actions avec le compte utilisateur que le scanner lui transmet.
+                Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
+
+                <h3>Agent de vérouillage</h3>
+
+                **TODO translate this**
+
+                
+                The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
+                It will also signalise the content the user have posted, to be sure admin review them.
+                <ol>
+                  <li>The user get disconnected</li>
+                  <li>The user receive unlock instructions by email</li>
+                  <li>User's content is signaled to admins</li>
+                </ol>
+
+                <h3>Quarantine Cop</h3>
+
+                <hr />
+                <h3>Note on RGPD/LPD</h3>
+                Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
+                process, to be compliant with the European regulations. Users should be noticed on the the conditions that their
+                account and data may be deleted if the Automatic Spam Filter detects suspicious activities.
+
+            actions:
+              save: "Save"
+              cancel: "Cancel"
+              review: "Review"
