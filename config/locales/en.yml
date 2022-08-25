@@ -63,6 +63,7 @@ en:
           index:
             headings:
               title: "Spam Report"
+              cops_title: "Cops"
               spam_flow: "Filter Configuration"
               profile_flow: "Editing User's Profile"
               comment_flow: "Creating a new Comment"
@@ -71,6 +72,18 @@ en:
               to_ban_metric: "To Ban"
               banned_metric: "Banned"
               quarantine_list: "Users in Quarantine"
+            cops_readme_html: |
+              <h3>Lock Cop</h3>
+              The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
+              It will also signalise the content the user have posted, to be sure admin review them.
+              <ol>
+                <li>The user get disconnected</li>
+                <li>The user receive unlock instructions by email</li>
+                <li>User's content is signaled to admins</li>
+              </ol>
+
+              <h3>Quarantine Cop</h3>
+
             readme_html: |
               <p>
                 Welcome to your spam prevention panel. <br />
@@ -93,18 +106,6 @@ en:
               For the <code>suspicious</code> and <code>spam</code> results, a <strong>cop</strong> is called.
               This cop will do some actions, like creating an error, signaling or block the user and its content.
 
-              <h3>Lock Cop</h3>
-              The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
-              It will also signalise the content the user have posted, to be sure admin review them.
-              <ol>
-                <li>The user get disconnected</li>
-                <li>The user receive unlock instructions by email</li>
-                <li>User's content is signaled to admins</li>
-              </ol>
-
-              <h3>Quarantine Cop</h3>
-
-              <hr />
               <h3>Note on RGPD/LPD</h3>
               Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
               process, to be compliant with the European regulations. Users should be noticed on the the conditions that their
