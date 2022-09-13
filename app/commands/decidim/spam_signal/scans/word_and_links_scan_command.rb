@@ -9,7 +9,6 @@ module Decidim
         end
 
         def call
-          byeb
           return broadcast(:ok) if suspicious_content.empty?
           # return broadcast(:spam) if contains_stop_tlds?
           return broadcast(:spam) if contains_uri? && contains_stop_words?
