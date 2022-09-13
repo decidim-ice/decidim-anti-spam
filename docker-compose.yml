@@ -3,11 +3,11 @@ services:
     image: postgres:12
     volumes:
       - pg-data-test:/var/lib/postgresql/data
+      - .docker/db-init.sh:/docker-entrypoint-initdb.d/db_init.sh
     environment:
-      # trunk-ignore(gitleaks/generic-api-key)
-      - POSTGRES_PASSWORD=TEST-baeGhi4Ohtahcee5eejoaxaiwaezaiGo
+      - POSTGRES_PASSWORD=TEST-insecure-password
       - POSTGRES_USER=decidim
-      - POSTGRES_DB=decidim_test
+      - POSTGRES_MULTIPLE_DATABASES=decidim_dev,decidim_test
     ports:
       - 5432:5432
 

@@ -2,14 +2,16 @@
 
 source "https://rubygems.org"
 
-base_path = ""
+base_path = "./"
 base_path = "../../" if File.basename(__dir__) == "dummy"
+base_path = "../" if File.basename(__dir__) == "development_app"
+
 require_relative "#{base_path}lib/decidim/spam_signal/version"
 
 DECIDIM_VERSION = Decidim::SpamSignal.version
 
 gem "decidim", DECIDIM_VERSION
-gem "decidim-spam_signal", path: "."
+gem "decidim-spam_signal", path: base_path
 gem "puma", ">= 4.3"
 gem "bootsnap", "~> 1.4"
 gem "uglifier", "~> 4.1"
