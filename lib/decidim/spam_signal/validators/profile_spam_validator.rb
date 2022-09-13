@@ -6,9 +6,9 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        validate :scan_spam, on: :update, if: :about_changed?
+        validate :scan_spam
         def scan_spam
-          return if about.empty?
+          return if !about || about.empty?
           current_user = self
           tested_content = Extractors::ProfileExtractor.extract(self, spam_config)
           spam_scan.call(
@@ -16,26 +16,41 @@ module Decidim
             spam_config
           ) do
             on(:spam) do
+              restore_values(current_user)
               obvious_spam_cop.call(
+                errors,
                 current_user,
                 spam_config,
                 tested_content
-              )
-              errors.add(
-                :about,
-                I18n.t("errors.spam",
-                  scope: "decidim.spam_signal",
-                  default: "This looks like spam."
-                )
               )
             end
             on(:suspicious) do
+              restore_values(current_user)
               suspicious_spam_cop.call(
+                errors,
                 current_user,
                 spam_config,
                 tested_content
               )
             end
+          end
+        end
+
+        # Case the lock cop is there, 
+        # it will save the user without validation,
+        # we should then update the attributes to before
+        # state
+        def restore_values(user)
+          if user.about_previously_changed?
+            user.about = user.about_previously_was
+          else
+            user.about = nil
+          end
+          
+          if user.personal_url_previously_changed?
+            user.personal_url = user.personal_url_previously_was
+          else
+            user.personal_url = nil
           end
         end
 

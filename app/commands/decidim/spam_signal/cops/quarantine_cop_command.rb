@@ -9,10 +9,16 @@ module Decidim
         end
 
         def call
+          errors.add(
+            :base,
+            I18n.t("errors.spam",
+              scope: "decidim.spam_signal",
+              default: "this looks like spam."
+            )
+          )
           sinalize!
           block!
           quarantine!
-          broadcast(:ok)
         end
 
         private

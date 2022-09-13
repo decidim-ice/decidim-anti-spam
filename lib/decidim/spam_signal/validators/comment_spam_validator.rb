@@ -17,20 +17,15 @@ module Decidim
           ) do
             on(:spam) do
               obvious_spam_cop.call(
+                errors,
                 author,
                 spam_config,
                 tested_content
               )
-              errors.add(
-                :body,
-                I18n.t("errors.spam",
-                  scope: "decidim.spam_signal",
-                  default: "this looks like spam."
-                )
-              )
             end
             on(:suspicious) do
               suspicious_spam_cop.call(
+                errors,
                 author,
                 spam_config,
                 tested_content

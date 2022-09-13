@@ -9,9 +9,17 @@ module Decidim
         end
 
         def call
-          sinalize!
-          lock!
-          broadcast(:ok)
+          errors.add(
+            :base,
+            I18n.t("errors.spam",
+              scope: "decidim.spam_signal",
+              default: "this looks like spam."
+            )
+          )
+          unless suspicious_user.access_locked?
+            sinalize!
+            lock!
+          end
         end
 
         private

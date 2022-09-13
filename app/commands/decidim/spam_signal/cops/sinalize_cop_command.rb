@@ -9,6 +9,13 @@ module Decidim
         end
 
         def call
+          errors.add(
+            :body,
+            I18n.t("errors.spam",
+              scope: "decidim.spam_signal",
+              default: "this looks like spam."
+            )
+          )
           sinalize!
           broadcast(:ok)
         end
