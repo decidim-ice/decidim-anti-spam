@@ -6,7 +6,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        validate :scan_spam
+        validate :scan_spam, on: :update, if: :about_changed?
         def scan_spam
           return if !about || about.empty?
           current_user = self
