@@ -12,28 +12,31 @@ module Decidim
         attr_reader :strategies
 
         def initialize
-          # Default strategies, can add others through set_strategy
-          @strategies = {
-            none: Scans::NoneScanCommand,
-            word_and_links: Scans::WordAndLinksScanCommand,
-          }
+          @_strategies = {}
         end
 
-        def set_strategy(strategy, command_klass)
-          @strategies[strategy.to_sym] = command_klass
+        def register(strategy, command_klass)
+          @_strategies[strategy.to_sym] = command_klass
         end
 
         def unset_strategy(strategy)
           key = strategy.to_sym
-          raise Error, "Can not remove :none strategy" if key == :none
-          raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.key? key
-          @strategies.except!(key)
+          raise Error, "Cop's Strategy #{strategy} does not exists" unless @_strategies.key? key
+          @_strategies.except!(key)
+        end
+
+        def strategies
+          @_strategies.keys
+        end
+
+        def form_for(strategy)
+          strategy(strategy).form
         end
 
         def strategy(strategy)
-          key = strategy.to_sym
-          return @strategies[key] if @strategies.key? key
-          @strategies[:none]
+          key = "#{strategy}".to_sym
+          return @_strategies[key] if @_strategies.key? key
+          nil
         end
       end
     end

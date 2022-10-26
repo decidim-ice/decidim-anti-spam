@@ -22,5 +22,10 @@ module Decidim
   # allows users to create spam_signal in a participatory space.
   module SpamSignal
     class Error < StandardError; end
+    autoload :CopsRepository, "decidim/spam_signal/cops/cops_repository"
+    autoload :ScansRepository, "decidim/spam_signal/scans/scans_repository"
+
+    autoload :WordScanCommand, "decidim/spam_signal/scans/word_scan_command"
+    autoload :LockCopCommand, "decidim/spam_signal/cops/lock_cop_command"
   end
 end

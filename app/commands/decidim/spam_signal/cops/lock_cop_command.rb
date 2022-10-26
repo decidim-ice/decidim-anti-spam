@@ -5,7 +5,7 @@ module Decidim
     module Cops
       class LockCopCommand < CopHandler
         def self.form
-          LockSettingsForm
+          ::Decidim::SpamSignal::Cops::LockSettingsForm
         end
 
         def call
@@ -17,12 +17,20 @@ module Decidim
             )
           )
           unless suspicious_user.access_locked?
-            sinalize!
+            sinalize! if config["sinalize_user_enabled"]
+            hide_comment! if config["hide_comments_enabled"]
             lock!
           end
         end
 
         private
+          def hide_comment!
+            suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
+            suspicious_comments.each do |spam|
+              Decidim::Admin::HideResource.call(spam, admin_reporter)
+            end
+          end
+
           def sinalize!
             moderation = Decidim::UserModeration.find_or_create_by!(user: suspicious_user)
             Decidim::UserReport.find_or_create_by!(moderation: moderation)  do |report|
@@ -35,8 +43,9 @@ module Decidim
 
           def lock!
             suspicious_user.lock_access!(
-              send_instructions: config.fetch(:is_email_unlockable,  true)
+              send_instructions: true
             )
+            suspicious_user.save!(validate: false)
           end
       end
     end

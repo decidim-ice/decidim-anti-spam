@@ -14,11 +14,9 @@ fr:
         profile_suspicious_cop: "Agent pour les Suspects (profil)"
         comment_obvious_cop: "Agent pour les Spams (commentaires)"
         comment_suspicious_cop: "Agent pour les Suspects (commentaires)"
-      quarantine:
-        num_days_of_quarantine: "Nombre de jour de quarantaine"
       lock:
         is_email_unlockable: "Peut dévérouiller son compte par email"
-      word_and_links:
+      word:
         stop_list_tlds_csv: "Liste de TLDS interdits, séparé par des virgules"
         stop_list_words_csv: "Liste de mots interdits, séparé par des virgules"
   decidim:
@@ -41,7 +39,7 @@ fr:
       scans:
         none:
           name: "ø"
-        word_and_links:
+        word:
           name: "Mots-clés"
           readme_html: |
             Définit des mots clés interdits et détermine le status d'un contenu entre <code>ok</code>, <code>suspicious</code> ou <code>spam</code>.
@@ -66,14 +64,6 @@ fr:
           readme_html: |
             Déconnecte et interdit la re-connexion durant 15min. Un email de déverouillage sera envoyé à l'utilisateur avec des instructions de déverouillages<br />
             Toutes les activités de l'utilisateur seront signaliées aux administrateurs.
-        quarantine:
-          name: "Quarantaine"
-          readme_html: |
-            Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
-            Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
-
-          errors:
-            num_days_of_quarantine: "Le nombre de jours de quarantaine doit être supérieur à 0."
       admin:
         spam_filter_reports:
           index:
@@ -83,11 +73,6 @@ fr:
               spam_flow: "Configuration du filtre"
               profile_flow: "Edition de profil"
               comment_flow: "Ajout de commentaires"
-              metrics: "Activité du filtre anti-spam"
-              quarantine_metric: "En Quarantaine"
-              to_ban_metric: "Prêt à être bannis"
-              banned_metric: "Bannis"
-              quarantine_list: "Utilisateurs en quarantaine"
             readme_html: |
               <p>
                 Salut, tu trouvera ici les configurations du filtre anti-spam <br />

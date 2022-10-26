@@ -6,66 +6,42 @@ module Decidim
       self.table_name = "spam_signal_config_tables"
       belongs_to :organization, foreign_key: :decidim_organization_id, class_name: "Decidim::Organization"
       validates :organization, presence: true
-      validate :valid_cops
-      validate :valid_scanners
-      before_save :none_scan_coherency
-
+      before_save :compute_settings
       def self.get_config(organization)
         Config.find_or_create_by!(organization: organization) do |conf|
-          conf.profile_scan = "none"
-          conf.comment_scan = "none"
-
-          conf.profile_obvious_cop = "none"
-          conf.profile_suspicious_cop = "none"
-          conf.comment_obvious_cop = "none"
-          conf.comment_suspicious_cop = "none"
-
-          conf.scan_settings = {
-            "none": {},
-            "word_and_links": {},
-          }
-
-          conf.cops_settings = {
-            "none": {},
-            "quarantine": {}
-          }
+          conf.comment_settings = {}
+          conf.profile_settings = {}
         end
       end
 
-      def none_scan_coherency
-        if profile_scan == "none"
-          self.profile_obvious_cop = self.profile_suspicious_cop = "none"
-        end
-        if comment_scan == "none"
-          self.comment_obvious_cop = self.comment_suspicious_cop = "none"
-        end
+      def comments
+        @comment_repo ||= SpamConfigRepo.new("comments", self, self.comment_settings)
       end
 
-      def for_scan(scan_name)
-        scan_key = "#{scan_name}"
-        return {} if scan_settings.empty?
-        return {} unless scan_settings.key? scan_key
-        ActiveSupport::HashWithIndifferentAccess.new(
-          scan_settings[scan_key]
-        )
+      def profiles
+        @profile_repo ||= SpamConfigRepo.new("profiles", self, self.profile_settings)
       end
 
-      def for_cop(scan_name)
-        scan_key = "#{scan_name}"
-        return {} if cops_settings.empty?
-        return {} unless cops_settings.key? scan_key
-        ActiveSupport::HashWithIndifferentAccess.new(
-          cops_settings[scan_key]
-        )
+      def save_settings
+        comment_settings_will_change!
+        profile_settings_will_change!
+        save!
       end
 
       private
-        def valid_cops
-          # TODO validate cops options from available strategies
-        end
-
-        def valid_scanners
-          # TODO validate scanners options from available strategies
+        def compute_settings
+          self.comment_settings = {
+            "scans" => comments.scans,
+            "rules" => comments.rules,
+            "spam_cop" => comments.spam_cop,
+            "suspicious_cop" => comments.suspicious_cop
+          }
+          self.profile_settings = {
+            "scans" => profiles.scans,
+            "rules" => profiles.rules,
+            "spam_cop" => profiles.spam_cop,
+            "suspicious_cop" => profiles.suspicious_cop
+          }
         end
     end
   end

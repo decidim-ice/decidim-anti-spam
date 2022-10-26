@@ -5,113 +5,105 @@ en:
       decidim/spam_signal/config:
         one: "Anti-Spam Configuration"
         other: "Anti-Spam Configurations"
+
   activemodel:
     attributes:
-      config:
-        profile_scan: "Spam-Scanner (profile)"
-        comment_scan: "Spam-Scanner (comments)"
-        profile_obvious_cop: "Obvious Cop (profile)"
-        profile_suspicious_cop: "Suspicious Cop (profile)"
-        comment_obvious_cop: "Obvious Cop (comments)"
-        comment_suspicious_cop: "Suspicious Cop (comments)"
-      quarantine:
-        num_days_of_quarantine: "Days of quarantine"
       lock:
         is_email_unlockable: "Can unlock its account by email"
-      word_and_links:
-        stop_list_tlds_csv: "Suspicious TLDS, comma-separated"
-        stop_list_words_csv: "Suspicious Words, comma-separated"
   decidim:
     account:
       locked: Your account is locked, check your emails to get unlock instructions
     spam_signal:
-      spam_block_justification: |
-        Your recent activities as been detected by our spam filter as suspicious.
-        You have been put in a five day quarantine, after your account and activity
-        will be removed from the platform.
-
-        If you want to appeal this decision, please drop an email at hello [at] domain.com.
-
-        For more information, please read our /terms-and-conditions.
       spam_signal_justification: |
         The spam filter have identified a spamming content.
       errors:
         spam: Your comment looks like spam.
+      forms:
+        word_settings_form:
+          stop_list_words_csv: "Suspicious Words, comma-separated"
+        allowed_tlds_form:
+          allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
+        forbidden_tlds_form:
+          forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
+        lock_settings_form:
+          sinalize_user_enabled: "After locking, sinalize the user"
+          hide_comments_enabled: "After locking, hide all the user's comments"
+        sinalize_settings_form:
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
       scans:
-        none:
-          name: "None"
-        word_and_links:
+        word:
           name: "Dictionnary"
+          description: "List forbidden words"
+        allowed_tlds:
+          name: "Allowed TLDs"
+          description: "Allow a list of domain extension, and ban all the others."
+        forbidden_tlds:
+          name: "Forbidden TLDs"
+          description: "Forbid a list of domain extension, allow all by default."
       cops:
-        none:
-          name: "None"
+        sinalize:
+          name: "Sinalize"
+          description: "Sinalize the user to the administrators"
         lock:
           name: "Lock"
-          readme_html: |
-            Disconnect, forbid access for 15minutes and send an email with unlocking instructions.<br />
-            All user's activities will be signaled to administrator.
-        quarantine:
-          name: "Quarantine"
-          readme_html: |
-            Disconnect, block the user, hide all his content, and put it in a quarantine list.<br />
-            After some days, the users in the quarantine list will definitely deleted.
+          description: "Lock the user, and send unlock instructions by email"
 
-          errors:
-            num_days_of_quarantine: "Numbers of days in quarantine must be positive."
       admin:
+        actions:
+          save: "Save"
         spam_filter_reports:
           index:
             headings:
-              title: "Spam Report"
-              cops_title: "Cops"
-              spam_flow: "Filter Configuration"
-              profile_flow: "Editing User's Profile"
-              comment_flow: "Creating a new Comment"
-              metrics: "Spam Activities"
-              quarantine_metric: "In Quarantine"
-              to_ban_metric: "To Ban"
-              banned_metric: "Banned"
-              quarantine_list: "Users in Quarantine"
-            cops_readme_html: |
-              <h3>Lock Cop</h3>
-              The lock cop will lock the user for 15minutes, and send unlock instructions by emails.
-              It will also signalise the content the user have posted, to be sure admin review them.
-              <ol>
-                <li>The user get disconnected</li>
-                <li>The user receive unlock instructions by email</li>
-                <li>User's content is signaled to admins</li>
-              </ol>
-
-              <h3>Quarantine Cop</h3>
-
-            readme_html: |
-              <p>
-                Welcome to your spam prevention panel. <br />
-                You will be able to control spam on the following situations:
-              </p>
-              <ul>
-                <li>When a user edit his profile</li>
-                <li>When a user post a new comment</li>
-              </ul>
-
-              <h3>How does it work?</h3>
-              <p>The process is simple: extract content to verifies, scan it, and react from spam detection.<br />
-              Spam Scanning have three possible results:</p>
-              <ol>
-                <li><strong>ok</strong>: All good, the user can proceed</li>
-                <li><strong>suspicious</strong>: We don't know if it's a spam, but it looks like one</li>
-                <li><strong>spam</strong>: Almost sure it's a spam</li>
-              </ol>
-
-              For the <code>suspicious</code> and <code>spam</code> results, a <strong>cop</strong> is called.
-              This cop will do some actions, like creating an error, signaling or block the user and its content.
-
-              <h3>Note on RGPD/LPD</h3>
-              Please be sure your <a href="/terms-and-conditions">Terms and Conditions</a> are transparent over this
-              process, to be compliant with the European regulations. Users should be noticed on the the conditions that their
-              account and data may be deleted if the Automatic Spam Filter detects suspicious activities.
-
-            actions:
-              save: "Save"
-              cancel: "Cancel"
-              review: "Review"
+              title: "ANTI-SPAM"
+              comment_settings: "Comments"
+              profile_settings: "Profiles"
+        comment_scans:
+          new:
+            headings:
+              title: "New spam detection for comment creation"
+              choose_scan: "Chose a detection type"
+          edit:
+            headings:
+              title: "Edit %{scan} Scanner"
+              caption: "%{scan} configurations"
+        comment_rules:
+          new:
+            headings:
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
+          edit:
+            description: "Fire %{type} agent if these are all TRUE"
+            headings:
+              caption: "Check at least on detection symbol required to fire the rule:"
+        comment_cops:
+          edit:
+            headings:
+              choose_cop: "Choose an agent active on %{type}"
+              title: "%{type} agent configuration"
+            form: "Customize %{type} Options"
+        profile_scans:
+          new:
+            headings:
+              title: "New spam detection for profile creation"
+              choose_scan: "Chose a detection type"
+          edit:
+            headings:
+              caption: "%{scan} configurations"
+              title: "Edit %{scan} Scanner"
+        profile_rules:
+          new:
+            headings:
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
+          edit:
+            description: "Fire %{type} agent if these are all TRUE"
+            headings:
+              caption: "Check at least on detection symbol required to fire the rule:"
+        profile_cops:
+          edit:
+            headings:
+              title: "%{type} agent configuration"
+              choose_cop: "Choose an agent active on %{type}"
+            form: "Customize %{type} Options"

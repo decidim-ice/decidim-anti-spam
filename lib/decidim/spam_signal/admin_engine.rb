@@ -7,8 +7,14 @@ module Decidim
       isolate_namespace Decidim::SpamSignal::Admin
       routes do
         resources :spam_filter_reports
-        resources :config, only: [:update]
-        resources :quarantines, only: [:show, :destroy]
+        resources :config, only: [] do
+          resources :comment_scans
+          resources :comment_rules
+          resources :comment_cops, only: [:update, :edit, :destroy]
+          resources :profile_scans
+          resources :profile_rules
+          resources :profile_cops, only: [:update, :edit, :destroy]
+        end
       end
 
       initializer "decidim_spam_signal.admin_mount_routes" do
@@ -16,6 +22,7 @@ module Decidim
           mount Decidim::SpamSignal::AdminEngine, at: "/admin/spam_signal", as: "decidim_admin_spam_signal"
         end
       end
+
       initializer "decidim_spam_signal.admin_menu" do
         Decidim.menu :admin_menu do |menu|
           menu.item I18n.t("menu.spam_signal", scope: "decidim.admin", default: "Spam Filter"),

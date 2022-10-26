@@ -29,11 +29,11 @@ module Decidim::SpamSignal::Admin
     end
 
     it "update! scan_settings config attributes with a ScanSettingsForm" do
-      form = Decidim::SpamSignal::Scans::WordAndLinksSettingsForm.new(
+      form = Decidim::SpamSignal::Scans::WordSettingsForm.new(
         stop_list_words_csv: "foo,bar"
-      ).with_context(handler_name: "word_and_links")
+      ).with_context(handler_name: "word")
       expect(config).to receive(:update!) do |args|
-        expect(args.scan_settings).to have_attribute("word_and_links")
+        expect(args.scan_settings).to have_attribute("word")
       end
       UpdateConfigCommand.call(
         config,
@@ -43,26 +43,10 @@ module Decidim::SpamSignal::Admin
       )
     end
 
-    it "update! cops_settings config attributes with a CopSettingsForm" do
-      form = Decidim::SpamSignal::Cops::QuarantineSettingsForm.new(
-        num_days_of_quarantine: 3
-      ).with_context(handler_name: "quarantine")
-      expect(config).to receive(:update!) do |args|
-        expect(args.scan_settings).to have_attribute("quarantine")
-        expect(args.scan_settings["quarantine"]).to eq({ num_days_of_quarantine: 3 })
-      end
-      UpdateConfigCommand.call(
-        config,
-        nil,
-        [],
-        [form]
-      )
-    end
-
     it "updates only the ConfigForm if send both ConfigForm and ScanSettings" do
-      settings_form = Decidim::SpamSignal::Scans::WordAndLinksSettingsForm.new(
+      settings_form = Decidim::SpamSignal::Scans::WordSettingsForm.new(
         stop_list_words_csv: "foo,bar"
-      ).with_context(handler_name: "word_and_links")
+      ).with_context(handler_name: "word")
       form = Decidim::SpamSignal::ConfigForm.new profile_scan: "word_and_list"
       expect(config).to receive(:update!) do |args|
         expect(args.profile_scan).to eq("word_and_list")

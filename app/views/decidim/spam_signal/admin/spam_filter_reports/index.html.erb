@@ -5,65 +5,278 @@
   font-weight: bold;
   font-family: Courrier, monospace;
 }
-.spam_signal__section {
-  margin-top: 2rem;
-  margin-bottom: 4rem;
+.content.spam_signal__section {
+  margin-top: 4rem;
+  margin-bottom: 8rem;
+  clear: both;
 }
 .spam_signal__actions {
   margin-top: 4rem;
 }
+
+.cell.rules ,
+.cell.scanners ,
+.cell.cops{
+  margin: 0;
+  padding: 0 2px;
+}
+.rules h3,
+.scanners h2,
+.cops h3 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 6px;
+}
+.rules h2,
+.scanners h2,
+.cops h2 {
+  border-bottom: 2px solid #DDD;
+  min-height: 40px;
+  background: #3b4557;
+  color: white;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 0px 0px #EBEBEB;
+  margin-bottom: 0;
+}
+
+.spam_settings {
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+  margin-top: 1rem;
+}
+.rules h2,
+.cops h2{
+  padding-left: 0.3rem;
+}
+
+.rules h3,
+.cops h3
+{
+  text-transform: uppercase;
+  letter-spacing: 0.3;
+  font-weight: bold;
+  background: #DDD;
+  min-height: 40.39px;
+}
+
+.rules h3 .button ,
+.cops h3 .button ,
+.scanners h2 .button
+{
+  display: inline-block;
+  justify-self: flex-end;
+  margin: 0 !important;
+  padding: 3px 16px;
+}
+.table_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+}
+
+.table_item .button.small ,
+.table_item form ,
+.table_item .button-group {
+  margin-bottom: 0;
+}
+
 </style>
 <% partial_dir = "/decidim/spam_signal/admin/spam_filter_reports" %>
 
-<div class="content spam_signal__section">
-  <div class="grid-x grid-margin-x">
-    <div class="cell small-6">
-      <div class="card">
-        <h2 class="card-title card-divider">
-          <%= t(".headings.title") %>
-        </h2>
-        <div class="card-content card-section">
-        <%= t(".readme_html") %>
-        </div>
-      </div>
-    </div>
-    <div class="cell small-6">
-      <div class="card">
-        <h2 class="card-title card-divider">
-          <%= t(".headings.cops_title") %>
-        </h2>
-        <div class="card-content card-section">
-          <%= t(".cops_readme_html") %>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="content">
+  <h1 class="card-title">
+    <%= t(".headings.title") %>
+  </h1>
 </div>
 
-<div class="content spam_signal__section">
-  <div class="grid-x grid-margin-x">
-    <div class="cell small-12 medium-6">
-      <h2><%= t(".headings.spam_flow") %></h2>
-      <%= decidim_form_for(@form_configuration, url: config_path(@form_configuration.id), method: :patch, html: {class: "callout", id: "ConfigurationForm"}) do |f| %>
-        <%= render partial: "#{partial_dir}/form",
-                   locals: { form: f} %>
-        <div class="form-actions spam_signal__actions">
-          <%= f.submit t(".actions.save") %>
-          <button class="button hollow" type="reset"><%= t(".actions.cancel")%></button>
+<div class="content spam_signal__section ">
+    <h1><%= t(".headings.comment_settings") %></h1>
+  <!-- Display the configurations, and link actions -->
+  <div class="grid-x grid-margin-y spam_settings">
+    <div class="cell small-12 medium-4 scanners">
+      <h2>
+        <span>Detection</span>
+        <% if available_scanners("comments").length > 0 %><%= link_to(routes.new_config_comment_scan_path(config_id: @current_config.id), class: "button  action") do %>+<% end %><% end %>
+      </h2>
+      <% @comment_settings.scans.each do |scan, options| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_comment_scan_path(config_id: @current_config.id, id: scan),class: "link") do %>
+            <%= t("#{@comment_settings.scan_strategy(scan).i18n_key}.name")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_comment_scan_path(config_id: @current_config.id, id: scan), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>
 
-    <%= render partial: "#{partial_dir}/metrics",
-              locals: { quarantine: quarantine} %>
-
-    <%= render partial: "#{partial_dir}/settings_forms",
-               locals: { scanner_forms: @scanner_forms, cop_forms: @cop_forms} %>
-  </div>
-  <% if quarantine.count > 0 %>
-    <div class="grid-x grid-margin-x spam_signal__section" id="review-quarantine">
-      <%= render partial: "#{partial_dir}/quarantine_list",
-                locals: { quarantine: quarantine} %>
+    <div class="cell small-12 medium-4 rules">
+      <h2>Rules</h2>
+      <h3>
+        <span>SPAM</span>
+        <%= link_to("+ OR", routes.new_config_comment_rule_path(config_id: @current_config.id, rule: "spam"), class: "button small") %>
+      </h3>
+      <% @comment_settings.rules.filter {|_, r| r["handler_name"] == "spam"}.each do |rule_id, rule| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_comment_rule_path(config_id: @current_config.id, id: rule_id), method: :get, class: "link") do %>
+            <%= rule["rules"].map {|k, v| k }.flatten.join(" AND ")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_comment_rule_path(config_id: @current_config.id, id: rule_id), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <h3 style="margin-top: 2rem">
+        <span>SUSPICIOUS</span>
+        <%= link_to("+ OR", routes.new_config_comment_rule_path(config_id: @current_config.id, rule: "suspicious"), class: "button small") %>
+      </h3>
+      <% @comment_settings.rules.filter {|_, r| r["handler_name"] == "suspicious"}.each do |rule_id, rule| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_comment_rule_path(config_id: @current_config.id, id: rule_id), method: :get, class: "link") do %>
+            <%= rule["rules"].map {|k, v| k }.flatten.join(" AND ")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_comment_rule_path(config_id: @current_config.id, id: rule_id), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    <div class="cell small-12 medium-4 cops">
+      <h2>Agents</h2>
+      <h3><span>SPAM</span></h3>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_comment_cop_path(config_id: @current_config.id, id: "spam", cop: (@comment_settings.spam_cop["handler_name"] unless @comment_settings.spam_cop.empty?)), class: "link") do %>
+            <% if @comment_settings.spam_cop.empty? %>
+                  None
+            <% else %>
+              <%= @comment_settings.spam_cop["handler_name"] %>
+            <% end %>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= link_to("✏️", routes.edit_config_comment_cop_path(config_id: @current_config.id, id: "spam", cop: (@comment_settings.spam_cop["handler_name"] unless @comment_settings.spam_cop.empty?)), class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+            <h3 style="margin-top: 2rem"><span>SUSPICIOUS</span> </h3>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_comment_cop_path(config_id: @current_config.id, id: "suspicious", cop: (@comment_settings.suspicious_cop["handler_name"] unless @comment_settings.suspicious_cop.empty?)), class: "link") do %>
+            <% if @comment_settings.suspicious_cop.empty? %>
+                  None
+            <% else %>
+              <%= @comment_settings.suspicious_cop["handler_name"] %>
+            <% end %>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= link_to("✏️", routes.edit_config_comment_cop_path(config_id: @current_config.id, id: "suspicious", cop: (@comment_settings.suspicious_cop["handler_name"] unless @comment_settings.suspicious_cop.empty?)), class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="content spam_signal__section ">
+    <h1><%= t(".headings.profile_settings") %></h1>
+  <!-- Display the configurations, and link actions -->
+  <div class="grid-x grid-margin-y spam_settings">
+    <div class="cell small-12 medium-4 scanners">
+      <h2>
+        <span>Detection</span>
+        <% if available_scanners("profiles").length > 0 %><%= link_to(routes.new_config_profile_scan_path(config_id: @current_config.id), class: "button  action") do %>+<% end %><% end %>
+      </h2>
+      <% @profile_settings.scans.each do |scan, options| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_profile_scan_path(config_id: @current_config.id, id: scan), method: :get, class: "link") do %>
+            <%= t("#{@profile_settings.scan_strategy(scan).i18n_key}.name")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_profile_scan_path(config_id: @current_config.id, id: scan), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="cell small-12 medium-4 rules">
+      <h2>Rules</h2>
+      <h3>
+        <span>SPAM</span>
+        <%= link_to("+ OR", routes.new_config_profile_rule_path(config_id: @current_config.id, rule: "spam"), class: "button small") %>
+      </h3>
+      <% @profile_settings.rules.filter {|_, r| r["handler_name"] == "spam"}.each do |rule_id, rule| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_profile_rule_path(config_id: @current_config.id, id: rule_id, rule: "spam"), method: :get, class: "link") do %>
+            <%= rule["rules"].map {|k, v| k }.flatten.join(" AND ")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_profile_rule_path(config_id: @current_config.id, id: rule_id, rule: "spam"), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <h3 style="margin-top: 2rem">
+        <span>SUSPICIOUS</span>
+        <%= link_to("+ OR", routes.new_config_profile_rule_path(config_id: @current_config.id, rule: "suspicious"), class: "button small") %>
+      </h3>
+      <% @profile_settings.rules.filter {|_, r| r["handler_name"] == "suspicious"}.each do |rule_id, rule| %>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_profile_rule_path(config_id: @current_config.id, id: rule_id, rule: "suspicious"), class: "link") do %>
+            <%= rule["rules"].map {|k, v| k }.flatten.join(" AND ")%>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= button_to("✏️", routes.edit_config_profile_rule_path(config_id: @current_config.id, id: rule_id, rule: "suspicious"), method: :get, class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="cell small-12 medium-4 cops">
+      <h2>Agents</h2>
+      <h3><span>SPAM</span></h3>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_profile_cop_path(config_id: @current_config.id, id: "spam", cop: (@profile_settings.spam_cop["handler_name"] unless @profile_settings.spam_cop.empty?)), class: "link") do %>
+            <% if @profile_settings.spam_cop.empty? %>
+                  None
+            <% else %>
+              <%= @profile_settings.spam_cop["handler_name"] %>
+            <% end %>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= link_to("✏️", routes.edit_config_profile_cop_path(config_id: @current_config.id, id: "spam", cop: (@profile_settings.spam_cop["handler_name"] unless @profile_settings.spam_cop.empty?)), class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+            <h3 style="margin-top: 2rem"><span>SUSPICIOUS</span> </h3>
+        <div class="table_item">
+          <%= link_to(routes.edit_config_profile_cop_path(config_id: @current_config.id, id: "suspicious", cop: (@profile_settings.suspicious_cop["handler_name"] unless @profile_settings.suspicious_cop.empty?)), class: "link") do %>
+            <% if @profile_settings.suspicious_cop.empty? %>
+                  None
+            <% else %>
+              <%= @profile_settings.suspicious_cop["handler_name"] %>
+            <% end %>
+          <% end %>
+          <div>
+            <div class="button-group">
+              <%= link_to("✏️", routes.edit_config_profile_cop_path(config_id: @current_config.id, id: "suspicious", cop: (@profile_settings.suspicious_cop["handler_name"] unless @profile_settings.suspicious_cop.empty?)), class: "button small secondary") %>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>

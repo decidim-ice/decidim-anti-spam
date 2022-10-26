@@ -8,43 +8,32 @@ module Decidim
         helper Decidim::SpamSignal::Admin::SpamSignalHelper
         before_action :get_config
         attr_reader :current_config
+        helper_method :available_scanners
 
         def index
-          @quarantine = quarantine_users.page(params[:page]).per(15)
-          @form_configuration = form(ConfigForm).from_model(current_config)
-          @scanner_forms = scanner_forms
-          @cop_forms = cop_forms
+          @comment_settings = current_config.comments
+          @profile_settings = current_config.profiles
         end
 
         private
-          def scanner_forms
-            strategies = []
-            strategies << current_config.profile_scan
-            strategies << current_config.comment_scan
-            strategies.uniq.map do |s|
-              form = Decidim::SpamSignal::Scans::ScansRepository.instance.strategy(s).form || nil
-              form.new(current_config.scan_settings[s] || {}).with_context(handler_name: s) unless form.nil?
-            end.reject { |f| f.nil? }
+          def available_scanners(repo_name)
+            repo = current_config.comments if repo_name == "comments"
+            repo = current_config.profiles if repo_name == "profiles"
+            available_scanner_names(repo).map do |scan|
+              scan_repository.strategy scan
+            end
           end
 
-          def cop_forms
-            strategies = []
-            strategies << current_config.profile_obvious_cop
-            strategies << current_config.profile_suspicious_cop
-            strategies << current_config.comment_obvious_cop
-            strategies << current_config.comment_suspicious_cop
-            strategies.uniq.map do |s|
-              form = Decidim::SpamSignal::Cops::CopsRepository.instance.strategy(s).form || nil
-              form.new(current_config.cops_settings[s] || {}).with_context(handler_name: s) unless form.nil?
-            end.reject { |f| f.nil? }
+          def available_scanner_names(repo)
+            scan_repository.strategies.select { |scan| !repo.scans.include?("#{scan}") }
+          end
+
+          def scan_repository
+            Decidim::SpamSignal::Scans::ScansRepository.instance
           end
 
           def get_config
             @current_config = Decidim::SpamSignal::Config.get_config(current_organization)
-          end
-
-          def quarantine_users
-            Decidim::SpamSignal::BannedUser.quarantine_users.order(notified_at: :asc)
           end
       end
     end

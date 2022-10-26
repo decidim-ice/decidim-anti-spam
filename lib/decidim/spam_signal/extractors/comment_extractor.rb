@@ -5,12 +5,9 @@ module Decidim
     module Extractors
       class CommentExtractor < Extractor
         def self.extract(comment, config)
-          return "" unless comment.body.present?
-          content = []
-          config.organization.available_locales.each do |locale|
-            content << "#{locale}: #{comment.body[locale]}" if comment.body[locale]
-          end
-          content.join("\n\n")
+          body = comment.attributes[:body]
+          return "" unless body.present?
+          body
         end
       end
     end

@@ -5,7 +5,7 @@ module Decidim
     module Cops
       class SinalizeCopCommand < CopHandler
         def self.form
-          nil
+          ::Decidim::SpamSignal::Cops::SinalizeSettingsForm
         end
 
         def call
@@ -15,7 +15,7 @@ module Decidim
               scope: "decidim.spam_signal",
               default: "this looks like spam."
             )
-          )
+          ) if config['forbid_creation_enabled']
           sinalize!
           broadcast(:ok)
         end

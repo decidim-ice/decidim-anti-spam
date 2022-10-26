@@ -45,7 +45,7 @@ def prepare_database(app_path)
   File.open(config_file, "w") { |f| YAML.dump(databaseYml, f) }
   Dir.chdir("#{app_path}") do
      system("bundle exec rails db:create")
-     system("bundle exec rails decidim_lausanne_budgets:install:migrations")
+     system("bundle exec rails decidim_spam_signal_admin:install:migrations")
      system("bundle exec rails db:migrate")
    end
 end
