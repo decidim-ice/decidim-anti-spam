@@ -1,0 +1,29 @@
+version: 0.1
+cli:
+  version: 0.15.1-beta
+lint:
+  enabled:
+    - git-diff-check@SYSTEM
+    - gitleaks@8.9.0
+    - markdownlint@0.32.1
+    - prettier@2.7.1
+    - svgo@2.8.0
+    - rubocop-fmt@1.22.2:
+        packages:
+          - rubocop-rails@2.15.2
+          - rubocop-performance@1.12.0
+          - rubocop-rake@0.6.0
+          - rubocop-rspec@2.5.0
+    - rubocop@1.22.2:
+        packages:
+          - rubocop-rails@2.15.2
+          - rubocop-performance@1.12.0
+          - rubocop-rake@0.6.0
+          - rubocop-rspec@2.5.0
+  ignore:
+    - linters: [ALL]
+      paths:
+        # Generated files
+        - LICENSE.md
+        - README.md
+        - spec/dummy/**

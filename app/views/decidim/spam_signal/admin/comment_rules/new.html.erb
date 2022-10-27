@@ -1,0 +1,9 @@
+<%= render "decidim/spam_signal/admin/shared/rules/new", 
+    locals: {
+      create_path: "config_comment_rules_path", 
+      destroy_path: "config_comment_rule_path", 
+      i18n_scope: "decidim.spam_signal.admin.comment_rules.new",
+      form: @form,
+      rule_type: rule_type
+    }
+ %>

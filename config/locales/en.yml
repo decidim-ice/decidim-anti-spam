@@ -1,0 +1,109 @@
+---
+en:
+  activerecord:
+    models:
+      decidim/spam_signal/config:
+        one: "Anti-Spam Configuration"
+        other: "Anti-Spam Configurations"
+
+  activemodel:
+    attributes:
+      lock:
+        is_email_unlockable: "Can unlock its account by email"
+  decidim:
+    account:
+      locked: Your account is locked, check your emails to get unlock instructions
+    spam_signal:
+      spam_signal_justification: |
+        The spam filter have identified a spamming content.
+      errors:
+        spam: Your comment looks like spam.
+      forms:
+        word_settings_form:
+          stop_list_words_csv: "Suspicious Words, comma-separated"
+        allowed_tlds_form:
+          allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
+        forbidden_tlds_form:
+          forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
+        lock_settings_form:
+          sinalize_user_enabled: "After locking, sinalize the user"
+          hide_comments_enabled: "After locking, hide all the user's comments"
+        sinalize_settings_form:
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
+      scans:
+        word:
+          name: "Dictionnary"
+          description: "List forbidden words"
+        allowed_tlds:
+          name: "Allowed TLDs"
+          description: "Allow a list of domain extension, and ban all the others."
+        forbidden_tlds:
+          name: "Forbidden TLDs"
+          description: "Forbid a list of domain extension, allow all by default."
+      cops:
+        sinalize:
+          name: "Sinalize"
+          description: "Sinalize the user to the administrators"
+        lock:
+          name: "Lock"
+          description: "Lock the user, and send unlock instructions by email"
+
+      admin:
+        actions:
+          save: "Save"
+        spam_filter_reports:
+          index:
+            headings:
+              title: "ANTI-SPAM"
+              comment_settings: "Comments"
+              profile_settings: "Profiles"
+        comment_scans:
+          new:
+            headings:
+              title: "New spam detection for comment creation"
+              choose_scan: "Chose a detection type"
+          edit:
+            headings:
+              title: "Edit %{scan} Scanner"
+              caption: "%{scan} configurations"
+        comment_rules:
+          new:
+            headings:
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
+          edit:
+            description: "Fire %{type} agent if these are all TRUE"
+            headings:
+              caption: "Check at least on detection symbol required to fire the rule:"
+        comment_cops:
+          edit:
+            headings:
+              choose_cop: "Choose an agent active on %{type}"
+              title: "%{type} agent configuration"
+            form: "Customize %{type} Options"
+        profile_scans:
+          new:
+            headings:
+              title: "New spam detection for profile creation"
+              choose_scan: "Chose a detection type"
+          edit:
+            headings:
+              caption: "%{scan} configurations"
+              title: "Edit %{scan} Scanner"
+        profile_rules:
+          new:
+            headings:
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
+          edit:
+            description: "Fire %{type} agent if these are all TRUE"
+            headings:
+              caption: "Check at least on detection symbol required to fire the rule:"
+        profile_cops:
+          edit:
+            headings:
+              title: "%{type} agent configuration"
+              choose_cop: "Choose an agent active on %{type}"
+            form: "Customize %{type} Options"

@@ -1,0 +1,48 @@
+<% form = locals[:form] %>
+<%= link_to("Go back", spam_filter_reports_path) %>
+<% if form %>
+  <div class="content spam_signal__section">
+    <h1><%= t("headings.title", type: cop_type, scope: locals[:i18n_scope]) %> (2/2)</h1>    
+  <div>
+    <div class="grid-x grid-margin-y callout">
+      <div class="cell small-10">
+        <strong><%= t("#{current_cop.i18n_key}.name").upcase %></strong><br />
+        <em><%= t("#{current_cop.i18n_key}.description", default: "") %></em>
+      </div>
+      <div class="cell small-2">
+        <%= button_to("Remove the agent", routes.send(locals[:destroy_path], config_id: current_config.id, id: cop_type), method: :delete, class: "button small alert") %>
+      </div>
+    </div>
+    <div class="form-fields callout">
+      <% unless form.attributes.empty? %>
+      <div class="form-fields">
+        <%= decidim_form_for(form, url: routes.send(locals[:update_path], current_config.id, cop_type), builder: Decidim::SpamSignal::SpamSettingsFormBuilder, method: :patch) do |f| %>
+          <h5><%= t("form", type: t("#{current_cop.i18n_key}.name"), scope: locals[:i18n_scope]) %></h5>    
+
+          <%= f.all_fields %>
+          <input type="hidden" name="cop" value="<%= current_cop.handler_name %>" />
+          <div class="actions">
+            <%= f.submit t("decidim.spam_signal.admin.actions.save") %>
+          </div>
+        <% end %>
+        </div>
+      <% else %>
+      <h5><em>There are no option for this agent</em></h5>
+      <% end %>
+    </div>
+<% else %>
+  <div class="content spam_signal__section">
+    <h1><%= t("headings.title", type: cop_type, scope: locals[:i18n_scope]) %> (2/2)</h1>    
+  <div>
+  <div class="callout">
+    <h2><%= t("headings.choose_cop", type: cop_type, scope: locals[:i18n_scope]) %></h2>
+    <div class="stacked button-group">
+      <% available_cops.each do |cop| %>
+        <%= link_to(routes.send(locals[:edit_path], config_id: current_config.id, id: cop_type, cop: cop.handler_name), class: "button") do %>
+          <strong><%= t("#{cop.i18n_key}.name").upcase %></strong><br />
+          <em><%= t("#{cop.i18n_key}.description", default: "") %></em>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

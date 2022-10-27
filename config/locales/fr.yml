@@ -1,0 +1,108 @@
+---
+fr:
+  activerecord:
+    models:
+      decidim/spam_signal/config:
+        one: "Configuration Anti-Spam"
+        other: "Configurations Anti-Spam"
+
+  decidim:
+    account:
+      locked: 
+        |  
+          Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
+          participer.ge.ch/pages/terms-and-conditions
+    spam_signal:
+      spam_signal_justification: |
+        L'anti-spam a détecter du contenu suspect.
+      errors:
+        spam: "Votre commentaire semble être du spam. "
+      forms:
+        word_settings_form:
+          stop_list_words_csv: "Mots clés interdits, séparé par des virgules"
+        allowed_tlds_form:
+          allowed_tlds_csv: "Liste des domaines (comme `.ch`) qui sont permis, séparé par des virgules"
+        forbidden_tlds_form:
+          forbidden_tlds_csv: "Liste des domaines (comme `.finance`) qui sont interdits, séparé par des virgules"
+        lock_settings_form:
+          sinalize_user_enabled: "Après vérouillage, signaliser l'utilisateur"
+          hide_comments_enabled: "Après vérouillage, cacher tous les commentaires de l'utilisateur"
+        sinalize_settings_form:
+          forbid_creation_enabled: "Empêcher le contenu d'être sauvé"
+      scans:
+        word:
+          name: "Mot-clés"
+          description: "Dictionnaire de mot-clés interdits."
+        allowed_tlds:
+          name: "Extensions permises"
+          description: "Autorise une liste d'extension de domaines, et interdit tous les autres."
+        forbidden_tlds:
+          name: "Extensions interdites"
+          description: "Interdit une liste d'extension de domaines, et autorise tous les autres."
+      cops:
+        sinalize:
+          name: "Signaliser"
+          description: "Signalise l'utilisateur aux administrateurs"
+        lock:
+          name: "Vérouiller"
+          description: "Vérouille temporairement l'utilisateur, et lui envoie des instructions de déverouilage."
+
+      admin:
+        actions:
+          save: "Sauver"
+        spam_filter_reports:
+          index:
+            headings:
+              title: "ANTI-SPAM"
+              comment_settings: "Commentaires"
+              profile_settings: "Profils utilisateurs"
+        comment_scans:
+          new:
+            headings:
+              title: "Nouveau type de détection pour les commentaires"
+              choose_scan: "Sélectionner un type de détection:"
+          edit:
+            headings:
+              title: "Modifier la détection '%{scan}'"
+              caption: "Configuration de '%{scan}'"
+        comment_rules:
+          new:
+            headings:
+              title: "Nouvelle règle pour '%{type}'"
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+          edit:
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            headings:
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+        comment_cops:
+          edit:
+            headings:
+              choose_cop: "Agent actif pour '%{type}'"
+              title: "Configuration de l'agent '%{type}'"
+            form: "Options de l'agent"
+        profile_scans:
+          new:
+            headings:
+              title: "Nouveau type de détection pour les profils utilisateurs"
+              choose_scan: "Sélectionner un type de détection:"
+          edit:
+            headings:
+              title: "Modifier la détection '%{scan}'"
+              caption: "Configuration de '%{scan}'"
+        profile_rules:
+          new:
+            headings:
+              title: "Nouvelle règle pour '%{type}'"
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+          edit:
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            headings:
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+        profile_cops:
+          edit:
+            headings:
+              choose_cop: "Agent actif pour '%{type}'"
+              title: "Configuration de l'agent '%{type}'"
+            form: "Options de l'agent"
