@@ -1,121 +1,108 @@
 ---
-fr:
+en:
   activerecord:
     models:
       decidim/spam_signal/config:
         one: "Configuration Anti-Spam"
-        other: "Configuration Anti-Spams"
-  activemodel:
-    attributes:
-      config:
-        profile_scan: "Scanner de spam (profil)"
-        comment_scan: "Scanner de spam (commentaires)"
-        profile_obvious_cop: "Agent pour les Spams (profil)"
-        profile_suspicious_cop: "Agent pour les Suspects (profil)"
-        comment_obvious_cop: "Agent pour les Spams (commentaires)"
-        comment_suspicious_cop: "Agent pour les Suspects (commentaires)"
-      lock:
-        is_email_unlockable: "Peut dévérouiller son compte par email"
-      word:
-        stop_list_tlds_csv: "Liste de TLDS interdits, séparé par des virgules"
-        stop_list_words_csv: "Liste de mots interdits, séparé par des virgules"
+        other: "Configurations Anti-Spam"
+
   decidim:
     account:
-      locked: Votre compte est vérouillé, consulter votre email pour lire les instructions de déverouillages
+      locked: 
+        |  
+          Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
+          participer.ge.ch/pages/terms-and-conditions
     spam_signal:
-      spam_block_justification: |
-        Votre activité récente sur la plateforme à été détectée comme suspecte par notre
-        filtre anti-spam.
-        Vous avez été mis en quarantaine, votre compte et son activité va être supprimé
-        sous 15jours.
-
-        Si vous voulez faire appel à cette decisision, merci de nous laisser un email à hello [at] domain.com.
-
-        Pour plus d'informations, rendez-vous sur /terms-and-conditions.
       spam_signal_justification: |
-        Notre filtre anti-spam a détecté votre activité comme suspecte.
+        L'anti-spam a détecter du contenu suspect.
       errors:
-        spam: Ce contenu est contraire à notre charte.
+        spam: "Votre commentaire semble être du spam. "
+      forms:
+        word_settings_form:
+          stop_list_words_csv: "Mots clés interdits, séparé par des virgules"
+        allowed_tlds_form:
+          allowed_tlds_csv: "Liste des domaines (comme `.ch`) qui sont permis, séparé par des virgules"
+        forbidden_tlds_form:
+          forbidden_tlds_csv: "Liste des domaines (comme `.finance`) qui sont interdits, séparé par des virgules"
+        lock_settings_form:
+          sinalize_user_enabled: "Après vérouillage, signaliser l'utilisateur"
+          hide_comments_enabled: "Après vérouillage, cacher tous les commentaires de l'utilisateur"
+        sinalize_settings_form:
+          forbid_creation_enabled: "Empêcher le contenu d'être sauvé"
       scans:
-        none:
-          name: "ø"
         word:
-          name: "Mots-clés"
-          readme_html: |
-            Définit des mots clés interdits et détermine le status d'un contenu entre <code>ok</code>, <code>suspicious</code> ou <code>spam</code>.
-            <ul>
-              <li>Est un <code>spam</code> si: 
-                <ul>
-                  <li>Si un lien est trouvé avec un nom de domaines présents dans les TLDS interdit. </li>
-                  <li>Si un mot clé ET un lien est trouvé dans le contenu</li>
-                </ul>
-              </li>
-              <li>Est un <code>suspicious</code> si: 
-                <ul>
-                  <li>Si un mot clé est trouvé, mais pas un lien</li>
-                </ul>
-              </li>
-            </ul>
+          name: "Mot-clés"
+          description: "Dictionnaire de mot-clés interdits."
+        allowed_tlds:
+          name: "Extensions permises"
+          description: "Autorise une liste d'extension de domaines, et interdit tous les autres."
+        forbidden_tlds:
+          name: "Extensions interdites"
+          description: "Interdit une liste d'extension de domaines, et autorise tous les autres."
       cops:
-        none:
-          name: "None"
+        sinalize:
+          name: "Signaliser"
+          description: "Signalise l'utilisateur aux administrateurs"
         lock:
-          name: "Vérouillage"
-          readme_html: |
-            Déconnecte et interdit la re-connexion durant 15min. Un email de déverouillage sera envoyé à l'utilisateur avec des instructions de déverouillages<br />
-            Toutes les activités de l'utilisateur seront signaliées aux administrateurs.
+          name: "Vérouiller"
+          description: "Vérouille temporairement l'utilisateur, et lui envoie des instructions de déverouilage."
+
       admin:
+        actions:
+          save: "Sauver"
         spam_filter_reports:
           index:
             headings:
-              title: "Rapport de Spam"
-              cops_title: "Agents"
-              spam_flow: "Configuration du filtre"
-              profile_flow: "Edition de profil"
-              comment_flow: "Ajout de commentaires"
-            readme_html: |
-              <p>
-                Salut, tu trouvera ici les configurations du filtre anti-spam <br />
-                Le filtre agit à certains endroit de la plateforme:
-              </p>
-              <ul>
-                <li>Lorsqu'un utilisateur édite son profil</li>
-                <li>Lorsqu'un utilisateur crée un nouveau commentaire</li>
-              </ul>
-
-              <h3>Comment ça marche?</h3>
-              <p>Le processus est simple: extraire les donnée à vérifier, les scanner, et réagir à la détection de spam.<br />
-              Les scanners de contenus ont trois résultats possibles:</p>
-              <ol>
-                <li><strong>ok</strong>: Tout bon, on peut y aller</li>
-                <li><strong>suspicious</strong>: C'est peut-être un spam, mais ce n'est pas sûr</li>
-                <li><strong>spam</strong>: Presque sûr que c'est du spam</li>
-              </ol>
-
-              Pour les résultats <code>suspicious</code> et <code>spam</code>, un <strong>agent</strong> est appelé.
-              Cet agent fait invariablement les mêmes actions avec le compte utilisateur que le scanner lui transmet.
-              Comme créer des erreurs, signalé l'utilisateur, modérer ses actions.
-
-              <h3>Note sur RGPD/LPD</h3>
-              Merci de vérifier que vos <a href="/terms-and-conditions">Conditions générales</a> sont transparentes sur
-              la stratégie de filtre anti-spam, afin d'être en accord avec les lois de votre pays.
-              Les utilisateurs doivent savoir le risque de mise en quarantaine ou de vérouillage en lisant vos conditions générales.
-            cops_readme_html: |
-              <h3>Agent de vérouillage</h3>
-              L'agent de vérouillage va bloquer l'utilisateur pour 15minutes, et envoyer des instructions
-              de déverouillages à l'utilisateur par email.<br />
-              Ceci va aussi signaliser tous les contenus que l'utilisateur à écrit jusqu'à présent.
-              <ol>
-                <li>L'utilisateur est déconnecté</li>
-                <li>L'utilisateur reçoit des instructions de déverouillages</li>
-                <li>Le contenu de l'utilisateur est signalisé aux administrateurs</li>
-              </ol>
-
-              <h3>Agent de quarantaine</h3>
-              Déconnecte et interdit la re-connexion. Un email de déverouillage sera envoyé à l'utilisateur avec un avertissement de suppression<br />
-              Toutes les activités de l'utilisateur seront modérées lors de la quarantaine, et supprimé une fois le nombre de jours de quarantaine passé.
-
-            actions:
-              save: "Enregistrer"
-              cancel: "Annuler"
-              review: "Consulter"
+              title: "ANTI-SPAM"
+              comment_settings: "Commentaires"
+              profile_settings: "Profils utilisateurs"
+        comment_scans:
+          new:
+            headings:
+              title: "Nouveau type de détection pour les commentaires"
+              choose_scan: "Sélectionner un type de détection:"
+          edit:
+            headings:
+              title: "Modifier la détection '%{scan}'"
+              caption: "Configuration de '%{scan}'"
+        comment_rules:
+          new:
+            headings:
+              title: "Nouvelle règle pour '%{type}'"
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+          edit:
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            headings:
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+        comment_cops:
+          edit:
+            headings:
+              choose_cop: "Agent actif pour '%{type}'"
+              title: "Configuration de l'agent '%{type}'"
+            form: "Options de l'agent"
+        profile_scans:
+          new:
+            headings:
+              title: "Nouveau type de détection pour les profils utilisateurs"
+              choose_scan: "Sélectionner un type de détection:"
+          edit:
+            headings:
+              title: "Modifier la détection '%{scan}'"
+              caption: "Configuration de '%{scan}'"
+        profile_rules:
+          new:
+            headings:
+              title: "Nouvelle règle pour '%{type}'"
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+          edit:
+            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            headings:
+              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+        profile_cops:
+          edit:
+            headings:
+              choose_cop: "Agent actif pour '%{type}'"
+              title: "Configuration de l'agent '%{type}'"
+            form: "Options de l'agent"

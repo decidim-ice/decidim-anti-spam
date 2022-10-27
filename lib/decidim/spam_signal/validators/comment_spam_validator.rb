@@ -20,7 +20,6 @@ module Decidim
             )
           end.map(&:keys).flatten.filter { |s| s != :ok && s != :valid }
           return if !symboles || symboles.empty?
-          byebug
           # Check the rules
           suspicious_rules = spam_ruleset("suspicious")
           spam_rules = spam_ruleset("spam")
