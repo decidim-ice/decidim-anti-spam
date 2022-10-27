@@ -17,17 +17,28 @@ module Decidim
             )
           )
           unless suspicious_user.access_locked?
-            sinalize! if config["sinalize_user_enabled"]
             hide_comment! if config["hide_comments_enabled"]
+            sinalize! if config["sinalize_user_enabled"]
             lock!
           end
         end
 
         private
           def hide_comment!
-            suspicious_comments ||= Decidim::Comments::Comment.where(author: suspicious_user)
+            suspicious_comments = Decidim::Comments::Comment.where(author: suspicious_user)
             suspicious_comments.each do |spam|
-              Decidim::Admin::HideResource.call(spam, admin_reporter)
+              moderation = Decidim::Moderation.find_or_create_by!(
+                reportable: spam,
+                participatory_space: spam.participatory_space
+              )
+              Decidim::Report.create!(
+                moderation: moderation,
+                user: admin_reporter,
+                reason: "spam",
+                details: I18n.t("decidim.spam_signal.spam_signal_justification")
+              )
+              moderation.update!(report_count: moderation.report_count + 1)
+              Decidim::Admin::HideResource.call(spam.reload, admin_reporter)
             end
           end
 
