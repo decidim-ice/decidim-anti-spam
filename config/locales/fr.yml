@@ -1,5 +1,5 @@
 ---
-en:
+fr:
   activerecord:
     models:
       decidim/spam_signal/config:
