@@ -78,6 +78,7 @@ bundle exec rails db:migrate
 ```bash
 export USER_BOT_EMAIL='bot@example.ch' # user-bot used for signaling the spammers
 ```
+
 ## Scripting
 We don't have UI for this (and probably won't), so here some useful script: 
 
@@ -194,6 +195,19 @@ This is provocative on purpose: participation must be as inclusive as possible, 
 ## License
 
 This engine is distributed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE.md).
+
+<br /><br />
+
+<p align="center">
+    <img
+        src="https://github.com/octree-gva/meta/blob/main/decidim/static/spam-signal/spam-signal-1.png?raw=true"
+        alt="Anti Spam for Decidim, screenshot" />
+</p>
+<p align="center">
+    <img
+        src="https://github.com/octree-gva/meta/blob/main/decidim/static/spam-signal/spam-signal-2.png?raw=true"
+        alt="Anti Spam for Decidim, screenshot" />
+</p>
 
 <br /><br />
 
