@@ -29,6 +29,7 @@
             alt="Voca – Open-Source SaaS platform for Decidim" />
     </a>
 </p>
+<br /><br />
 
 # Anti-Spam for decidim
 
