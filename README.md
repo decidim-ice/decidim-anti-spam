@@ -108,7 +108,7 @@ An agent have two classes: A command class, and a form class (for settings).
 For `Command`, here some restrictions:
 
 * You need to define a form to a `Decidim::Form` class, with absolute `::<name>` namespace. You will have trouble with memory allocation if you don't
-* You need to suffix your command with `ScanCommand` name. That's a convention we use that do a bit of magic.
+* You need to suffix your command with `ScanCommand` name. That's a convention we use to avoid configurations.
 * call must broadcast :ok or one of the `output_symbols` defined 
 
 ```ruby
@@ -148,7 +148,7 @@ And now, you can register your command in an initializer:
 Decidim::SpamSignal::Scans::ScansRepository.instance.register(:custom, ::CustomScanCommand)
 ```
 
-And set the i19n fields: 
+And set the i18n fields: 
 * `decidim.spam_signal.scans.custom.name`
 * `decidim.spam_signal.scans.custom.description`
 * `decidim.spam_signal.forms.custom.custom_settings_form.foo_enabled`
@@ -158,7 +158,7 @@ And set the i19n fields:
 We won't advise you create your own agent, as it seems the Lock agent as the strongest agent is already a good compromise for spam control. If you really want it, that's simple, it's almost like detection:
 
 * Use `CopCommand` to suffix your command
-* Add a `self.form` to your settings
+* Add a `self.form` to your settings (it can returns `nil`)
 * Use these different attributes: 
     * `suspicious_user` the user that have done something wrong
     * `admin_reporter` an admin user only used to report spam
@@ -181,14 +181,14 @@ Settings are exactly the same logic, and i18n fields:
 * `decidim.spam_signal.cops.custom.description`
 * `decidim.spam_signal.forms.custom.custom_settings_form.foo_enabled`
 
-To register it: 
+To register it in an initializer:
 ```
 Decidim::SpamSignal::Cops::CopsRepository.instance.register(:custom, ::CustomCopCommand)
 ```
 
 
 **N.B** You will find in the code the term `cop` to refer an agent. 
-This is provocative on purpose: participation must be as inclusive as possible, restricting participation is _BAD_. You are warned, be careful coding your cop. 
+This is provocative on purpose: participation must be as inclusive as possible, restricting participation is _BAD_. You are warned, be your own cop.
 
 
 ## License
