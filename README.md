@@ -135,7 +135,7 @@ For Settings:
     * if its ends with `_csv` you will have a textarea
     * the rest is like default decidim's form builder.
 
-```
+```ruby
 class CustomSettingsForm < Decidim::Form
     include Decidim::SpamSignal::SettingsForm
     attribute :foo_enabled, Boolean, default: false
@@ -144,7 +144,7 @@ end
 ```
 
 And now, you can register your command in an initializer: 
-```
+```ruby
 Decidim::SpamSignal::Scans::ScansRepository.instance.register(:custom, ::CustomScanCommand)
 ```
 
@@ -164,7 +164,7 @@ We won't advise you create your own agent, as it seems the Lock agent as the str
     * `admin_reporter` an admin user only used to report spam
     * `errors` an ActiveRecord error, to forbid saving (@see [Working With Validation Errors in Rails Guides](https://guides.rubyonrails.org/active_record_validations.html#working-with-validation-errors))
 
-```
+```ruby
 class CustomCopCommand < Decidim::SpamSignal::Cops::CopHandler
     def self.form
         ::CustomSettingsForm
@@ -182,7 +182,7 @@ Settings are exactly the same logic, and i18n fields:
 * `decidim.spam_signal.forms.custom.custom_settings_form.foo_enabled`
 
 To register it in an initializer:
-```
+```ruby
 Decidim::SpamSignal::Cops::CopsRepository.instance.register(:custom, ::CustomCopCommand)
 ```
 
