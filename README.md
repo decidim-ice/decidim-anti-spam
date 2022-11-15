@@ -38,8 +38,6 @@ Flexible detection and reaction on spam for Decidim, sponsored by:
 * [Participer Lausanne](https://participer.lausanne.ch)
 * [Genève Participe](https://participer.ge.ch)
 
-https://user-images.githubusercontent.com/3929108/200023260-23f08412-f660-411b-8e3d-70642a5f1aa4.mp4
-
 ## Available Detection
 This anti-spam gem comes with three core detection for spam: 
 
