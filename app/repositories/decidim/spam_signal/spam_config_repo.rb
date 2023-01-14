@@ -6,7 +6,7 @@ module Decidim
       attr_reader :handler_name
       attr_reader :config
       attr_accessor :errors
-      def initialize(handler_name, config, attributes)
+      def initialize(handler_name, attributes)
         @config = with_defaults(
           attributes
         )

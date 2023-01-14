@@ -19,7 +19,7 @@ fr:
         spam: "Votre commentaire semble être du spam. "
       forms:
         word_settings_form:
-          stop_list_words_csv: "Mots clés interdits, séparé par des virgules"
+          stop_list_words_csv: "Mots clés interdits, un par ligne"
         allowed_tlds_form:
           allowed_tlds_csv: "Liste des domaines (comme `.ch`) qui sont permis, séparé par des virgules"
         forbidden_tlds_form:
