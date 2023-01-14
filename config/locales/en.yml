@@ -20,7 +20,7 @@ en:
         spam: Your comment looks like spam.
       forms:
         word_settings_form:
-          stop_list_words_csv: "Suspicious Words, comma-separated"
+          stop_list_words_csv: "Suspicious Words, one per line"
         allowed_tlds_form:
           allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
         forbidden_tlds_form:

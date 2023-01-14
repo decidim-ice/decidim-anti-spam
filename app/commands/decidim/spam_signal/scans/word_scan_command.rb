@@ -32,7 +32,7 @@ module Decidim
           def stop_list_words
             @stop_list_words ||= (
               config["stop_list_words_csv"] || ""
-            ).split(",").map(&:strip)
+            ).split("\n").map(&:strip)
           end
       end
     end

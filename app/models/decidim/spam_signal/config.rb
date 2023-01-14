@@ -15,11 +15,11 @@ module Decidim
       end
 
       def comments
-        @comment_repo ||= SpamConfigRepo.new("comments", self, self.comment_settings)
+        @comment_repo ||= SpamConfigRepo.new("comments", self.comment_settings)
       end
 
       def profiles
-        @profile_repo ||= SpamConfigRepo.new("profiles", self, self.profile_settings)
+        @profile_repo ||= SpamConfigRepo.new("profiles", self.profile_settings)
       end
 
       def save_settings
