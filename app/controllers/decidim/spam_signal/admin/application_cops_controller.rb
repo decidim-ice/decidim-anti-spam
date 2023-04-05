@@ -30,7 +30,7 @@ module Decidim
 
         def update
           raise "No agent found" unless current_cop
-          form = current_cop.form.from_params(params.require("#{cop_key}".to_sym)).with_context(
+          form = current_cop.form.from_params(params.require("#{cop_key}")).with_context(
             handler_name: current_cop.handler_name,
             type: cop_type
           )
@@ -61,7 +61,7 @@ module Decidim
             )
           end
         end
-        
+
         def create
           raise "No scanner found" unless current_cop
           form = current_cop.form.from_params(
@@ -75,8 +75,8 @@ module Decidim
             resource_config,
             form
           ) do |on|
-            on(:invalid) { flash[:alert] = "Can not create the scanner" }
-            on(:ok) { flash[:notice] = "Scanner has been created"  }
+            on(:invalid) { flash[:alert] = "Can not create the agent" }
+            on(:ok) { flash[:notice] = "Agent has been created"  }
             redirect_to spam_filter_reports_path
           end
         end

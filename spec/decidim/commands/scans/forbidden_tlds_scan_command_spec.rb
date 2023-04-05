@@ -14,7 +14,7 @@ describe Decidim::SpamSignal::Scans::ForbiddenTldsScanCommand::class do
   end
 
   context "with forbidden tlds=(.finance,.fin.br)" do
-    let(:forbidden_tlds_config) { { "forbidden_tlds_csv" => ".finance,.fin.br" }}
+    let(:forbidden_tlds_config) { { "forbidden_tlds_csv" => ".finance,.fin.br" } }
     let(:config) do
       create(
         :spam_signal_config,
@@ -42,7 +42,7 @@ describe Decidim::SpamSignal::Scans::ForbiddenTldsScanCommand::class do
   end
 
   context "with empty forbidden tlds" do
-    let(:forbidden_tlds_config) { { "forbidden_tlds_csv" => "" }}
+    let(:forbidden_tlds_config) { { "forbidden_tlds_csv" => "" } }
     let(:config) do
       create(
         :spam_signal_config,

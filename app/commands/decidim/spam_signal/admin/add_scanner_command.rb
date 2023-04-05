@@ -18,12 +18,11 @@ module Decidim
 
         def call
           return broadcast(:invalid) if form.invalid?
-          return broadcast(:invalid) if attributes.blank?
 
           begin
             settings_repo.add_scan(
               form.handler_name,
-              attributes
+              attributes || {}
             )
             current_config.save_settings
             broadcast(:ok, settings_repo)

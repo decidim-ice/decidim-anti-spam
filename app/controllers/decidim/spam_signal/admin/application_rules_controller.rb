@@ -119,7 +119,7 @@ module Decidim
           def rule_type
             params.permit(:rule)["rule"] || nil
           end
-          
+
           def current_scanner
             return nil unless scan_key
             scan_repository.strategy(scan_key)

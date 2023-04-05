@@ -2,9 +2,9 @@ PATH
   remote: .
   specs:
     decidim-spam_signal (0.24.3)
-      decidim-admin (= 0.24.3)
-      decidim-comments (= 0.24.3)
-      decidim-core (= 0.24.3)
+      decidim-admin (>= 0.24)
+      decidim-comments (>= 0.24)
+      decidim-core (>= 0.24)
 
 GEM
   remote: https://rubygems.org/

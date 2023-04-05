@@ -10,6 +10,7 @@ module Decidim
           @suspicious_content = suspicious_content
           @config = config
         end
+
         def self.i18n_key
           "decidim.spam_signal.scans.#{handler_name}"
         end

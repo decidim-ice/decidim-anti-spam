@@ -23,23 +23,22 @@ module Decidim
           def allowed_tlds_csv
             @allowed_tlds_csv ||= (
               config["allowed_tlds_csv"] || ""
-            ).split(",").map(&:strip).filter {|tlds| !tlds.empty? }
+            ).split(",").map(&:strip).filter { |tlds| !tlds.empty? }
           end
 
           def all_allowed?
-            hosts.filter {|url| !allowed_tlds_csv.any? {|tld| url.include? tld } }.empty?
+            hosts.filter { |url| !allowed_tlds_csv.any? { |tld| url.include? tld } }.empty?
           end
 
           def hosts
             URI.extract(suspicious_content, ["http", "https", "", "mailto" ]).map do |uri|
               begin
-                (scheme, subdomain, host ) = URI.split(uri)
+                (scheme, subdomain, host) = URI.split(uri)
                 host || ""
               rescue URI::InvalidURIError
                 ""
               end
             end
-
           end
 
           def regex(patterns)

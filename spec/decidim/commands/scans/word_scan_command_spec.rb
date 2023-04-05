@@ -14,7 +14,7 @@ describe Decidim::SpamSignal::Scans::WordScanCommand::class do
   end
 
   context "with dictionnary=(sexy,call girl,Let's talk)" do
-    let(:word_config) { { "stop_list_words_csv" => "sexy,call girl,Let's talk" }}
+    let(:word_config) { { "stop_list_words_csv" => "sexy,call girl,Let's talk" } }
     let(:config) do
       create(
         :spam_signal_config,
@@ -38,7 +38,7 @@ describe Decidim::SpamSignal::Scans::WordScanCommand::class do
   end
 
   context "with empty dictionnary" do
-    let(:word_config) { { "stop_list_words_csv" => "" }}
+    let(:word_config) { { "stop_list_words_csv" => "" } }
     let(:config) do
       create(
         :spam_signal_config,

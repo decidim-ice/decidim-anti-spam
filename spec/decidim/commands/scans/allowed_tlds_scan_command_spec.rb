@@ -14,7 +14,7 @@ describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
   end
 
   context "with forbidden tlds=(.ch,.com)" do
-    let(:allowed_tlds_config) { { "allowed_tlds_csv" => ".ch,.com" }}
+    let(:allowed_tlds_config) { { "allowed_tlds_csv" => ".ch,.com" } }
     let(:config) do
       create(
         :spam_signal_config,
@@ -43,7 +43,7 @@ describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
   end
 
   context "with empty forbidden tlds" do
-    let(:allowed_tlds_config) { { "allowed_tlds_csv" => "" }}
+    let(:allowed_tlds_config) { { "allowed_tlds_csv" => "" } }
     let(:config) do
       create(
         :spam_signal_config,

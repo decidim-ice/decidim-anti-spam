@@ -28,12 +28,16 @@ en:
         lock_settings_form:
           sinalize_user_enabled: "After locking, sinalize the user"
           hide_comments_enabled: "After locking, hide all the user's comments"
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
         sinalize_settings_form:
           forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
       scans:
         word:
           name: "Dictionnary"
           description: "List forbidden words"
+        akismet:
+          name: "Akismet"
+          description: "Add akismet validation (wordpress validation)"
         allowed_tlds:
           name: "Allowed TLDs"
           description: "Allow a list of domain extension, and ban all the others."

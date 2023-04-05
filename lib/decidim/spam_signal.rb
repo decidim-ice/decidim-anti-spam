@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "akismet/akismet"
 require_relative "spam_signal/admin"
 require_relative "spam_signal/engine"
 require_relative "spam_signal/admin_engine"

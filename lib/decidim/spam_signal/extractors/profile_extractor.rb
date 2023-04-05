@@ -5,9 +5,9 @@ module Decidim
     module Extractors
       class ProfileExtractor < Extractor
         def self.extract(user, _config)
-          "#{user.about}
+          "#{user.about}" + (user.personal_url ? "
 ===
-#{user.personal_url}"
+#{user.personal_url}" : "")
         end
       end
     end

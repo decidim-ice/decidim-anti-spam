@@ -10,17 +10,18 @@ module Decidim
 
         def call
           errors.add(
-            :base,
+            error_key,
             I18n.t("errors.spam",
               scope: "decidim.spam_signal",
               default: "this looks like spam."
             )
-          )
+          ) unless config['forbid_creation_enabled']
           unless suspicious_user.access_locked?
             hide_comment! if config["hide_comments_enabled"]
             sinalize! if config["sinalize_user_enabled"]
             lock!
           end
+          broadcast(config['forbid_creation_enabled'] ? :restore_value : :save)
         end
 
         private
@@ -31,25 +32,17 @@ module Decidim
                 reportable: spam,
                 participatory_space: spam.participatory_space
               )
+              is_new = moderation.report_count == 0
               moderation.update(reported_content: spam.body[admin_reporter.locale]) if !moderation.reported_content && spam.body[admin_reporter.locale]
-              Decidim::Report.create!(
+              report = Decidim::Report.find_or_create_by!(
                 moderation: moderation.reload,
-                user: admin_reporter,
-                locale: admin_reporter.locale,
-                reason: "spam",
-                details: I18n.t("decidim.spam_signal.spam_signal_justification", default: "Automatic Spam Analysis fire an alert about this content")
-              )
+                user: admin_reporter) do |report|
+                  report.locale = admin_reporter.locale
+                  report.reason = "spam"
+                  report.details = "#{now_tag}cascade: #{spam}"
+              end
+              report.update(details: "#{report.details}.#{now_tag}cascade: #{spam}")unless is_new
               moderation.update!(report_count: moderation.report_count + 1, hidden_at: Time.current)
-            end
-          end
-
-          def sinalize!
-            moderation = Decidim::UserModeration.find_or_create_by!(user: suspicious_user)
-            Decidim::UserReport.find_or_create_by!(moderation: moderation)  do |report|
-              report.moderation = moderation
-              report.user = admin_reporter
-              report.reason = "spam"
-              report.details = I18n.t("decidim.spam_signal.spam_signal_justification")
             end
           end
 
