@@ -38,7 +38,6 @@ module Decidim::SpamSignal::Cops
         LockCopCommand.call(comment.errors, spammer, config, spam_content, spam_cop)
         expect(comment.reload).not_to be_hidden
       end
-
       it "does add a :base error on resource" do
         expect(comment.errors).to receive(:add)
         LockCopCommand.call(comment.errors, spammer, config, spam_content, spam_cop)
