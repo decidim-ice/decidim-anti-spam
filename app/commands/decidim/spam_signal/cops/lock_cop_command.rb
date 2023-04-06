@@ -41,7 +41,7 @@ module Decidim
                   report.reason = "spam"
                   report.details = "#{now_tag}cascade: #{spam}"
               end
-              report.update(details: "#{report.details}.#{now_tag}cascade: #{spam}")unless is_new
+              report.update(details: "#{report.details}#{now_tag}cascade: #{spam}")unless is_new
               moderation.update!(report_count: moderation.report_count + 1, hidden_at: Time.current)
             end
           end

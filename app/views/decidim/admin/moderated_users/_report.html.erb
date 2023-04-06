@@ -1,0 +1,15 @@
+<% unless report.details.blank? %>
+<div class="reveal" id="report-<%= report.id %>" data-reveal>
+  <h1><%= t(".reasons.#{report.reason}") %></h1>
+  <ol>
+    <% report.details.split("\n").each do |line| %>
+      <li><%= line %></li>
+    <% end %>
+  </ol>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<button class="button tiny" style="margin-bottom: 0;" data-open="report-<%= report.id %>"><%= t(".reasons.#{report.reason}") %></button>
+<% end %>
