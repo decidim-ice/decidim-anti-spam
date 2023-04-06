@@ -31,6 +31,7 @@ en:
           forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
         sinalize_settings_form:
           forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
+          send_emails_enabled: "Send emails after sinalizations?"
       scans:
         word:
           name: "Dictionnary"

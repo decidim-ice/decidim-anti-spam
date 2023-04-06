@@ -16,7 +16,7 @@ module Decidim
               default: "this looks like spam."
             )
           ) if config['forbid_creation_enabled']
-          sinalize!
+          sinalize!(config['send_emails_enabled'])
           broadcast(config['forbid_creation_enabled'] ? :restore_value : :save)
         end
       end

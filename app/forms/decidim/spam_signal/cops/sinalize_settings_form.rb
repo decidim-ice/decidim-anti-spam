@@ -6,6 +6,7 @@ module Decidim
       class SinalizeSettingsForm < Decidim::Form
         include Decidim::SpamSignal::SettingsForm
         attribute :forbid_creation_enabled, Boolean, default: true
+        attribute :send_emails_enabled, Boolean, default: true
       end
     end
   end
