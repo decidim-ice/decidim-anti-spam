@@ -9,6 +9,7 @@ module Decidim
         validate :scan_spam
         def scan_spam
           return if !about || about.empty?
+          return if blocked_at_changed?(from: nil) # we are blocking the user, don't validate if it is spam.
           current_user = self
           tested_content = Extractors::ProfileExtractor.extract(self, spam_config)
 
