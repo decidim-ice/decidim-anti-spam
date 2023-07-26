@@ -36,9 +36,6 @@ en:
         word:
           name: "Dictionnary"
           description: "List forbidden words"
-        akismet:
-          name: "Akismet"
-          description: "Add akismet validation (wordpress validation)"
         allowed_tlds:
           name: "Allowed TLDs"
           description: "Allow a list of domain extension, and ban all the others."
