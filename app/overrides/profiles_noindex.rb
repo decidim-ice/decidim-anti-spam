@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 ##
-# Snippet for insert the meta tag 'noindex' in the head section of the views listed above
+# Snippet for insert the meta tag 'noindex' in the head section of the views listed below
+# using Deface gem
 ##
 views = ["decidim/profiles/show", 
          "decidim/user_activities/index",
