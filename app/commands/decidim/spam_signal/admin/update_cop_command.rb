@@ -33,7 +33,7 @@ module Decidim
 
           def attributes
             return {} unless form
-            form.attributes.filter { |_i, v| v.present? }.stringify_keys!
+            form.attributes.stringify_keys!
           end
       end
     end

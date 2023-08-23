@@ -26,19 +26,18 @@ module Decidim
           end
 
           def any_forbidden_tlds?
-            hosts.filter {|url| forbidden_tlds_csv.any? {|tld| url.include? tld } }.present?
+            hosts.filter { |url| forbidden_tlds_csv.any? { |tld| url.include? tld } }.present?
           end
 
           def hosts
             URI.extract(suspicious_content, ["http", "https", "", "mailto" ]).map do |uri|
               begin
-                (scheme, subdomain, host ) = URI.split(uri)
+                (scheme, subdomain, host) = URI.split(uri)
                 host
               rescue URI::InvalidURIError
                 ""
               end
             end
-
           end
 
           def regex(patterns)

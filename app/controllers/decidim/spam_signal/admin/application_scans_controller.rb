@@ -60,7 +60,7 @@ module Decidim
 
         def create
           raise "No scanner found" unless current_scanner
-          form = current_scanner.form.from_params(params.require("#{scan_key}".to_sym)).with_context(handler_name: current_scanner.handler_name)
+          form = current_scanner.form.from_params(params.require("#{scan_key}")).with_context(handler_name: current_scanner.handler_name)
           AddScannerCommand.call(
             current_config,
             resource_config,
@@ -76,9 +76,9 @@ module Decidim
         end
         private
           def available_scanners
-           available_scanner_names.map do |scan|
-              scan_repository.strategy scan
-            end
+            available_scanner_names.map do |scan|
+               scan_repository.strategy scan
+             end
           end
           def available_scanner_names
             scan_repository.strategies.select { |scan| !current_settings.scans.include?("#{scan}") }

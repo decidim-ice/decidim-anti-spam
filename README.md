@@ -78,6 +78,7 @@ bundle exec rails db:migrate
 
 ```bash
 export USER_BOT_EMAIL='bot@example.ch' # user-bot used for signaling the spammers
+export ANTISPAM_ADMIN='admin@example.ch' # if only one email should receive notifications from the anti-spam
 ```
 
 ## Scripting

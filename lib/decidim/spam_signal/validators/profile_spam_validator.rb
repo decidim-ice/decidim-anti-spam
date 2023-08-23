@@ -9,8 +9,10 @@ module Decidim
         validate :scan_spam
         def scan_spam
           return if !about || about.empty?
+          return if blocked_at_changed?(from: nil) # we are blocking the user, don't validate if it is spam.
           current_user = self
           tested_content = Extractors::ProfileExtractor.extract(self, spam_config)
+
           # Collect fired symbols
           symboles = spam_scanners.map do |scan_command, scan_option|
             scan_command.call(
@@ -36,21 +38,27 @@ module Decidim
 
           # If it's a cop fire it, else if it's a suspicous, fire it.
           if fire_spam_cop && obvious_spam_cop
-            restore_values(current_user)
             obvious_spam_cop.call(
-              errors,
-              current_user,
-              obvious_spam_cop_options,
-              tested_content
-            )
+              errors: errors,
+              error_key: :about,
+              suspicious_user: current_user,
+              config: obvious_spam_cop_options,
+              justification: "profile: " + tested_content
+            ) do |on|
+              on(:save) {}
+              on(:restore_value) { restore_values(current_user) }
+            end
           elsif fire_suspicious_cop && suspicious_spam_cop
-            restore_values(current_user)
             suspicious_spam_cop.call(
-              errors,
-              current_user,
-              suspicious_spam_cop_options,
-              tested_content
-            )
+              errors: errors,
+              error_key: :about,
+              suspicious_user: current_user,
+              config: suspicious_spam_cop_options,
+              justification:  "profile: " + tested_content
+            ) do |on|
+              on(:save) {}
+              on(:restore_value) { restore_values(current_user) }
+            end
           end
         end
 
@@ -67,6 +75,16 @@ module Decidim
           cop = spam_config.profiles.spam_cop
           return nil unless cop
           cop
+        end
+
+        def scan_context
+          {
+            validator: "profile",
+            is_updating: true,
+            date: updated_at,
+            current_organization: organization,
+            author: self
+          }
         end
 
         def obvious_spam_cop
@@ -97,6 +115,7 @@ module Decidim
 
         def spam_scanners
           spam_config.profiles.scans.map do |s, options|
+            options["context"] = scan_context
             [Scans::ScansRepository.instance.strategy(s), options]
           end
         end

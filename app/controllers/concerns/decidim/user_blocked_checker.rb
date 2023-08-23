@@ -8,6 +8,22 @@ module Decidim
 
     included do
       before_action :check_user_not_blocked
+      around_action :store_request_metadata
+    end
+
+    def store_request_metadata
+      Thread.current[:current_request] = ::ActiveSupport::HashWithIndifferentAccess.new(
+        real_ip: request.ip || request.headers['X-Real-IP'],
+        user_agent: request.headers['User-Agent'],
+        xhr: request.xhr?,
+        id: request.request_id,
+        remote_ip: request.remote_ip,
+        referrer: request.headers['Refer'],
+        country: request.headers['X-GEO-COUNTRY-CODE']
+      )
+      yield
+      ensure
+        Thread.current[:current_request] = nil
     end
 
     def check_user_not_blocked

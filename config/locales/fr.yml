@@ -8,10 +8,9 @@ fr:
 
   decidim:
     account:
-      locked: 
-        |  
-          Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
-          participer.ge.ch/pages/terms-and-conditions
+      locked: |
+        Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
+        participer.ge.ch/pages/terms-and-conditions
     spam_signal:
       spam_signal_justification: |
         L'anti-spam a détecter du contenu suspect.

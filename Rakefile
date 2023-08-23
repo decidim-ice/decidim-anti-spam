@@ -18,8 +18,8 @@ def prepare_database(app_path)
   # Remove previous existing db, and recreate one.
   disable_docker_compose = ENV.fetch("DISABLED_DOCKER_COMPOSE", "false") == "true"
   unless disable_docker_compose
-    system("docker-compose -f docker-compose.yml down -v")
-    system("docker-compose -f docker-compose.yml up -d --remove-orphans")
+    system("sudo docker-compose -f docker-compose.yml down -v")
+    system("sudo docker-compose -f docker-compose.yml up -d --remove-orphans")
   end
   databaseYml = {
     "development" => {

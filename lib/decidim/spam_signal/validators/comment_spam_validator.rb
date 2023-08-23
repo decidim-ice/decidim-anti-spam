@@ -10,7 +10,6 @@ module Decidim
 
         def scan_spam
           return if body.empty?
-
           tested_content = Extractors::CommentExtractor.extract(self, spam_config)
           # Collect fired symbols
           symboles = spam_scanners.map do |scan_command, scan_option|
@@ -20,6 +19,7 @@ module Decidim
             )
           end.map(&:keys).flatten.filter { |s| s != :ok && s != :valid }
           return if !symboles || symboles.empty?
+
           # Check the rules
           suspicious_rules = spam_ruleset("suspicious")
           spam_rules = spam_ruleset("spam")
@@ -33,21 +33,22 @@ module Decidim
               symboles.include? rule
             end.all?
           end.any?
-
           # If it's a cop fire it, else if it's a suspicous, fire it.
           if fire_spam_cop && obvious_spam_cop
             obvious_spam_cop.call(
-              errors,
-              author,
-              obvious_spam_cop_options,
-              tested_content
+              errors: errors,
+              suspicious_user: author,
+              config: obvious_spam_cop_options,
+              reportable: author,
+              justification: "comment: " + tested_content
             )
           elsif fire_suspicious_cop && suspicious_spam_cop
             suspicious_spam_cop.call(
-              errors,
-              author,
-              suspicious_spam_cop_options,
-              tested_content
+              errors: errors,
+              suspicious_user: author,
+              reportable: author,
+              config: suspicious_spam_cop_options,
+              justification:  "comment: " + tested_content
             )
           end
         end
@@ -71,6 +72,7 @@ module Decidim
           return nil unless cop
           cop
         end
+
         def suspicious_spam_cop
           cop_key = suspicious_spam_cop_options["handler_name"]
           return nil unless cop_key
@@ -87,8 +89,19 @@ module Decidim
           context.author || nil
         end
 
+        def scan_context
+          {
+            validator: commentable.commentable_type == "Decidim::Comments::Comment" ? "comment-reply" : "comment",
+            is_updating: id.present?,
+            date: id.present? ? updated_at : DateTime.now,
+            current_organization: context.current_organization,
+            author: context.author
+          }
+        end
+
         def spam_scanners
           spam_config.comments.scans.map do |s, options|
+            options["context"] = scan_context
             [Scans::ScansRepository.instance.strategy(s), options]
           end
         end
