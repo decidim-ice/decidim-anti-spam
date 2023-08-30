@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency "decidim-core", Decidim::SpamSignal.decidim_version
   s.add_dependency "decidim-admin", Decidim::SpamSignal.decidim_version
   s.add_dependency "decidim-comments", Decidim::SpamSignal.decidim_version
+  s.add_dependency "deface", ">= 1.8.1"
 
 end
