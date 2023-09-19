@@ -11,7 +11,7 @@
 /spec/dummy
 /bin/rails
 .DS_Store
-
+.migrations
 # rspec failure tracking
 .rspec-failures
 
