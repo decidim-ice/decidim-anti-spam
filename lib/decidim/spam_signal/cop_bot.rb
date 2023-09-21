@@ -14,10 +14,12 @@ module Decidim
           usr.confirmed_at = ::Time.current
           usr.locale = ::I18n.default_locale
           usr.admin = true
-
+          usr.email_on_moderations = false
           usr.tos_agreement = true
           usr.personal_url = ""
           usr.about = ""
+          usr.notification_types = "none"
+          usr.email_on_notification = false
           usr.accepted_tos_version = organization.tos_version
           usr.admin_terms_accepted_at = ::Time.current
         end
@@ -26,6 +28,9 @@ module Decidim
           email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org"),
           confirmed_at: ::Time.current,
           admin: true,
+          email_on_moderations: false,
+          email_on_notification: false,
+          notification_types: "none",
           accepted_tos_version: organization.tos_version,
           admin_terms_accepted_at: ::Time.current
         )
