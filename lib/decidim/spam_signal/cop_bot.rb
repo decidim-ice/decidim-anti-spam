@@ -4,27 +4,33 @@ module Decidim
   module SpamSignal
     class CopBot
       def self.get(organization)
-        suffixe = Decidim::User.where(nickname: "bot").count
         user_bot = Decidim::User.find_or_create_by!(
-          email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org")
+          nickname: "bot"
         ) do |usr|
           usr.name = "bot"
-          usr.nickname = "bot#{suffixe if suffixe > 0}"
+          usr.email = ENV.fetch("USER_BOT_EMAIL", "bot@example.org")
           usr.password = usr.password_confirmation = ::Devise.friendly_token
           usr.organization = organization
           usr.confirmed_at = ::Time.current
           usr.locale = ::I18n.default_locale
           usr.admin = true
-
+          usr.email_on_moderations = false
           usr.tos_agreement = true
           usr.personal_url = ""
           usr.about = ""
+          usr.notification_types = "none"
+          usr.email_on_notification = false
           usr.accepted_tos_version = organization.tos_version
           usr.admin_terms_accepted_at = ::Time.current
         end
         user_bot.update(
           blocked: false,
+          email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org"),
+          confirmed_at: ::Time.current,
           admin: true,
+          email_on_moderations: false,
+          email_on_notification: false,
+          notification_types: "none",
           accepted_tos_version: organization.tos_version,
           admin_terms_accepted_at: ::Time.current
         )
