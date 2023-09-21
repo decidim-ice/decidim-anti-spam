@@ -6,7 +6,7 @@ module Decidim
       def self.get(organization)
         suffixe = Decidim::User.where(nickname: "bot").count
         user_bot = Decidim::User.find_or_create_by!(
-          email: ENV.fetch("USER_BOT_EMAIL", "bot@decidim.org")
+          email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org")
         ) do |usr|
           usr.name = "bot"
           usr.nickname = "bot#{suffixe if suffixe > 0}"

@@ -62,11 +62,7 @@ module Decidim
           end
           # append the new bad things (to have a log).
           user_report.update(details: "#{user_report.details}#{now_tag} #{justification}") unless is_new
-          admin_accountable = Decidim::User.where(admin: true, email: ENV.fetch("ANTISPAM_ADMIN", "")).first
-          email_list = admin_accountable ? [admin_accountable] : current_organization.admins
-          email_list.each do |admin| 
-            Decidim::UserReportJob.perform_later(admin, admin_reporter, "spam", reportable)
-          end if send_emails
+          Decidim::UserReportJob.perform_later(admin, admin_reporter, "spam", reportable)
         end
 
       end

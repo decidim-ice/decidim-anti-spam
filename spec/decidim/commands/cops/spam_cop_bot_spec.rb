@@ -8,22 +8,22 @@ describe Decidim::SpamSignal::CopBot::class do
   context "#get" do
     it "create a bot user from USER_BOT_EMAIL" do
       expect do
-        ENV["USER_BOT_EMAIL"] = "test@decidim.com"
+        ENV["USER_BOT_EMAIL"] = "test@example.org"
         Decidim::SpamSignal::CopBot.get(organization)
       end.to change(Decidim::User, :count).by(1)
-      expect(Decidim::User.last.email).to eq("test@decidim.com")
+      expect(Decidim::User.last.email).to eq("test@example.org")
     end
 
     it "doesn't create a bot user if it already exists" do
-      ENV["USER_BOT_EMAIL"] = "test@decidim.com"
-      create(:user, :admin, organization: organization, email: "test@decidim.com")
+      ENV["USER_BOT_EMAIL"] = "test@example.org"
+      create(:user, :admin, organization: organization, email: "test@example.org")
       expect do
         Decidim::SpamSignal::CopBot.get(organization)
       end.to change(Decidim::User, :count).by(0)
     end
 
     it "Use a suffix on nickname if the bot nickname is taken, and create the bot user anyway" do
-      ENV["USER_BOT_EMAIL"] = "test@decidim.com"
+      ENV["USER_BOT_EMAIL"] = "test@example.org"
       create(:user, :admin, organization: organization, email: "test@me.com", nickname: "bot")
       expect do
         bot = Decidim::SpamSignal::CopBot.get(organization)
