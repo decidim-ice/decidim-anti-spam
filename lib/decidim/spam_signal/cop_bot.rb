@@ -23,6 +23,8 @@ module Decidim
         end
         user_bot.update(
           blocked: false,
+          email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org"),
+          confirmed_at: ::Time.current,
           admin: true,
           accepted_tos_version: organization.tos_version,
           admin_terms_accepted_at: ::Time.current
