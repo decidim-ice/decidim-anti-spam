@@ -5,12 +5,16 @@ fr:
       decidim/spam_signal/config:
         one: "Configuration Anti-Spam"
         other: "Configurations Anti-Spam"
-
+  devise:
+    failure:
+      locked:  |
+        Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
+        /pages/terms-and-conditions
   decidim:
     account:
-      locked: |
+      locked:  |
         Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
-        participer.ge.ch/pages/terms-and-conditions
+        /pages/terms-and-conditions
     spam_signal:
       spam_signal_justification: |
         L'anti-spam a détecter du contenu suspect.
