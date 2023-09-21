@@ -4,8 +4,11 @@ class CopbotEmail < ActiveRecord::Migration[5.2]
   def change
     # bot email should never be bot@decidim.org
     cop = Decidim::User.where(nickname: "bot").first
-    cop.update(email: ENV.fetch("USER_BOT_EMAIL", "bot@example.org"))
-    Decidim::User.where(email: "bot@decidim.org").each |legacy_bot|
+    cop.email = ENV.fetch("USER_BOT_EMAIL", "bot@example.org")
+    cop.skip_confirmation!
+    cop.save
+    Decidim::User.where(email: "bot@decidim.org").each do |legacy_bot|
+      Decidim::UserReport.where(user: legacy_bot).update(user: cop)
       legacy_bot.destroy
     end
   end
