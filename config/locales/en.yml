@@ -15,7 +15,7 @@ en:
       locked: Your account is locked, check your emails to get unlock instructions
     spam_signal:
       spam_signal_justification: |
-        The spam filter have identified a spamming content.
+        Antispam hide this content as the author or the content itself looks suspicious
       errors:
         spam: Your comment looks like spam.
       forms:
