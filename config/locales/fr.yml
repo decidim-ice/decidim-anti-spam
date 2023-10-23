@@ -10,6 +10,10 @@ fr:
       locked:  |
         Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
         /pages/terms-and-conditions
+  activemodel:
+    attributes:
+      lock:
+        is_email_unlockable: "Permettre de déverouiller le compte par email"
   decidim:
     account:
       locked:  |

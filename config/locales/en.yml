@@ -5,7 +5,10 @@ en:
       decidim/spam_signal/config:
         one: "Anti-Spam Configuration"
         other: "Anti-Spam Configurations"
-
+  devise:
+    failure:
+      locked:  |
+        Your account is locked, check your emails to get unlock instructions
   activemodel:
     attributes:
       lock:
