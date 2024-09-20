@@ -2,7 +2,7 @@
 
 module Decidim
   module SpamSignal
-    class ApplicationHandler < ::Rectify::Command
+    class ApplicationHandler < Decidim::SpamSignal::Command
       def self.form
         raise Error, "Handler need to define a form or return null"
       end

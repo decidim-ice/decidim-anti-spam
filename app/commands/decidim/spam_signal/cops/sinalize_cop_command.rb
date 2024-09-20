@@ -9,15 +9,16 @@ module Decidim
         end
 
         def call
-          errors.add(
-            error_key,
-            I18n.t("errors.spam",
-              scope: "decidim.spam_signal",
-              default: "this looks like spam."
+          if config["forbid_creation_enabled"]
+            errors.add(
+              error_key,
+              I18n.t("errors.spam",
+                     scope: "decidim.spam_signal",
+                     default: "this looks like spam.")
             )
-          ) if config['forbid_creation_enabled']
-          sinalize!(config['send_emails_enabled'])
-          broadcast(config['forbid_creation_enabled'] ? :restore_value : :save)
+          end
+          sinalize!(is_user_reported: config["send_emails_enabled"])
+          broadcast(config["forbid_creation_enabled"] ? :restore_value : :save)
         end
       end
     end

@@ -9,7 +9,6 @@ module Decidim
       # Strategies repository
       class ScansRepository
         include Singleton
-        attr_reader :strategies
 
         def initialize
           @_strategies = {}
@@ -21,7 +20,8 @@ module Decidim
 
         def unset_strategy(strategy)
           key = strategy.to_sym
-          raise Error, "Cop's Strategy #{strategy} does not exists" unless @_strategies.key? key
+          raise Error, "Cop's Strategy #{strategy} does not exists" unless @_strategies.has_key? key
+
           @_strategies.except!(key)
         end
 
@@ -34,8 +34,9 @@ module Decidim
         end
 
         def strategy(strategy)
-          key = "#{strategy}".to_sym
-          return @_strategies[key] if @_strategies.key? key
+          key = strategy.to_s.to_sym
+          return @_strategies[key] if @_strategies.has_key? key
+
           nil
         end
       end

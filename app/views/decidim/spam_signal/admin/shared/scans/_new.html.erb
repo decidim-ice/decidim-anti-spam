@@ -1,8 +1,11 @@
-<%= link_to("Go back", spam_filter_reports_path) %>
+<%= link_to(spam_filter_reports_path) do %>
+  <%= icon("chevron-left") %>
+  <span><%= t("decidim.spam_signal.admin.actions.go_back") %></span>
+<% end %>
 
 <div class="content spam_signal__section">
   <h1 class="card-title">
-    <%= t("headings.title", scope: locals[:i18n_scope]).upcase %> (<% if @form %>2<% else %>1<% end %>/2)
+    <%= t("headings.title", scope: i18n_scope).upcase %> (<% if @form %>2<% else %>1<% end %>/2)
   </h1>
 <div>
 
@@ -13,7 +16,7 @@
     <em><%= t("description", scope: current_scanner.i18n_key) %></em>
   </div>
 </div>
-    <%= decidim_form_for(@form, url: routes.send(locals[:create_path], config_id: current_config.id), builder: Decidim::SpamSignal::SpamSettingsFormBuilder, method: :post, html: {class: "callout"}) do |f| %>
+    <%= decidim_form_for(@form, url: routes.send(create_path, config_id: current_config.id), builder: Decidim::SpamSignal::SpamSettingsFormBuilder, method: :post, html: {class: "callout"}) do |f| %>
       <div class="form-fields">
         <em><%= t("#{current_scanner.i18n_key}.description", default: "") %></em>
         <%= f.all_fields %>
@@ -25,10 +28,10 @@
     <% end %>
   <% else %>
     <div class="callout">
-      <h2><%= t("headings.choose_scan", scope: locals[:i18n_scope]) %></h2>
+      <h2><%= t("headings.choose_scan", scope: i18n_scope) %></h2>
       <div class="stacked button-group">
         <% available_scanners.each do |scan| %>
-          <%= link_to(routes.send(locals[:new_path], config_id: current_config.id, id: scan.handler_name), class: "button") do %>
+          <%= link_to(routes.send(new_path, config_id: current_config.id, id: scan.handler_name), class: "button") do %>
             <strong><%= t("#{scan.i18n_key}.name").upcase %></strong><br />
             <em><%= t("#{scan.i18n_key}.description", default: "") %></em>
           <% end %>

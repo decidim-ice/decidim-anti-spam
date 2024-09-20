@@ -1,5 +1,9 @@
-<%= link_to("Go back", spam_filter_reports_path) %>
-    <h1><%= t("headings.title", scan: t("name", scope: current_scanner.i18n_key) ,scope: locals[:i18n_scope]) %></h1>
+<%= link_to(spam_filter_reports_path) do %>
+  <%= icon("chevron-left") %>
+  <span><%= t("decidim.spam_signal.admin.actions.go_back") %></span>
+<% end %>
+
+<h1><%= t("headings.title", scan: t("name", scope: current_scanner.i18n_key) ,scope: i18n_scope) %></h1>
 
 <div class="grid-x grid-margin-y callout">
   <div class="cell small-10">
@@ -7,13 +11,16 @@
     <em><%= t("description", scope: current_scanner.i18n_key) %></em>
   </div>
   <div class="cell small-2">
-    <%= button_to("🗑 Remove scan", routes.send(locals[:destroy_path], config_id: current_config.id, id: current_scanner.handler_name), method: :delete, class: "button small alert") %>
+    <%= button_to(routes.send(destroy_path, config_id: current_config.id, id: current_scanner.handler_name), method: :delete, class: "button small alert") do %>
+      <%= icon("trash") %>
+      <span><%= t("decidim.spam_signal.admin.actions.remove", resource: t("name", scope: current_scanner.i18n_key)) %></span>
+    <% end %>
   </div>
 </div>
 
   <div class="form-fields">
-    <%= decidim_form_for(@form, url: routes.send(locals[:update_path], current_config.id, current_scanner.handler_name), builder: Decidim::SpamSignal::SpamSettingsFormBuilder, method: :patch, html: {class: "callout"}) do |f| %>
-        <h5><%= t("headings.caption", scan: t("name", scope: current_scanner.i18n_key) ,scope: locals[:i18n_scope]) %></h5>
+    <%= decidim_form_for(@form, url: routes.send(update_path, current_config.id, current_scanner.handler_name), builder: Decidim::SpamSignal::SpamSettingsFormBuilder, method: :patch, html: {class: "callout"}) do |f| %>
+        <h5><%= t("headings.caption", scan: t("name", scope: current_scanner.i18n_key) ,scope: i18n_scope) %></h5>
         <%= f.all_fields %>
         <input type="hidden" name="id" value="<%= current_scanner.handler_name %>" />
         <div class="actions">

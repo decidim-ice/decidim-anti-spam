@@ -4,9 +4,10 @@ module Decidim
   module SpamSignal
     module Extractors
       class CommentExtractor < Extractor
-        def self.extract(comment, config)
+        def self.extract(comment, _config)
           body = comment.attributes[:body]
-          return "" unless body.present?
+          return "" if body.blank?
+
           body
         end
       end

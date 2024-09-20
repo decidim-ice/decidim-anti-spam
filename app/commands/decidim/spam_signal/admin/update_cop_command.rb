@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Admin
-      class UpdateCopCommand < Rectify::Command
+      class UpdateCopCommand < Decidim::SpamSignal::Command
         attr_reader :form,
                     :current_config,
                     :settings_repo
@@ -18,8 +18,9 @@ module Decidim
 
         def call
           return broadcast(:invalid) if form.invalid?
+
           begin
-            settings_repo.set_cop(
+            settings_repo.update_cop_attribute(
               { **attributes, "handler_name" => form.handler_name, "type" => form.context.type }
             )
             current_config.save_settings
@@ -31,10 +32,11 @@ module Decidim
 
         private
 
-          def attributes
-            return {} unless form
-            form.attributes.stringify_keys!
-          end
+        def attributes
+          return {} unless form
+
+          form.attributes.stringify_keys!
+        end
       end
     end
   end

@@ -1,0 +1,23 @@
+#
+# Your Crowdin credentials
+#
+base_path: .
+base_url: https://api.crowdin.com
+api_token: "insecure_api_token"
+project_id: "project_id"
+
+#
+# Choose file structure in Crowdin
+# e.g. true or false
+#
+preserve_hierarchy: true
+
+#
+# Files configuration
+#
+files: [
+  {
+    "source": "/config/locales/decidim_spam_module.en.yml",
+    "translation": "/config/locales/decidim_spam_module.%two_letters_code%.yml",
+  }
+]
