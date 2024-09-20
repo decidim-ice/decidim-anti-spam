@@ -84,14 +84,18 @@ crowdin::upload:
     - npm install -g @crowdin/cli
     - crowdin upload -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
     - crowdin status -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
-  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" && $GITLAB_USER_ID == $TRANSLATIONBOT_ID'
+      when: always
 ##
 # Create a Merge request in the project with updated 
 # crowndin translations.
 crowdin::merge_request:
   stage: translate
   image: node:18.20
-  extends: .publication_rules
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" && $GITLAB_USER_ID != $TRANSLATIONBOT_ID'
+      when: always
   before_script:
     - apt-get update && apt-get install -y git
   script:
