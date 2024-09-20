@@ -5,6 +5,9 @@ en:
       decidim/spam_signal/config:
         one: "Anti-Spam Configuration"
         other: "Anti-Spam Configurations"
+      decidim/spam_signal/rule:
+        one: "Rule"
+        other: "Rules"
   devise:
     failure:
       locked:  |
@@ -29,12 +32,12 @@ en:
         forbidden_tlds_form:
           forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
         lock_settings_form:
-          sinalize_user_enabled: "After locking, sinalize the user"
+          sinalize_user_enabled: "After locking, report the user (no emails to admin)"
           hide_comments_enabled: "After locking, hide all the user's comments"
           forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
         sinalize_settings_form:
           forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
-          send_emails_enabled: "Send emails after sinalizations?"
+          send_emails_enabled: "Send emails after reports?"
       scans:
         word:
           name: "Dictionnary"
@@ -45,10 +48,15 @@ en:
         forbidden_tlds:
           name: "Forbidden TLDs"
           description: "Forbid a list of domain extension, allow all by default."
+        outputs:
+          forbidden_tlds_found: Found a forbidden TLDs
+          word_found: Match dictionary
+          and_word: " AND "
+          if_word: "IF "
       cops:
         sinalize:
-          name: "Sinalize"
-          description: "Sinalize the user to the administrators"
+          name: "Report"
+          description: "Report the user to the administrators"
         lock:
           name: "Lock"
           description: "Lock the user, and send unlock instructions by email"
@@ -56,12 +64,58 @@ en:
       admin:
         actions:
           save: "Save"
+          go_back: "Back"
+          remove: "Delete %{resource}"
+        cops:
+          notices:
+            bad_destroy: "An error occures while deleting %{resource} agent"
+            destroy_ok: "The %{resource} agent has been deleted"
+            bad_update: "An error occures while updating %{resource} agent"
+            update_ok: "The %{resource} agent is now active"
+            bad_create: "An error occures while creating %{resource} agent"
+            create_ok: "The %{resource} is now active"
+            not_found: "Agent not found"
+          no_cops: "Do nothing"
+        scans:
+          notices:
+            bad_destroy: "An error occures while deleting %{resource} scanner"
+            destroy_ok: "The %{resource} scanner has been deleted"
+            bad_update: "An error occures while updating %{resource} scanner"
+            update_ok: "The %{resource} scanner is now active"
+            bad_create: "An error occures while creating %{resource} scanner"
+            create_ok: "The %{resource} is now active"
+            not_found: "Scanner not found"
+        rules:
+          notices:
+            bad_destroy: "An error occures while deleting the rule"
+            destroy_ok: "The rule has been deleted"
+            bad_update: "An error occures while updating the rule"
+            update_ok: "The rule is now active"
+            bad_create: "An error occures while creating rule"
+            create_ok: "The rule is now active"
+            not_found: "Rule not found"
+            no_content: "No rules have been checked, delelete the rule instead saving an empty rule"
+
         spam_filter_reports:
           index:
             headings:
               title: "ANTI-SPAM"
-              comment_settings: "Comments"
-              profile_settings: "Profiles"
+              scanner_settings: 
+                title: Detection
+              rules_settings:
+                title: Rules
+                spam_section: "SPAM"
+                suspicious_section: "SUSPICIOUS"
+              cop_settings:
+                title: Agents
+                spam_section: "WHEN SPAM"
+                suspicious_section: "WHEN SUSPICIOUS"
+              comment_settings: 
+                title: "Comments"
+                description: "Triggered when a participant save a new comment"
+              profile_settings: 
+                title: "Profiles"
+                description: "Triggered when a participant save his/her profile."
         comment_scans:
           new:
             headings:
@@ -87,6 +141,7 @@ en:
               choose_cop: "Choose an agent active on %{type}"
               title: "%{type} agent configuration"
             form: "Customize %{type} Options"
+
         profile_scans:
           new:
             headings:
@@ -96,6 +151,7 @@ en:
             headings:
               caption: "%{scan} configurations"
               title: "Edit %{scan} Scanner"
+
         profile_rules:
           new:
             headings:
@@ -106,6 +162,7 @@ en:
             description: "Fire %{type} agent if these are all TRUE"
             headings:
               caption: "Check at least on detection symbol required to fire the rule:"
+
         profile_cops:
           edit:
             headings:

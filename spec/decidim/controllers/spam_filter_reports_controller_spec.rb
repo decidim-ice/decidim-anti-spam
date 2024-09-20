@@ -6,7 +6,7 @@ module Decidim::SpamSignal::Admin
     routes { Decidim::SpamSignal::AdminEngine.routes }
 
     let(:organization) { create(:organization) }
-    let(:current_user) { create(:user, :admin, :confirmed, organization: organization) }
+    let(:current_user) { create(:user, :admin, :confirmed, locale: organization.default_locale, organization: organization) }
 
     before do
       request.env["decidim.current_organization"] = organization

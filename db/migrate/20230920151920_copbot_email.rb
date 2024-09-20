@@ -9,6 +9,7 @@ class CopbotEmail < ActiveRecord::Migration[5.2]
       cop.skip_confirmation!
       cop.save
     end
+    # Legacy fix, ensure no @decidim.org emails are present.
     Decidim::User.where(email: "bot@decidim.org").each do |legacy_bot|
       Decidim::UserReport.where(user: legacy_bot).update(user: cop)
       legacy_bot.destroy

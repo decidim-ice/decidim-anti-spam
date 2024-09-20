@@ -7,30 +7,32 @@ module Decidim
         include FormFactory
         before_action :config
         helper Decidim::SpamSignal::Admin::SpamSignalHelper
-        helper_method :cop_type, :available_cops, :current_config, :current_cop
-        def index
-          output_symbols = scan_repository.strategies.map do |scan_name|
-            scanKlass = scan_repository.strategy(scan_name)
-            scanKlass.output_symbols
-          end.flatten
-        end
+        helper_method :cop_type, :available_cops, :current_config, :current_cop, :new_cop?
+        def index; end
 
         def destroy
           raise "Missing id" unless cop_type
+
+          cop_to_delete = resource_config.cop(cop_type)
+          cop_name = t("decidim.spam_signal.cops.#{cop_to_delete["handler_name"]}.name")
+
           RemoveCopCommand.call(
             current_config,
             resource_config,
             cop_type
-          ) do |on|
-            on(:invalid) { flash[:alert] = "Can not remove the agent" }
-            on(:ok) { flash[:notice] = "Remove has been removed"  }
+          ) do |_on|
+            on(:invalid) { flash[:alert] = t("decidim.spam_signal.admin.cops.notices.bad_destroy", resource: cop_name) }
+            on(:ok) { flash[:notice] = t("decidim.spam_signal.admin.cops.notices.destroy_ok", resource: cop_name) }
             redirect_to spam_filter_reports_path
           end
         end
 
         def update
-          raise "No agent found" unless current_cop
-          form = current_cop.form.from_params(params.require("#{cop_key}")).with_context(
+          raise t("decidim.spam_signal.admin.cops.notices.not_found") unless current_cop
+
+          cop_name = t("decidim.spam_signal.cops.#{current_cop.handler_name}.name")
+
+          form = current_cop.form.from_params(params.require(cop_key.to_s)).with_context(
             handler_name: current_cop.handler_name,
             type: cop_type
           )
@@ -38,9 +40,9 @@ module Decidim
             current_config,
             resource_config,
             form
-          ) do |on|
-            on(:invalid) { flash[:alert] = "Can not update the agent" }
-            on(:ok) { flash[:notice] = "Agent has been updated"  }
+          ) do |_on|
+            on(:invalid) { flash[:alert] = t("decidim.spam_signal.admin.cops.notices.bad_update", resource: cop_name) }
+            on(:ok) { flash[:notice] = t("decidim.spam_signal.admin.cops.notices.update_ok", resource: cop_name) }
             redirect_to spam_filter_reports_path
           end
         end
@@ -63,9 +65,12 @@ module Decidim
         end
 
         def create
-          raise "No scanner found" unless current_cop
+          raise t("decidim.spam_signal.admin.cops.notices.not_found") unless current_cop
+
+          cop_name = t("decidim.spam_signal.cops.#{current_cop.handler_name}.name")
+
           form = current_cop.form.from_params(
-            params.require("#{cop_type}".to_sym)
+            params.require(cop_type.to_s.to_sym)
           ).with_context(
             handler_name: current_cop.handler_name,
             type: cop_type
@@ -74,9 +79,9 @@ module Decidim
             current_config,
             resource_config,
             form
-          ) do |on|
-            on(:invalid) { flash[:alert] = "Can not create the agent" }
-            on(:ok) { flash[:notice] = "Agent has been created"  }
+          ) do |_on|
+            on(:invalid) { flash[:alert] = t("decidim.spam_signal.admin.cops.notices.bad_create", resource: cop_name) }
+            on(:ok) { flash[:notice] = t("decidim.spam_signal.admin.cops.notices.create_ok", resource: cop_name) }
             redirect_to spam_filter_reports_path
           end
         end
@@ -84,38 +89,47 @@ module Decidim
         def resource_config
           raise Error, "Not implemented"
         end
+
         private
-          def available_cops
-            cop_repository.strategies.map do |cop, copKlass|
-              cop_repository.strategy cop
-            end
-          end
 
-          def cop_repository
-            Decidim::SpamSignal::Cops::CopsRepository.instance
-          end
+        def new_cop?
+          params.permit(:new_cop)[:new_cop] == "true"
+        end
 
-          def current_settings
-            resource_config
+        def available_cops
+          cop_repository.strategies.map do |cop, _cop_klass|
+            cop_repository.strategy cop
           end
-          def cop_type
-            params.permit(:id)["id"] || nil
-          end
-          def cop_key
-            params.permit(:cop)["cop"] || nil
-          end
+        end
 
-          def current_cop
-            return nil unless cop_type && cop_key
-            cop_repository.strategy(cop_key)
-          end
+        def cop_repository
+          Decidim::SpamSignal::Cops::CopsRepository.instance
+        end
 
-          def current_config
-            @current_config ||= Decidim::SpamSignal::Config.where(
-              id: params.require(:config_id),
-              organization: current_organization
-            ).first!
-          end
+        def current_settings
+          resource_config
+        end
+
+        def cop_type
+          params.permit(:id)["id"] || nil
+        end
+
+        def cop_key
+          params.permit(:cop)["cop"] || nil
+        end
+
+        def current_cop
+          return nil unless cop_type && cop_key
+
+          cop_repository.strategy(cop_key)
+        end
+
+        def current_config
+          @current_config ||= Decidim::SpamSignal::Config.where(
+            id: params.require(:config_id),
+            organization: current_organization
+          ).first!
+        end
       end
     end
   end

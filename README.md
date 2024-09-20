@@ -63,7 +63,12 @@ An agent is activated by a rule with a detected content. We have for now two age
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-spam_signal", git: "https://github.com/octree-gva/decidim-module-spam_signal"
+gem 'decidim-spam_signal', '~> 0.3.1'
+```
+or 
+
+```ruby
+gem install decidim-spam_signal
 ```
 
 Then execute:
@@ -73,6 +78,61 @@ bundle
 bundle exec rails decidim_spam_signal:install:migrations
 bundle exec rails db:migrate
 ```
+
+## Local development
+For decidim version 0.27, use Gemfile.0.27. For version 0.26, use Gemfile.0.26
+```
+cp Gemfile.0.27 Gemfile
+``` 
+
+First, you need to run an empty database with a decidim dev container which runs nothing.
+```
+docker-compose down -v --remove-orphans
+docker-compose up -d
+```
+
+Once created, you access the decidim container
+```
+# Get the id of the decidim dev container
+docker ps --format {{.ID}} --filter=label=org.label-schema.name=decidim
+# 841ae977c7da
+docker exec -it 841ae977c7da bash
+```
+You are now in bash, run manually. This will check your environment and do migrations if needed
+```
+bundle exec rake decidim_spam_signal_admin:install:migrations
+docker-entrypoint
+```
+
+You are now ready to use your container in the way you want for development:
+
+* Run a rails seed: `bundle exec rails db:seed`
+* Have live-reload on your assets: `bin/webpack-dev-server`
+* Execute tasks, like `bundle exec rails g migration AddSomeColumn`
+* Run the rails server: `bundle exec rails s -b 0.0.0.0`
+* etc.
+
+To stop everything, uses:
+- `docker-compose down` to stop the containers
+- `docker-compose down -v` to stop the containers and remove all previously saved data.
+
+### Debugging
+To debug something on the container:
+1. Ensure `decidim-app` is running
+```bash
+docker ps --all
+#   CONTAINER ID   IMAGE                           COMMAND                  CREATED        STATUS        PORTS                                            NAMES
+#   841ae977c7da   decidim-module-spam_signal-decidim-app   "sleep infinity"   32 minutes ago   Up 29 minutes   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:3035->3035/tcp, :::3035->3035/tcp   decidim-spam_signal-app <-------- THIS ONE
+#   b56adf6404d8   decidim-geo-development-app     "bin/webpack-dev-ser…"   54 seconds ago   Up 46 seconds   0.0.0.0:3035->3035/tcp   decidim-webpacker                                       decidim-installer
+#   bc1e912c3d8a   postgis/postgis:14-3.3-alpine   "docker-entrypoint.s…"   13 hours ago   Up 13 hours   0.0.0.0:5432->5432/tcp                           decidim-module-geo-pg-1
+```
+
+2. In another terminal, run `docker exec -it 841ae977c7da bash`
+3. Run
+    - `tail -f $ROOT/log/development.log` to **access logs**
+    - `bundle exec rails restart` to **restart rails server AND keeps webpacker running**
+    - `cd $ROOT` to access the `development_app`
+    - `cd $ROOT/../decidim_module_geo` to access the module directory
 
 ## Environment Variable
 

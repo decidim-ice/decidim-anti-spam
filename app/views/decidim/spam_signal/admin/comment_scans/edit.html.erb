@@ -1,8 +1,8 @@
-<%= render "decidim/spam_signal/admin/shared/scans/edit", 
+<%= render partial: "decidim/spam_signal/admin/shared/scans/edit", 
     locals: {
       update_path: "config_comment_scan_path", 
       destroy_path: "config_comment_scan_path", 
-      i18n_scope: "decidim.spam_signal.admin.comment_scans.edit",
-      current_scanner: current_scanner
+      current_scanner: current_scanner,
+      i18n_scope: "decidim.spam_signal.admin.comment_scans.edit"
     }
  %>

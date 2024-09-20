@@ -1,23 +1,30 @@
-<%= link_to("Go back", spam_filter_reports_path) %>
+<%= link_to(spam_filter_reports_path) do %>
+  <%= icon("chevron-left") %>
+  <span><%= t("decidim.spam_signal.admin.actions.go_back") %></span>
+<% end %>
 
-<% form = locals[:form] %>
 <div class="grid-x grid-margin-y callout">
   <div class="cell small-10">
     <strong><%= form.rules.keys.map(&:to_s).join(" AND ") %></strong><br />
-    <em><%= t("description", type: form.context.handler_name, scope: locals[:i18n_scope]) %></em>
+    <em><%= t("description", type: form.context.handler_name, scope: i18n_scope) %></em>
   </div>
   <div class="cell small-2">
-      <%= button_to("🗑 Remove the rule", routes.send(locals[:destroy_path], config_id: current_config.id, id: form.context.id), method: :delete, class: "button small alert") %>
+    <%= button_to(routes.send(destroy_path, config_id: current_config.id, id: form.context.id), method: :delete, class: "button small alert") do %>
+      <%= icon("trash") %>
+      <span><%= t("decidim.spam_signal.admin.actions.remove", resource: t("activerecord.models.decidim/spam_signal/rule", count: 1)) %></span>
+    <% end %>
   </div>
 </div>
 
 <div class="callout">    
-    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: routes.send(locals[:update_path], current_config.id, form.context.id), method: :patch, html: {id: "EditRule"}) do |f| %>
-      <h5><%= t("headings.caption", scope: locals[:i18n_scope]) %></h5>
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: routes.send(update_path, current_config.id, form.context.id), method: :patch, html: {id: "EditRule"}) do |f| %>
+      <h5><%= t("headings.caption", scope: i18n_scope) %></h5>
       <% available_symbols.map {|s| "#{s}" }.each do |symbol| %>
         <label for="EditRule<%= symbol.upcase %>">
           <input id="EditRule<%= symbol.upcase %>" type="checkbox" name="rules[<%=form.context.id%>][<%= symbol %>]" value="true" <%= 'checked="checked"' if form.rules["#{symbol}".to_sym]%> /> 
-          <%= symbol.titleize %>
+          <code>
+            <%= t("decidim.spam_signal.scans.outputs.#{symbol}") %>
+          </code>
           </label>
       <% end %>
       <div class="actions">

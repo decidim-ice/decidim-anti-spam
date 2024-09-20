@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Admin
-      class UpdateScannerCommand < Rectify::Command
+      class UpdateScannerCommand < Decidim::SpamSignal::Command
         attr_reader :form,
                     :current_config,
                     :settings_repo
@@ -34,13 +34,15 @@ module Decidim
 
         private
 
-          def form_blank?(form)
-            return true if form.nil?
-            attributes.blank?
-          end
-          def attributes
-            form.attributes.stringify_keys!
-          end
+        def form_blank?(form)
+          return true if form.nil?
+
+          attributes.blank?
+        end
+
+        def attributes
+          form.attributes.stringify_keys!
+        end
       end
     end
   end

@@ -7,6 +7,7 @@ require_relative "spam_signal/admin_engine"
 require_relative "spam_signal/cop_bot"
 require_relative "spam_signal/spam_settings_form_builder"
 
+require_relative "spam_signal/validators/spam_scan_validator"
 require_relative "spam_signal/validators/profile_spam_validator"
 require_relative "spam_signal/validators/comment_spam_validator"
 

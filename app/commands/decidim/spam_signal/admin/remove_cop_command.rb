@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Admin
-      class RemoveCopCommand < Rectify::Command
+      class RemoveCopCommand < Decidim::SpamSignal::Command
         attr_reader :key,
                     :current_config,
                     :settings_repo
@@ -17,13 +17,11 @@ module Decidim
         end
 
         def call
-          begin
-            settings_repo.rm_cop(key)
-            current_config.save_settings
-            broadcast(:ok, settings_repo)
-          rescue StandardError => e
-            broadcast(:invalid, e.message)
-          end
+          settings_repo.rm_cop(key)
+          current_config.save_settings
+          broadcast(:ok, settings_repo)
+        rescue StandardError => e
+          broadcast(:invalid, e.message)
         end
       end
     end

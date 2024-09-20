@@ -1,0 +1,143 @@
+##
+# Set of re-usable rules for decidim module development. 
+# You are required to set the following CI/CD variables: 
+# 
+# - CROWDIN_PERSONAL_TOKEN: protected & masked. // API Token from crowdin
+# - CROWDIN_PROJECT_ID: masked. // Project ID from crowdin
+# - TRANSLATIONBOT_ID: masked. // Project Bot `mr-translation` user id (see in repo>members tab)
+# - TRANSLATIONBOT_ACCESS_TOKEN: masked. // Project Token with name `mr-translations`
+# - GEM_HOST_API_KEY: protected & masked. // 
+stages:
+  - lint
+  - test
+  - translate
+  - publish
+variables:
+  POSTGRES_DB: decidim_test
+  POSTGRES_USER: decidim
+  POSTGRES_PASSWORD: "TEST-insecure_password"
+
+services:
+  - postgres:15
+  - redis:latest
+
+
+.development_rules:  
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_TAG'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+.publication_rules:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_TAG'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+##
+# Lint ruby code
+ruby::rubocop:  
+  extends: .development_rules
+  image: ruby:3.0.7
+  stage: lint
+  script:
+    - bundle
+    - bundle exec rubocop .
+##
+# Lint crowdin.yml configuration file
+crowdin::lint:  
+  extends: .development_rules
+  image: node:18.20
+  stage: lint
+  script:
+    - npm install -g @crowdin/cli
+    - crowdin config lint --no-progress || exit 1
+    - crowdin status -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress || exit 1
+##
+# Publish the gem un ruby gem.
+ruby::rubygem:
+  image: ruby:3.0.7
+  stage: publish
+  script:
+    - echo "---" > .credentials
+    - |
+      echo ":ci_rubygems_api_key: $GEM_HOST_API_KEY" >> .credentials
+    - chmod 0600 .credentials
+    - gem build decidim*.gemspec
+    - gem push decidim*.gem -k ci_rubygems_api_key --config-file .credentials
+  only:
+    - tags
+##
+# Upload new translation keys to crowdin
+crowdin::upload:
+  stage: translate
+  image: node:18.20
+  script:
+    - npm install -g @crowdin/cli
+    - crowdin upload -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
+    - crowdin status -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
+  when: manual
+##
+# Create a Merge request in the project with updated 
+# crowndin translations.
+crowdin::merge_request:
+  stage: translate
+  image: node:18.20
+  extends: .publication_rules
+  before_script:
+    - apt-get update && apt-get install -y git
+  script:
+    - git config --global user.email "mr-translations"
+    - git config --global user.name "$TRANSLATIONBOT_ID"
+    - npm install -g @crowdin/cli
+    - crowdin download -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
+    - crowdin status -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
+    - export BRANCH_NAME="i18n/$(date +%Y%m%d%H%M%S)"
+    - export ORIGIN="crowndin_$(date +%Y%m%d%H%M%S)"
+    - echo "add $ORIGIN=https://$TRANSLATIONBOT_ID:$TRANSLATIONBOT_ACCESS_TOKEN@git.octree.ch/$CI_PROJECT_PATH.git"
+    - git remote add $ORIGIN https://$TRANSLATIONBOT_ID:$TRANSLATIONBOT_ACCESS_TOKEN@git.octree.ch/$CI_PROJECT_PATH.git
+    - git checkout -b $BRANCH_NAME
+    - git add config/locales
+    - git commit -m "Crowdin Updates"
+    - git push $ORIGIN HEAD:$BRANCH_NAME -o merge_request.create -o merge_request.target=main
+##
+# Execute rspec and expose a spec report
+ruby::rspec:
+  image: ruby:3.0.7
+  stage: test
+  extends: .development_rules
+  artifacts:
+    when: always
+    paths:
+      - rspec.xml
+    reports:
+      junit: rspec.xml
+  variables:
+    DATABASE_HOST: "postgres"
+    # trunk-ignore(gitleaks/generic-api-key)
+    DATABASE_PASSWORD: "TEST-insecure_password"
+    DATABASE_USERNAME: "decidim"
+    DISABLED_DOCKER_COMPOSE: "true"
+    NODE_MAJOR: 18
+  before_script:
+    - apt-get update -qq && apt-get install -y ca-certificates curl gnupg
+    - mkdir -p /etc/apt/keyrings
+    - curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    - echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+    - apt-get update && apt-get install -y -qq nodejs
+    - npm install -g yarn --force
+    - gem install bundler
+    - bundle config set path 'vendor'
+    - RAILS_ENV=development bundle install -j $(nproc)
+    - bundle exec rake test_app
+  script:
+    - RAILS_ENV=test bundle exec rspec spec/decidim --format progress --format RspecJunitFormatter --out rspec.xml
+

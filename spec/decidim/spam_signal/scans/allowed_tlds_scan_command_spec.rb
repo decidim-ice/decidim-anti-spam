@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
+describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand do
   def scan_with_config(content, conf)
     Decidim::SpamSignal::Scans::AllowedTldsScanCommand.call(
       content,
@@ -25,15 +25,17 @@ describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
         }
       )
     end
-    def scan(content); scan_with_config(content, allowed_tlds_config); end
-    context "is fine" do
+
+    def scan(content) = scan_with_config(content, allowed_tlds_config)
+    context "when it is fine" do
       it("'There is no URL'") { expect(scan("There is no URL")).to be :ok }
       it("'this is not an url: crypto.finance is ok'") { expect(scan("this is not an url: crypto.finance is ok")).to be :ok }
       it("'http://good.url.com'") { expect(scan("http://good.url.com")).to be :ok }
       it("'http://www.good.url.ch'") { expect(scan("http://www.good.url.ch")).to be :ok }
       it("'http://infos.com.br'") { expect(scan("http://infos.com.br")).to be :ok }
     end
-    context "found a forbidden domain" do
+
+    context "when it found a forbidden domain" do
       it("'https://good.url.gov'") { expect(scan("http:s//good.url.gov")).to be :not_allowed_tlds_found }
       it("'Check https://crypto.finance'") { expect(scan("Check https://crypto.finance")).to be :not_allowed_tlds_found }
       it("'Check http://crypto.finance") { expect(scan("Check http://crypto.finance")).to be :not_allowed_tlds_found }
@@ -54,8 +56,9 @@ describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
         }
       )
     end
-    def scan(content); scan_with_config(content, allowed_tlds_config); end
-    context "is fine" do
+
+    def scan(content) = scan_with_config(content, allowed_tlds_config)
+    context "when it is fine" do
       it("'call for dumb text'") { expect(scan("call for dumb text")).to be :ok }
       it("'http://good.url.com'") { expect(scan("http://good.url.com")).to be :ok }
       it("'Sexy https://ransomware.com'") { expect(scan("Sexy https://ransomware.com")).to be :ok }
@@ -63,5 +66,4 @@ describe Decidim::SpamSignal::Scans::AllowedTldsScanCommand::class do
       it("'https://ransomware.us let's talk") { expect(scan("https://ransomware.us let's talk")).to be :ok }
     end
   end
-
 end

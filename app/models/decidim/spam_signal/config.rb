@@ -5,7 +5,6 @@ module Decidim
     class Config < ApplicationRecord
       self.table_name = "spam_signal_config_tables"
       belongs_to :organization, foreign_key: :decidim_organization_id, class_name: "Decidim::Organization"
-      validates :organization, presence: true
       before_save :compute_settings
       def self.get_config(organization)
         Config.find_or_create_by!(organization: organization) do |conf|
@@ -15,11 +14,11 @@ module Decidim
       end
 
       def comments
-        @comment_repo ||= SpamConfigRepo.new("comments", self.comment_settings)
+        @comments ||= SpamConfigRepo.new("comments", comment_settings)
       end
 
       def profiles
-        @profile_repo ||= SpamConfigRepo.new("profiles", self.profile_settings)
+        @profiles ||= SpamConfigRepo.new("profiles", profile_settings)
       end
 
       def save_settings
@@ -29,20 +28,21 @@ module Decidim
       end
 
       private
-        def compute_settings
-          self.comment_settings = {
-            "scans" => comments.scans,
-            "rules" => comments.rules,
-            "spam_cop" => comments.spam_cop,
-            "suspicious_cop" => comments.suspicious_cop
-          }
-          self.profile_settings = {
-            "scans" => profiles.scans,
-            "rules" => profiles.rules,
-            "spam_cop" => profiles.spam_cop,
-            "suspicious_cop" => profiles.suspicious_cop
-          }
-        end
+
+      def compute_settings
+        self.comment_settings = {
+          "scans" => comments.scans,
+          "rules" => comments.rules,
+          "spam_cop" => comments.spam_cop,
+          "suspicious_cop" => comments.suspicious_cop
+        }
+        self.profile_settings = {
+          "scans" => profiles.scans,
+          "rules" => profiles.rules,
+          "spam_cop" => profiles.spam_cop,
+          "suspicious_cop" => profiles.suspicious_cop
+        }
+      end
     end
   end
 end

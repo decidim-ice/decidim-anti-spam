@@ -1,22 +1,25 @@
-<%= link_to("Go back", spam_filter_reports_path) %>
-
-<% form = locals[:form] %>
+<%= link_to(spam_filter_reports_path) do %>
+  <%= icon("chevron-left") %>
+  <span><%= t("decidim.spam_signal.admin.actions.go_back") %></span>
+<% end %>
 
 <div class="grid-x grid-margin-y callout">
   <div class="cell small-10">
-    <strong><%= t("headings.title", type: rule_type, scope: locals[:i18n_scope]).upcase %></strong><br />
-    <em><%= t("description", type: rule_type, scope: locals[:i18n_scope]) %></em>
+    <strong><%= t("headings.title", type: rule_type, scope: i18n_scope).upcase %></strong><br />
+    <em><%= t("description", type: rule_type, scope: i18n_scope) %></em>
   </div>
 </div>
 
 <div class="callout">    
-    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: routes.send(locals[:create_path], current_config.id), method: :post, html: {id: "NewRule"}) do |f| %>
-      <h5><%= t("headings.caption", scope: locals[:i18n_scope]) %></h5>
+    <%= decidim_form_for(form, builder: Decidim::SpamSignal::SpamSettingsFormBuilder, url: routes.send(create_path, current_config.id), method: :post, html: {id: "NewRule"}) do |f| %>
+      <h5><%= t("headings.caption", scope: i18n_scope) %></h5>
       <% new_id = uuid %>
       <% available_symbols.map {|s| "#{s}" }.each do |symbol| %>
         <label for="NewRule<%= symbol.upcase %>">
           <input id="NewRule<%= symbol.upcase %>" type="checkbox" name="rules[<%=new_id%>][<%= symbol %>]" value="true" />
-          <%= symbol.titleize %>
+          <code>
+            <%= t("decidim.spam_signal.scans.outputs.#{symbol}") %>
+          </code>
           </label>
       <% end %>
       <input id="NewRuleType" type="hidden" name="rule" value="<%= rule_type %>" />

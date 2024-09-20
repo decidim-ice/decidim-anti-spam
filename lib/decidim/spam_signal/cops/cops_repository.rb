@@ -10,10 +10,10 @@ module Decidim
       class CopsRepository
         include Singleton
         attr_reader :strategies
+
         def initialize
           # Default strategies, can add others through set_strategy
-          @strategies = {
-          }
+          @strategies = {}
         end
 
         def register(strategy, command_klass)
@@ -22,13 +22,15 @@ module Decidim
 
         def unset_strategy(strategy)
           key = strategy.to_sym
-          raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.key? key
+          raise Error, "Cop's Strategy #{strategy} does not exists" unless @strategies.has_key? key
+
           @strategies.except!(key)
         end
 
         def strategy(strategy)
           key = strategy.to_sym
-          return @strategies[key] if @strategies.key? key
+          return @strategies[key] if @strategies.has_key? key
+
           nil
         end
       end

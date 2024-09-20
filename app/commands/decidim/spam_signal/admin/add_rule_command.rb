@@ -3,7 +3,7 @@
 module Decidim
   module SpamSignal
     module Admin
-      class AddRuleCommand < Rectify::Command
+      class AddRuleCommand < Decidim::SpamSignal::Command
         attr_reader :form,
                     :current_config,
                     :settings_repo,
@@ -23,8 +23,8 @@ module Decidim
 
           begin
             rule = {}
-            rule["#{id}"] = attributes
-            rule["#{id}"]["handler_name"] = form.handler_name
+            rule[id.to_s] = attributes
+            rule[id.to_s]["handler_name"] = form.handler_name
             settings_repo.add_rule(rule)
             current_config.save_settings
             broadcast(:ok, settings_repo)
@@ -35,13 +35,15 @@ module Decidim
 
         private
 
-          def form_blank?(form)
-            return true if form.nil?
-            attributes.blank?
-          end
-          def attributes
-            form.attributes.filter { |_i, v| v.present? }.stringify_keys!
-          end
+        def form_blank?(form)
+          return true if form.nil?
+
+          attributes.blank?
+        end
+
+        def attributes
+          form.attributes.filter { |_i, v| v.present? }.stringify_keys!
+        end
       end
     end
   end
