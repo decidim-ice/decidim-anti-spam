@@ -1,5 +1,5 @@
 ---
-en:
+pt:
   activerecord:
     models:
       decidim/spam_signal/config:
@@ -11,46 +11,46 @@ en:
   devise:
     failure:
       locked: |
-        Your account is locked, an email has been sent with unlock instructions
+        Your account is locked, check your emails to get unlock instructions
   activemodel:
     attributes:
       lock:
         is_email_unlockable: "Can unlock its account by email"
   decidim:
     account:
-      locked: Your account is locked, an email has been sent with unlock instructions
+      locked: Your account is locked, check your emails to get unlock instructions
     spam_signal:
       spam_signal_justification: |
-        Anti-Spam: This content has been hidden. The classification process is automatic, to fill a complaint, use our support email
+        Antispam hide this content as the author or the content itself looks suspicious
       errors:
-        spam: Our anti-spam flagged this content.
+        spam: Your comment looks like spam.
       forms:
         word_settings_form:
-          stop_list_words_csv: "Suspicious Words. Add one word per line"
+          stop_list_words_csv: "Suspicious Words, one per line"
         allowed_tlds_form:
-          allowed_tlds_csv: "Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated"
+          allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
         forbidden_tlds_form:
-          forbidden_tlds_csv: "List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated"
+          forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
         lock_settings_form:
-          sinalize_user_enabled: "After locking the account, report it. The report won't send any email to admins"
-          hide_comments_enabled: "After locking the user, hide all its comments"
-          forbid_creation_enabled: "Avoid user to save this data"
+          sinalize_user_enabled: "After locking, report the user (no emails to admin)"
+          hide_comments_enabled: "After locking, hide all the user's comments"
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
         sinalize_settings_form:
-          forbid_creation_enabled: "Avoid the user to save this data"
-          send_emails_enabled: "Send email to admin after reports?"
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
+          send_emails_enabled: "Send emails after reports?"
       scans:
         word:
-          name: "Dictionary"
-          description: "List of forbidden words"
+          name: "Dictionnary"
+          description: "List forbidden words"
         allowed_tlds:
           name: "Allowed TLDs"
-          description: "Allow a list of domain extension, and ban the others."
+          description: "Allow a list of domain extension, and ban all the others."
         forbidden_tlds:
           name: "Forbidden TLDs"
-          description: "Forbid a list of domain extension, allow all the others."
+          description: "Forbid a list of domain extension, allow all by default."
         outputs:
-          forbidden_tlds_found: Forbidden domain extensions (TLDs) found 
-          word_found: Word matches with dictionary
+          forbidden_tlds_found: Found a forbidden TLDs
+          word_found: Match dictionary
           and_word: " AND "
           if_word: "IF "
       cops:

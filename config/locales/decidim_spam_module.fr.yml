@@ -3,113 +3,164 @@ fr:
   activerecord:
     models:
       decidim/spam_signal/config:
-        one: "Configuration Anti-Spam"
-        other: "Configurations Anti-Spam"
+        one: "Anti-Spam Configuration"
+        other: "Anti-Spam Configurations"
+      decidim/spam_signal/rule:
+        one: "Rule"
+        other: "Rules"
   devise:
     failure:
-      locked:  |
-        Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
-        /pages/terms-and-conditions
+      locked: |
+        Your account is locked, check your emails to get unlock instructions
   activemodel:
     attributes:
       lock:
-        is_email_unlockable: "Permettre de déverouiller le compte par email"
+        is_email_unlockable: "Can unlock its account by email"
   decidim:
     account:
-      locked:  |
-        Votre compte à été bloqué par notre système, veuillez consulter nos termes et conditions ici: 
-        /pages/terms-and-conditions
+      locked: Your account is locked, check your emails to get unlock instructions
     spam_signal:
       spam_signal_justification: |
-        L'anti-spam a détecter du contenu suspect.
+        Antispam hide this content as the author or the content itself looks suspicious
       errors:
-        spam: "Votre commentaire semble être du spam. "
+        spam: Your comment looks like spam.
       forms:
         word_settings_form:
-          stop_list_words_csv: "Mots clés interdits, un par ligne"
+          stop_list_words_csv: "Suspicious Words, one per line"
         allowed_tlds_form:
-          allowed_tlds_csv: "Liste des domaines (comme `.ch`) qui sont permis, séparé par des virgules"
+          allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
         forbidden_tlds_form:
-          forbidden_tlds_csv: "Liste des domaines (comme `.finance`) qui sont interdits, séparé par des virgules"
+          forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
         lock_settings_form:
-          sinalize_user_enabled: "Après vérouillage, signaliser l'utilisateur"
-          hide_comments_enabled: "Après vérouillage, cacher tous les commentaires de l'utilisateur"
+          sinalize_user_enabled: "After locking, report the user (no emails to admin)"
+          hide_comments_enabled: "After locking, hide all the user's comments"
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
         sinalize_settings_form:
-          forbid_creation_enabled: "Empêcher le contenu d'être sauvé"
+          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
+          send_emails_enabled: "Send emails after reports?"
       scans:
         word:
-          name: "Mot-clés"
-          description: "Dictionnaire de mot-clés interdits."
+          name: "Dictionnary"
+          description: "List forbidden words"
         allowed_tlds:
-          name: "Extensions permises"
-          description: "Autorise une liste d'extension de domaines, et interdit tous les autres."
+          name: "Allowed TLDs"
+          description: "Allow a list of domain extension, and ban all the others."
         forbidden_tlds:
-          name: "Extensions interdites"
-          description: "Interdit une liste d'extension de domaines, et autorise tous les autres."
+          name: "Forbidden TLDs"
+          description: "Forbid a list of domain extension, allow all by default."
+        outputs:
+          forbidden_tlds_found: Found a forbidden TLDs
+          word_found: Match dictionary
+          and_word: " AND "
+          if_word: "IF "
       cops:
         sinalize:
-          name: "Signaliser"
-          description: "Signalise l'utilisateur aux administrateurs"
+          name: "Report"
+          description: "Report the user to the administrators"
         lock:
-          name: "Vérouiller"
-          description: "Vérouille temporairement l'utilisateur, et lui envoie des instructions de déverouilage."
-
+          name: "Lock"
+          description: "Lock the user, and send unlock instructions by email"
       admin:
         actions:
-          save: "Sauver"
+          save: "Save"
+          go_back: "Back"
+          remove: "Delete %{resource}"
+        cops:
+          notices:
+            bad_destroy: "An error occures while deleting %{resource} agent"
+            destroy_ok: "The %{resource} agent has been deleted"
+            bad_update: "An error occures while updating %{resource} agent"
+            update_ok: "The %{resource} agent is now active"
+            bad_create: "An error occures while creating %{resource} agent"
+            create_ok: "The %{resource} is now active"
+            not_found: "Agent not found"
+          no_cops: "Do nothing"
+        scans:
+          notices:
+            bad_destroy: "An error occures while deleting %{resource} scanner"
+            destroy_ok: "The %{resource} scanner has been deleted"
+            bad_update: "An error occures while updating %{resource} scanner"
+            update_ok: "The %{resource} scanner is now active"
+            bad_create: "An error occures while creating %{resource} scanner"
+            create_ok: "The %{resource} is now active"
+            not_found: "Scanner not found"
+        rules:
+          notices:
+            bad_destroy: "An error occures while deleting the rule"
+            destroy_ok: "The rule has been deleted"
+            bad_update: "An error occures while updating the rule"
+            update_ok: "The rule is now active"
+            bad_create: "An error occures while creating rule"
+            create_ok: "The rule is now active"
+            not_found: "Rule not found"
+            no_content: "No rules have been checked, delelete the rule instead saving an empty rule"
         spam_filter_reports:
           index:
             headings:
               title: "ANTI-SPAM"
-              comment_settings: "Commentaires"
-              profile_settings: "Profils utilisateurs"
+              scanner_settings:
+                title: Detection
+              rules_settings:
+                title: Rules
+                spam_section: "SPAM"
+                suspicious_section: "SUSPICIOUS"
+              cop_settings:
+                title: Agents
+                spam_section: "WHEN SPAM"
+                suspicious_section: "WHEN SUSPICIOUS"
+              comment_settings:
+                title: "Comments"
+                description: "Triggered when a participant save a new comment"
+              profile_settings:
+                title: "Profiles"
+                description: "Triggered when a participant save his/her profile."
         comment_scans:
           new:
             headings:
-              title: "Nouveau type de détection pour les commentaires"
-              choose_scan: "Sélectionner un type de détection:"
+              title: "New spam detection for comment creation"
+              choose_scan: "Chose a detection type"
           edit:
             headings:
-              title: "Modifier la détection '%{scan}'"
-              caption: "Configuration de '%{scan}'"
+              title: "Edit %{scan} Scanner"
+              caption: "%{scan} configurations"
         comment_rules:
           new:
             headings:
-              title: "Nouvelle règle pour '%{type}'"
-              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
-            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
           edit:
-            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            description: "Fire %{type} agent if these are all TRUE"
             headings:
-              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+              caption: "Check at least on detection symbol required to fire the rule:"
         comment_cops:
           edit:
             headings:
-              choose_cop: "Agent actif pour '%{type}'"
-              title: "Configuration de l'agent '%{type}'"
-            form: "Options de l'agent"
+              choose_cop: "Choose an agent active on %{type}"
+              title: "%{type} agent configuration"
+            form: "Customize %{type} Options"
         profile_scans:
           new:
             headings:
-              title: "Nouveau type de détection pour les profils utilisateurs"
-              choose_scan: "Sélectionner un type de détection:"
+              title: "New spam detection for profile creation"
+              choose_scan: "Chose a detection type"
           edit:
             headings:
-              title: "Modifier la détection '%{scan}'"
-              caption: "Configuration de '%{scan}'"
+              caption: "%{scan} configurations"
+              title: "Edit %{scan} Scanner"
         profile_rules:
           new:
             headings:
-              title: "Nouvelle règle pour '%{type}'"
-              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
-            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+              title: "New %{type} rule"
+              caption: "Check the detections symbols required to fire the rule:"
+            description: "Fire %{type} agent if these are all TRUE"
           edit:
-            description: "L'agent de '%{type}' sera déclenché si TOUS les symboles cochés sont trouvés"
+            description: "Fire %{type} agent if these are all TRUE"
             headings:
-              caption: "Cocher un symbole ou plus de détection qui déclenchent la règle:"
+              caption: "Check at least on detection symbol required to fire the rule:"
         profile_cops:
           edit:
             headings:
-              choose_cop: "Agent actif pour '%{type}'"
-              title: "Configuration de l'agent '%{type}'"
-            form: "Options de l'agent"
+              title: "%{type} agent configuration"
+              choose_cop: "Choose an agent active on %{type}"
+            form: "Customize %{type} Options"
