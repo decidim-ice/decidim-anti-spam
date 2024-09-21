@@ -11,84 +11,85 @@ fr:
   devise:
     failure:
       locked: |
-        Your account is locked, check your emails to get unlock instructions
+        Your account is locked, an email has been sent with unlock instructions
   activemodel:
     attributes:
       lock:
         is_email_unlockable: "Can unlock its account by email"
   decidim:
     account:
-      locked: Your account is locked, check your emails to get unlock instructions
+      locked: Your account is locked, an email has been sent with unlock instructions
     spam_signal:
       spam_signal_justification: |
-        Antispam hide this content as the author or the content itself looks suspicious
+        Anti-Spam: This content has been hidden. The classification process is automatic, to fill a complaint, use our support email
       errors:
-        spam: Your comment looks like spam.
+        spam: Our anti-spam flagged this content.
       forms:
         word_settings_form:
-          stop_list_words_csv: "Suspicious Words, one per line"
+          stop_list_words_csv: "Suspicious Words. Add one word per line"
         allowed_tlds_form:
-          allowed_tlds_csv: "List of permitted tlds (extensions, like `.ch`), comma-separated"
+          allowed_tlds_csv: "Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated"
         forbidden_tlds_form:
-          forbidden_tlds_csv: "List of forbidden tlds (extensions, like `.finance`), comma-separated"
+          forbidden_tlds_csv: "List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated"
         lock_settings_form:
-          sinalize_user_enabled: "After locking, report the user (no emails to admin)"
-          hide_comments_enabled: "After locking, hide all the user's comments"
-          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
+          sinalize_user_enabled: "After locking the account, report it. The report won't send any email to admins"
+          hide_comments_enabled: "After locking the user, hide all its comments"
+          forbid_creation_enabled: "Avoid user to save this data"
         sinalize_settings_form:
-          forbid_creation_enabled: "Raise a validation error (when user submit data, it won't be saved)"
-          send_emails_enabled: "Send emails after reports?"
+          forbid_creation_enabled: "Avoid the user to save this data"
+          send_emails_enabled: "Send email to admin after reports?"
       scans:
         word:
-          name: "Dictionnary"
-          description: "List forbidden words"
+          name: "Dictionary"
+          description: "List of forbidden words"
         allowed_tlds:
           name: "Allowed TLDs"
-          description: "Allow a list of domain extension, and ban all the others."
+          description: "Allow a list of domain extension, and ban the others."
         forbidden_tlds:
           name: "Forbidden TLDs"
-          description: "Forbid a list of domain extension, allow all by default."
+          description: "Forbid a list of domain extension, allow all the others."
         outputs:
-          forbidden_tlds_found: Found a forbidden TLDs
-          word_found: Match dictionary
+          forbidden_tlds_found: Forbidden domain extensions (TLDs) found
+          word_found: Word matches with dictionary
+          not_allowed_tlds_found: Not allowed domain extensions found
           and_word: " AND "
           if_word: "IF "
       cops:
         sinalize:
           name: "Report"
-          description: "Report the user to the administrators"
+          description: "Report the user to the administrator"
         lock:
-          name: "Lock"
-          description: "Lock the user, and send unlock instructions by email"
+          name: "Sign out & Lock"
+          description: "Sign Out the user, and the lock it's account. The user can log back to the platform after clicking in the instruction email"
       admin:
         actions:
           save: "Save"
-          go_back: "Back"
+          go_back: "Back to Spam Configuration"
           remove: "Delete %{resource}"
         cops:
           notices:
-            bad_destroy: "An error occures while deleting %{resource} agent"
+            bad_destroy: "An error occurs while deleting %{resource} agent"
             destroy_ok: "The %{resource} agent has been deleted"
-            bad_update: "An error occures while updating %{resource} agent"
+            bad_update: "An error occurs while updating %{resource} agent"
             update_ok: "The %{resource} agent is now active"
-            bad_create: "An error occures while creating %{resource} agent"
+            bad_create: "An error occurs while creating %{resource} agent"
             create_ok: "The %{resource} is now active"
             not_found: "Agent not found"
           no_cops: "Do nothing"
         scans:
           notices:
-            bad_destroy: "An error occures while deleting %{resource} scanner"
+            bad_destroy: "An error occurs while deleting %{resource} scanner"
             destroy_ok: "The %{resource} scanner has been deleted"
-            bad_update: "An error occures while updating %{resource} scanner"
+            bad_update: "An error occurs while updating %{resource} scanner"
             update_ok: "The %{resource} scanner is now active"
-            bad_create: "An error occures while creating %{resource} scanner"
+            bad_create: "An error occurs while creating %{resource} scanner"
             create_ok: "The %{resource} is now active"
             not_found: "Scanner not found"
         rules:
           notices:
-            bad_destroy: "An error occures while deleting the rule"
+            bad_destroy: "An error occurs while deleting the rule"
             destroy_ok: "The rule has been deleted"
-            bad_update: "An error occures while updating the rule"
+            bad_update: "An error occurs while updating the rule"
             update_ok: "The rule is now active"
             bad_create: "An error occures while creating rule"
             create_ok: "The rule is now active"
