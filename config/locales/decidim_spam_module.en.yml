@@ -49,8 +49,9 @@ en:
           name: "Forbidden TLDs"
           description: "Forbid a list of domain extension, allow all the others."
         outputs:
-          forbidden_tlds_found: Forbidden domain extensions (TLDs) found 
+          forbidden_tlds_found: Forbidden domain extensions (TLDs) found
           word_found: Word matches with dictionary
+          not_allowed_tlds_found: Not allowed domain extensions found
           and_word: " AND "
           if_word: "IF "
       cops:
