@@ -22,3 +22,4 @@ spec/decidim_dummy_app
 development_app
 
 .circleci
+node_modules
