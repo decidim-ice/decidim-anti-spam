@@ -16,7 +16,7 @@ If you're interested in joining this global effort, here's how you can contribut
 
     * Start translating: After opening the editor, you can start translating. Whether you're helping to translate a new language or improving existing translations, your contribution will make a significant impact.
 
-    * Your work will be reviewed and merge in the next minor version. Usually, we take up to 10 working days to release new minor versions. If you are in hurry, please send us an email at [support@octree.ch](support@octree.ch)
+    * Your work will be reviewed and merge in the next minor version. Usually, we take up to 10 working days to release new minor versions. If you are in hurry, please send us an email at [support@octree.ch](mailto:support@octree.ch)
 
 By contributing to the translation of Decidim Anti-Spam, you're not just translating words; you're helping to break down language barriers and making this module more accessible to users around the world.
 

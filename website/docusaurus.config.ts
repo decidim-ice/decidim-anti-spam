@@ -38,18 +38,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Useful options to enforce blogging best practices
-          onInlineTags: 'warn',
-          onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
-        },
+
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -112,10 +101,6 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Releases',
-              to: '/blog',
-            },
             {
               label: 'GitLab',
               href: 'https://git.octree.ch/decidim/decidim-spam-signal',
