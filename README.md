@@ -124,7 +124,7 @@ docker ps --all
 #   CONTAINER ID   IMAGE                           COMMAND                  CREATED        STATUS        PORTS                                            NAMES
 #   841ae977c7da   decidim-module-spam_signal-decidim-app   "sleep infinity"   32 minutes ago   Up 29 minutes   0.0.0.0:3000->3000/tcp, :::3000->3000/tcp, 0.0.0.0:3035->3035/tcp, :::3035->3035/tcp   decidim-spam_signal-app <-------- THIS ONE
 #   b56adf6404d8   decidim-geo-development-app     "bin/webpack-dev-ser…"   54 seconds ago   Up 46 seconds   0.0.0.0:3035->3035/tcp   decidim-webpacker                                       decidim-installer
-#   bc1e912c3d8a   postgis/postgis:14-3.3-alpine   "docker-entrypoint.s…"   13 hours ago   Up 13 hours   0.0.0.0:5432->5432/tcp                           decidim-module-geo-pg-1
+#   bc1e912c3d8a   postgis/postgis:14-3.3-alpine   "docker-entrypoint.s…"   13 hours ago   Up 13 hours   0.0.0.0:5432->5432/tcp                           decidim-spam-signal-pg-1
 ```
 
 2. In another terminal, run `docker exec -it 841ae977c7da bash`
