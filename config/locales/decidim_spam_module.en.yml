@@ -21,22 +21,22 @@ en:
       locked: Your account is locked, an email has been sent with unlock instructions
     spam_signal:
       spam_signal_justification: |
-        Anti-Spam: This content has been hidden. The classification process is automatic, to fill a complaint, use our support email
+        Anti-Spam: This content has been hidden. The classification process is automatic, to make a complaint, use our support email
       errors:
         spam: Our anti-spam flagged this content.
       forms:
         word_settings_form:
           stop_list_words_csv: "Suspicious Words. Add one word per line"
         allowed_tlds_form:
-          allowed_tlds_csv: "Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated"
+          allowed_tlds_csv: "List of allowed TLDs (aka extensions, like `.ch`). Comma seperated"
         forbidden_tlds_form:
           forbidden_tlds_csv: "List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated"
         lock_settings_form:
-          sinalize_user_enabled: "After locking the account, report it. The report won't send any email to admins"
-          hide_comments_enabled: "After locking the user, hide all its comments"
-          forbid_creation_enabled: "Avoid user to save this data"
+          sinalize_user_enabled: "After locking the account, report it. The report won't send any email to admins. Admins will need to block the account manually."
+          hide_comments_enabled: "After locking the user, hide all of their comments"
+          forbid_creation_enabled: "Don't allow the user to save this data"
         sinalize_settings_form:
-          forbid_creation_enabled: "Avoid the user to save this data"
+          forbid_creation_enabled: "Don't allow the user to save this data"
           send_emails_enabled: "Send email to admin after reports?"
       scans:
         word:
@@ -44,14 +44,14 @@ en:
           description: "List of forbidden words"
         allowed_tlds:
           name: "Allowed TLDs"
-          description: "Allow a list of domain extension, and ban the others."
+          description: "Allow a list of domain extensions, and ban the others."
         forbidden_tlds:
           name: "Forbidden TLDs"
-          description: "Forbid a list of domain extension, allow all the others."
+          description: "Forbid a list of domain extensions, allow all the others."
         outputs:
           forbidden_tlds_found: Forbidden domain extensions (TLDs) found
-          word_found: Word matches with dictionary
-          not_allowed_tlds_found: Not allowed domain extensions found
+          word_found: Forbidden word found
+          not_allowed_tlds_found: Forbidden domain extensions found
           and_word: " AND "
           if_word: "IF "
       cops:
@@ -60,7 +60,7 @@ en:
           description: "Report the user to the administrator"
         lock:
           name: "Sign out & Lock"
-          description: "Sign Out the user, and the lock it's account. The user can log back to the platform after clicking in the instruction email"
+          description: "Sign out the user, and then lock their account. The user can log back to the platform after clicking a link in the email they receive informing them of the action."
       admin:
         actions:
           save: "Save"
@@ -68,57 +68,57 @@ en:
           remove: "Delete %{resource}"
         cops:
           notices:
-            bad_destroy: "An error occurs while deleting %{resource} agent"
+            bad_destroy: "An error occured while deleting %{resource} agent"
             destroy_ok: "The %{resource} agent has been deleted"
-            bad_update: "An error occurs while updating %{resource} agent"
+            bad_update: "An error occured while updating %{resource} agent"
             update_ok: "The %{resource} agent is now active"
-            bad_create: "An error occurs while creating %{resource} agent"
+            bad_create: "An error occured while creating %{resource} agent"
             create_ok: "The %{resource} is now active"
             not_found: "Agent not found"
           no_cops: "Do nothing"
         scans:
           notices:
-            bad_destroy: "An error occurs while deleting %{resource} scanner"
+            bad_destroy: "An error occured while deleting %{resource} scanner"
             destroy_ok: "The %{resource} scanner has been deleted"
-            bad_update: "An error occurs while updating %{resource} scanner"
+            bad_update: "An error occured while updating %{resource} scanner"
             update_ok: "The %{resource} scanner is now active"
-            bad_create: "An error occurs while creating %{resource} scanner"
+            bad_create: "An error occured while creating %{resource} scanner"
             create_ok: "The %{resource} is now active"
             not_found: "Scanner not found"
         rules:
           notices:
-            bad_destroy: "An error occurs while deleting the rule"
+            bad_destroy: "An error occured while deleting the rule"
             destroy_ok: "The rule has been deleted"
-            bad_update: "An error occurs while updating the rule"
+            bad_update: "An error occured while updating the rule"
             update_ok: "The rule is now active"
-            bad_create: "An error occures while creating rule"
+            bad_create: "An error occured while creating rule"
             create_ok: "The rule is now active"
             not_found: "Rule not found"
-            no_content: "No rules have been checked, delelete the rule instead saving an empty rule"
+            no_content: "No rules have been checked, delete the rule instead of saving an empty rule"
         spam_filter_reports:
           index:
             headings:
               title: "ANTI-SPAM"
               scanner_settings:
-                title: Detection
+                title: Trigger
               rules_settings:
                 title: Rules
                 spam_section: "SPAM"
                 suspicious_section: "SUSPICIOUS"
               cop_settings:
                 title: Agents
-                spam_section: "WHEN SPAM"
-                suspicious_section: "WHEN SUSPICIOUS"
+                spam_section: "WHEN SPAM CONTENT DETECTED"
+                suspicious_section: "WHEN SUSPICIOUS CONTENT DETECTED"
               comment_settings:
                 title: "Comments"
-                description: "Triggered when a participant save a new comment"
+                description: "Triggered when a participant saves a new comment"
               profile_settings:
                 title: "Profiles"
-                description: "Triggered when a participant save his/her profile."
+                description: "Triggered when a participant saves their profile."
         comment_scans:
           new:
             headings:
-              title: "New spam detection for comment creation"
+              title: "New spam content detected for comment creation"
               choose_scan: "Chose a detection type"
           edit:
             headings:
@@ -128,23 +128,23 @@ en:
           new:
             headings:
               title: "New %{type} rule"
-              caption: "Check the detections symbols required to fire the rule:"
-            description: "Fire %{type} agent if these are all TRUE"
+              caption: "Check the trigger/s required to fire the rule:"
+            description: "Fire %{type} action if these are all TRUE"
           edit:
-            description: "Fire %{type} agent if these are all TRUE"
+            description: "Fire %{type} action if these are all TRUE"
             headings:
-              caption: "Check at least on detection symbol required to fire the rule:"
+              caption: "Select at least one trigger to fire the rule:"
         comment_cops:
           edit:
             headings:
-              choose_cop: "Choose an agent active on %{type}"
-              title: "%{type} agent configuration"
-            form: "Customize %{type} Options"
+              choose_cop: "Choose an action to take on %{type} content"
+              title: "%{type} content action configuration"
+            form: "Customize %{type} content options"
         profile_scans:
           new:
             headings:
               title: "New spam detection for profile creation"
-              choose_scan: "Chose a detection type"
+              choose_scan: "Choose a trigger type"
           edit:
             headings:
               caption: "%{scan} configurations"
@@ -152,16 +152,16 @@ en:
         profile_rules:
           new:
             headings:
-              title: "New %{type} rule"
-              caption: "Check the detections symbols required to fire the rule:"
-            description: "Fire %{type} agent if these are all TRUE"
+              title: "New %{type} content rule"
+              caption: "Check the triggers required to fire the rule:"
+            description: "Fire %{type} trigger if these are all TRUE"
           edit:
-            description: "Fire %{type} agent if these are all TRUE"
+            description: "Fire %{type} trigger if these are all TRUE"
             headings:
-              caption: "Check at least on detection symbol required to fire the rule:"
+              caption: "Check at least one trigger required to fire the rule:"
         profile_cops:
           edit:
             headings:
-              title: "%{type} agent configuration"
-              choose_cop: "Choose an agent active on %{type}"
-            form: "Customize %{type} Options"
+              title: "%{type} trigger configuration"
+              choose_cop: "Choose a trigger active on %{type}"
+            form: "Customize %{type} content options"
