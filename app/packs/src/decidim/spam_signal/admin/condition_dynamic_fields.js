@@ -17,6 +17,10 @@ const toggleDisabledAddConditionItem = () => {
   }
 };
 
+const autoName = (conditionItemSelector, $field) => {
+  $field.find("input").attr("name", `flow[conditions][${$(conditionItemSelector).length}][anti_spam_condition_id]`)    
+}
+
 const createDynamicFieldsForConditions = () => {
   createDynamicFields({
     placeholderId: placeholderId,
@@ -25,7 +29,10 @@ const createDynamicFieldsForConditions = () => {
     fieldSelector: conditionItemSelector,
     addFieldButtonSelector: addConditionItemSelector,
     removeFieldButtonSelector: removeConditionItemChildSelector,
-    onAddField: () => toggleDisabledAddConditionItem(),
+    onAddField: ($field) => {
+      toggleDisabledAddConditionItem();
+      autoName(conditionItemSelector, $field);
+    },
     onRemoveField: ($field) => {
       $field.remove();
       toggleDisabledAddConditionItem();

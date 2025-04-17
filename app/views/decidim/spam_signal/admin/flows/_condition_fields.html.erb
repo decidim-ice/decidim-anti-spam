@@ -6,6 +6,9 @@
       <%= icon("close-line", title: t(".remove")) %>
     </button>
   </div>
-    <%= f.select :anti_spam_condition_id, available_conditions.map { |c| ["#{c.name} (#{c.condition_type})", c.id] } %>
-    <%= f.hidden_field :anti_spam_flow_id, value: flow.id %>
+    <%= f.select :anti_spam_condition_id, 
+                  available_conditions.map { |c| ["#{c.name} (#{c.condition_type})", c.id] },
+                  {} %>
+    <%= f.hidden_field :anti_spam_flow_id, 
+                        value: flow.id %>
 </div>

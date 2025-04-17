@@ -20,11 +20,11 @@ module Decidim
 
         def edit
           trigger_type = flow.trigger_type.constantize
-          actions_form = Decidim::SpamSignal.config.actions_registry.names.filter do |action_name|
-            trigger_type.available_actions.include?(action_name)
+          actions_form = Decidim::SpamSignal.config.actions_registry.names.filter do |act_name|
+            trigger_type.available_actions.include?(act_name)
           end
-          actions_form = actions_form.map do |action_name|
-            Decidim::SpamSignal.config.actions_registry.form_for(action_name).new(**flat_action_settings(flow.action_settings || {}))
+          actions_form = actions_form.map do |act_name|
+            Decidim::SpamSignal.config.actions_registry.form_for(act_name).new(**flat_action_settings(flow.action_settings || {}))
           end
           @form ||= begin
             form = FlowForm.from_model(flow)
@@ -48,11 +48,11 @@ module Decidim
         def update
           trigger_type = flow.trigger_type.constantize
           available_actions = Decidim::SpamSignal.config.actions_registry.names
-          actions_form = available_actions.filter do |action_name|
-            trigger_type.available_actions.include?(action_name)
+          actions_form = available_actions.filter do |act_name|
+            trigger_type.available_actions.include?(act_name)
           end
-          actions_form = actions_form.map do |action_name|
-            Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(params.require(:flow).require(:action_settings))
+          actions_form = actions_form.map do |act_name|
+            Decidim::SpamSignal.config.actions_registry.form_for(act_name).from_params(params.require(:flow).require(:action_settings))
           end
           @form = FlowForm.from_params(params)
           @form.action_settings = actions_form
@@ -67,7 +67,9 @@ module Decidim
             return redirect_to flows_path, notice: t("decidim.spam_signal.admin.flows.create.success") if was_new
               redirect_to edit_flow_path(flow), notice: t("decidim.spam_signal.admin.flows.update.success")
           else
-            render :edit, flash: { alert: t("decidim.spam_signal.admin.flows.update.error") }
+            flash.now[:alert] = @form.errors.messages[:conditions].first
+            render :edit
+            #{ alert: t("decidim.spam_signal.admin.flows.update.error") }
           end
         end
 
