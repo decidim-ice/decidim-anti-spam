@@ -9,9 +9,9 @@ views = ["decidim/profiles/show",
          "decidim/user_timeline/index",
          "decidim/user_conversation/index"].freeze
 
-views.each do |view|
+views.each_with_index do |view, index|
   Deface::Override.new(virtual_path: view,
-                       name: "profiles_noindex",
+                       name: "spam_profiles_noindex_#{index}",
                        insert_after: "erb[loud]:contains('cell \"decidim/profile\"')",
                        text: "<% content_for :header_snippets do %><meta name='robots' content='noindex,nofollow'><% end %>")
 end
