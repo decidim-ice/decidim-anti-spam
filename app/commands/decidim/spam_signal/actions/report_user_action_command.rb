@@ -6,7 +6,6 @@ module Decidim
       class ReportUserActionCommand < ActionCommand
         def call
           return unless config["report_user_enabled"]
-
           report_user!
           broadcast(:done)
         end
