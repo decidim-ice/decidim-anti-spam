@@ -5,8 +5,8 @@ module Decidim
     module Conditions
       class AllowedTldsCommand < ConditionHandler
         def call
-          return broadcast(:ok) if allowed_tlds_csv.empty?
-          return broadcast(:ok) if all_allowed?
+          return broadcast(:valid) if allowed_tlds_csv.empty?
+          return broadcast(:valid) if all_allowed?
 
           broadcast(:invalid)
         end

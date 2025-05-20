@@ -6,7 +6,6 @@ module Decidim
       class LockSettingsForm < Decidim::Form
         include Decidim::SpamSignal::SettingsForm
         attribute :forbid_creation_enabled, Boolean, default: true
-        attribute :report_user_user_enabled, Boolean, default: true
         attribute :hide_comments_enabled, Boolean, default: false
       end
     end

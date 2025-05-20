@@ -7,10 +7,13 @@ module Decidim
         def call
           return broadcast(:save) unless config["forbid_save_enabled"]
 
-          errors.add(
-            error_key,
-            config["forbid_save_message_#{suspicious_user.locale}"]
-          )
+          current_locale = suspicious_user.locale || current_organization.default_locale
+          error_keys.each do |error_key|
+            errors.add(
+              error_key,
+              config["forbid_save_message_#{current_locale}"] || :invalid
+            )
+          end
           broadcast(:restore_value)
         end
       end

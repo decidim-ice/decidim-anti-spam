@@ -14,11 +14,10 @@ module Decidim
         add_breadcrumb_item_from_menu :admin_settings_menu
 
         def tab_menu_name = :admin_spam_signal_menu
-        
+
         def show
-          @conditions = Decidim::SpamSignal::Condition.all      
+          @conditions = Decidim::SpamSignal::Condition.all
         end
-        
       end
     end
   end

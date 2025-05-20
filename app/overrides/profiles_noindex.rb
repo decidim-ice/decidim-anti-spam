@@ -15,4 +15,3 @@ views.each do |view|
                        insert_after: "erb[loud]:contains('cell \"decidim/profile\"')",
                        text: "<% content_for :header_snippets do %><meta name='robots' content='noindex,nofollow'><% end %>")
 end
-

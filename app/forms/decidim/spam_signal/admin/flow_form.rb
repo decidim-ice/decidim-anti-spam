@@ -9,6 +9,7 @@ module Decidim
         def form_attributes
           attributes.except(:id).keys
         end
+
         mimic :flow
         translatable_attribute :name, String
         attribute :conditions, [FlowConditionForm]
@@ -31,7 +32,6 @@ module Decidim
           errors.add(:conditions, I18n.t("forms.valid_conditions.empty", scope: "decidim.spam_signal")) unless conditions.any?
           errors.add(:conditions, I18n.t("forms.valid_conditions.invalid", scope: "decidim.spam_signal")) unless conditions.all?(&:valid?)
         end
-
       end
     end
   end

@@ -10,7 +10,6 @@ module Decidim
       validates :condition_type, presence: true
       validate :in_registry
 
-
       def form
         @form ||= Decidim::SpamSignal.config.conditions_registry.form_for(condition_type)
       end

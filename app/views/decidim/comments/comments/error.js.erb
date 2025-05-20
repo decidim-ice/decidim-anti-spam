@@ -1,4 +1,5 @@
-if(window && window.location && window.location.reload)
-  window.location.reload();
-else
-  alert("Comment creation error");
+(function() {
+  const errorLabel = $("#new_comment_for_Comment_<%= @form.commentable.id %> .form-error")
+  errorLabel.html("<%= @form.errors.messages.values.join(", ") %>");
+  errorLabel.addClass("is-visible");
+})();

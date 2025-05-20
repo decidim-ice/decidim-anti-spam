@@ -8,7 +8,7 @@ module Decidim
 
         METADATA = {
           placeholder: I18n.t("placeholder", scope: "decidim.spam_signal.forms.forbidden_tlds_settings_form")
-        }
+        }.freeze
 
         attribute :forbidden_tlds_csv, String
         validates :forbidden_tlds_csv, presence: true

@@ -14,9 +14,9 @@ module Decidim
         private
 
         def contains_stop_words?
-          suspicious_content.match(
+          suspicious_content.match?(
             /#{regex(stop_list_words)}/i
-          ).to_s.present?
+          )
         end
 
         def regex(patterns)

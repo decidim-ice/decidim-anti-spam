@@ -21,8 +21,8 @@ describe Decidim::SpamSignal::Flows::FlowValidator do
 
     def suspicious_user; end
 
-    def spam_error_key
-      :test
+    def spam_error_keys
+      [:test]
     end
 
     def content_for_antispam
@@ -66,6 +66,7 @@ describe Decidim::SpamSignal::Flows::FlowValidator do
       Decidim::SpamSignal::Actions::DummySettingsForm,
       Decidim::SpamSignal::Actions::DummyActionCommand
     )
+    Decidim::SpamSignal::FlowCondition.delete_all
     Decidim::SpamSignal::Flow.delete_all
     allow(form).to receive(:current_organization).and_return(organization)
     allow(form).to receive(:suspicious_user).and_return(tested_suspicious_user)

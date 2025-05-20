@@ -37,8 +37,3 @@ bundle exec rails db:migrate
 ```
 (you can make sure migrations pass with bundle exec rails db:migrate:status)
 
-**Set an email accountable to manage spam moderation**<br />
-```bash
-# Save it as environment variables
-export ANTISPAM_ADMIN=myemail@example.org
-```

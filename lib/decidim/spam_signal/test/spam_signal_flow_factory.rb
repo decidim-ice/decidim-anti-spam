@@ -5,7 +5,7 @@ FactoryBot.define do
     organization { create(:organization) }
     trigger_type { "dummy" }
     name { Faker::Lorem.word }
-    action_settings { { foo: "bar" } }
+    action_settings { [{ foo: "bar" }] }
     conditions { [] }
   end
 end

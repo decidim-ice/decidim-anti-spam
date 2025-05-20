@@ -15,7 +15,6 @@ module Decidim
         def official_account?
           context[:suspicious_user].officialized?
         end
-
       end
     end
   end

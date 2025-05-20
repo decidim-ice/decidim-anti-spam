@@ -26,8 +26,8 @@ module Decidim
           context.handler_name
         end
 
-        def self.human_attribute_name(attr)
-          I18n.t("decidim.spam_signal.forms.#{name.demodulize.underscore}.#{attr}")
+        def self.human_attribute_name(attr, options = {})
+          I18n.t("decidim.spam_signal.forms.#{name.demodulize.underscore}.#{attr}", **options)
         end
 
         def model_name

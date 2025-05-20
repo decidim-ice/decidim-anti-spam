@@ -5,13 +5,9 @@ module Decidim
     module Conditions
       class ForbiddenTldsCommand < ConditionHandler
         def call
-          return broadcast(:forbidden_tlds_found) if any_forbidden_tlds?
+          return broadcast(:invalid) if any_forbidden_tlds?
 
-          broadcast(:ok)
-        end
-
-        def self.output_symbols
-          [:forbidden_tlds_found]
+          broadcast(:valid)
         end
 
         private
