@@ -10,21 +10,20 @@ module Decidim
   module UpdateAccountOverrides
     extend ActiveSupport::Concern
 
-    prepended do 
+    prepended do
       def call
         return broadcast(:invalid, @form.password) unless @form.valid?
-
+        
         update_personal_data
         update_avatar
         update_password
-
+        
+        
         if current_user.valid?
-          with_events do
-            changes = current_user.changed
-            current_user.save!
-            send_update_summary!(changes)
-          end
+          changes = current_user.changed
+          current_user.save!
           notify_followers
+          send_update_summary!(changes)
           broadcast(:ok, current_user.unconfirmed_email.present?)
         else
           # Add the broadcast condition for spam_signal
