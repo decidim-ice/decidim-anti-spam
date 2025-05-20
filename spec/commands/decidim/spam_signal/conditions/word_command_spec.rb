@@ -10,8 +10,8 @@ describe Decidim::SpamSignal::Conditions::WordCommand do
       context
     ) do
       on(:ok) { return :ok }
-      on(:word_found) { return :word_found }
-    end
+      on(:invalid) { return :invalid }
+    end.keys.first
   end
 
   context "with dictionnary=(sexy,call girl,Let's talk)" do
@@ -19,14 +19,14 @@ describe Decidim::SpamSignal::Conditions::WordCommand do
 
     def run_condition(content) = run_condition_with_config(content, word_config)
     context "when it is fine" do
-      it("'call for dumb text'") { expect(run_condition("call for dumb text")).to be :ok }
-      it("'http://good.url.com'") { expect(run_condition("http://good.url.com")).to be :ok }
+      it("'call for dumb text'") { expect(run_condition("call for dumb text")).to be :valid }
+      it("'http://good.url.com'") { expect(run_condition("http://good.url.com")).to be :valid }
     end
 
     context "when found a word" do
-      it("'https://hello.sexy.gg'") { expect(run_condition("https://hello.sexy.gg")).to be :word_found }
-      it("'Sexy https://ransomware.com'") { expect(run_condition("Sexy https://ransomware.com")).to be :word_found }
-      it("'https://ransomware.com let's talk") { expect(run_condition("https://ransomware.com let's talk")).to be :word_found }
+      it("'https://hello.sexy.gg'") { expect(run_condition("https://hello.sexy.gg")).to be :invalid }
+      it("'Sexy https://ransomware.com'") { expect(run_condition("Sexy https://ransomware.com")).to be :invalid }
+      it("'https://ransomware.com let's talk") { expect(run_condition("https://ransomware.com let's talk")).to be :invalid }
     end
   end
 
@@ -35,11 +35,11 @@ describe Decidim::SpamSignal::Conditions::WordCommand do
 
     def run_condition(content) = run_condition_with_config(content, word_config)
     context "when it is fine" do
-      it("'call for dumb text'") { expect(run_condition("call for dumb text")).to be :ok }
-      it("'http://good.url.com'") { expect(run_condition("http://good.url.com")).to be :ok }
-      it("'Sexy https://ransomware.com'") { expect(run_condition("Sexy https://ransomware.com")).to be :ok }
-      it("'https://hello.sexy.gg'") { expect(run_condition("https://hello.sexy.gg")).to be :ok }
-      it("'https://ransomware.com let's talk") { expect(run_condition("https://ransomware.com let's talk")).to be :ok }
+      it("'call for dumb text'") { expect(run_condition("call for dumb text")).to be :valid }
+      it("'http://good.url.com'") { expect(run_condition("http://good.url.com")).to be :valid }
+      it("'Sexy https://ransomware.com'") { expect(run_condition("Sexy https://ransomware.com")).to be :valid }
+      it("'https://hello.sexy.gg'") { expect(run_condition("https://hello.sexy.gg")).to be :valid }
+      it("'https://ransomware.com let's talk") { expect(run_condition("https://ransomware.com let's talk")).to be :valid }
     end
   end
 end

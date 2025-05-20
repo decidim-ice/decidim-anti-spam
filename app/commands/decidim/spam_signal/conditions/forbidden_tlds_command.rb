@@ -7,7 +7,7 @@ module Decidim
         def call
           return broadcast(:invalid) if any_forbidden_tlds?
 
-          broadcast(:ok)
+          broadcast(:valid)
         end
 
         private
