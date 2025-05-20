@@ -104,11 +104,9 @@ pt:
               rules_settings:
                 title: Rules
                 spam_section: "SPAM"
-                suspicious_section: "SUSPICIOUS"
               cop_settings:
                 title: Agents
                 spam_section: "WHEN SPAM"
-                suspicious_section: "WHEN SUSPICIOUS"
               comment_settings:
                 title: "Comments"
                 description: "Triggered when a participant save a new comment"

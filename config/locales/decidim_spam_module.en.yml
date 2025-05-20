@@ -138,4 +138,4 @@ en:
           report_user_send_emails_enabled: "Send email"
           report_user_send_email_to: "Send email to"
         word_settings_form:
-          stop_list_words_csv: "Suspicious Words. Comma-separated"
+          stop_list_words_csv: "Suspicious Words. One word per line"

@@ -19,8 +19,8 @@ module Decidim
         def pick; end
 
         def new
-          session[:trigger_type] = @trigger_type = params.require(:trigger_type)
-          session[:klass] = klass = Object.const_get(@trigger_type)
+          @trigger_type = params.require(:trigger_type)
+          klass = @trigger_type.constantize
           actions_form = actions(klass).map do |action_name|
             Decidim::SpamSignal.config.actions_registry.form_for(action_name).new
           end
@@ -32,8 +32,9 @@ module Decidim
         end
 
         def create
-          @trigger_type = session[:trigger_type]
-          actions_form = actions(session[:klass]).map do |action_name|
+          @trigger_type = params.require(:trigger_type)
+          klass = @trigger_type.constantize
+          actions_form = actions(klass).map do |action_name|
             Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(params.require(:flow).require(:action_settings))
           end
           @form ||= begin
@@ -64,7 +65,7 @@ module Decidim
         end
 
         def edit
-          session[:trigger_type] = @trigger_type = flow.trigger_type
+          @trigger_type = flow.trigger_type
           actions_form = actions(@trigger_type.constantize).map do |action_name|
             Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_model(flow.action_settings)
           end
@@ -73,12 +74,11 @@ module Decidim
             form.action_settings = actions_form
             form
           end
-          
         end
 
         def update
           @flow = flow
-          @trigger_type = session[:trigger_type]
+          @trigger_type = params.require(:trigger_type)
           actions_form = actions(@trigger_type.constantize).map do |action_name|
             Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(params.require(:flow).require(:action_settings))
           end
