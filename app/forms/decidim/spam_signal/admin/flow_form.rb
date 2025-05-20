@@ -9,6 +9,7 @@ module Decidim
         def form_attributes
           attributes.except(:id).keys
         end
+
         mimic :flow
         translatable_attribute :name, String
         attribute :conditions, [FlowConditionForm]

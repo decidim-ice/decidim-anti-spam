@@ -24,6 +24,8 @@ module Decidim
         end
 
         def email_must_be_admin
+          return if !report_user_send_emails_enabled || report_user_send_email_to.blank?
+
           errors.add(:report_user_send_email_to, :must_be_admin) unless Decidim::User.find_by(admin: true, email: report_user_send_email_to)
         end
       end

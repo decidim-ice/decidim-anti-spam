@@ -22,9 +22,7 @@ module Decidim
           @trigger_type = params.require(:trigger_type)
           klass = @trigger_type.constantize
           actions_form = actions(klass).map do |action_name|
-            Decidim::SpamSignal.config.actions_registry.form_for(action_name).with_context(
-              handler_name: @trigger_type
-            ).new
+            Decidim::SpamSignal.config.actions_registry.form_for(action_name).new
           end
           @form ||= begin
             form = form(FlowForm).instance
@@ -64,12 +62,12 @@ module Decidim
             form
           end
 
-          if form.valid?
+          if @form.valid?
             @flow = Decidim::SpamSignal::Flow.create!(
               organization: current_organization,
               trigger_type: @trigger_type,
-              name: form.name,
-              action_settings: form.action_settings
+              name: @form.name,
+              action_settings: @form.action_settings.map(&:attributes)
             )
             @form.conditions.map do |condition|
               Decidim::SpamSignal::FlowCondition.create!(
