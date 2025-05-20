@@ -7,8 +7,6 @@ describe Decidim::SpamSignal::AntiSpamUser do
   let(:spam_cop) { create(:user, :admin, locale: organization.default_locale, organization:) }
 
   describe "#get" do
-
-
     it "unblock the bot user if was blocked" do
       cop = Decidim::SpamSignal::AntiSpamUser.get(organization)
       cop.update(blocked: true)
