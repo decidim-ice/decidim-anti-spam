@@ -26,11 +26,7 @@ module Decidim
           context.handler_name
         end
 
-<<<<<<< HEAD
         def self.human_attribute_name(attr, options = {})
-=======
-        def self.human_attribute_name(attr, options={})
->>>>>>> 45d9125 (fix: fix report action)
           I18n.t("decidim.spam_signal.forms.#{name.demodulize.underscore}.#{attr}", **options)
         end
 
