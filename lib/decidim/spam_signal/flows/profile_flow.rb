@@ -58,8 +58,7 @@ module Decidim
             # save the user without validation in the process.
             def after_antispam
               return unless errors.has_key? :about
-
-              self.about = suspicious_user.about_was
+              self.about = suspicious_user.about_was 
               self.personal_url = suspicious_user.personal_url_was
             end
 
