@@ -4,7 +4,7 @@ module Decidim
   module SpamSignal
     module Extractors
       class Extractor
-        def self.extract(_model, _config)
+        def self.extract(_model)
           raise Error, "not implemented"
         end
       end

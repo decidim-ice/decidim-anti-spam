@@ -55,16 +55,13 @@ module Decidim
             end
 
             def content_for_antispam
-              @content_for_antispam ||= Extractors::CommentExtractor.extract(self, spam_config)
+              @content_for_antispam ||= Extractors::CommentExtractor.extract(self)
             end
 
             def skip_antispam?
               body.empty?
             end
 
-            def resource_spam_config
-              @resource_spam_config ||= spam_config.comments
-            end
           end
         end
       end

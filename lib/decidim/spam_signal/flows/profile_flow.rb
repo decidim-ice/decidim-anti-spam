@@ -37,11 +37,8 @@ module Decidim
             end
 
             def content_for_antispam
-              @content_for_antispam ||= Extractors::ProfileExtractor.extract(self, spam_config)
+              @content_for_antispam ||= Extractors::ProfileExtractor.extract(self)
             end
-
-            def spam_config
-            end 
 
             def spam_error_key
               :about
