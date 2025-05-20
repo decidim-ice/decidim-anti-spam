@@ -60,7 +60,6 @@ module Decidim
             def skip_antispam?
               body.empty?
             end
-
           end
         end
       end
