@@ -9,7 +9,7 @@ module Decidim
         def form_attributes
           attributes.except(:id).keys
         end
-      
+
         mimic :condition
 
         attribute :name, String
@@ -21,7 +21,7 @@ module Decidim
         def self.conditional_display
           {}
         end
-      
+
         private
 
         def valid_settings
@@ -32,18 +32,14 @@ module Decidim
         end
 
         def valid_format?(settings_attributes)
-
           str = settings_attributes.values.last
 
           case settings_attributes.keys.last
-          when  "stop_list_words_csv"
+          when "stop_list_words_csv"
             valid_word_format?(str)
-          when "forbidden_tlds_csv"
-            valid_tlds_format?(str)
-          when "allowed_tlds_csv"
+          when "forbidden_tlds_csv", "allowed_tlds_csv"
             valid_tlds_format?(str)
           end
-
         end
 
         def valid_word_format?(str)

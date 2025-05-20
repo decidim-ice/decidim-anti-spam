@@ -58,7 +58,8 @@ module Decidim
             # save the user without validation in the process.
             def after_antispam
               return unless errors.has_key? :about
-              self.about = suspicious_user.about_was 
+
+              self.about = suspicious_user.about_was
               self.personal_url = suspicious_user.personal_url_was
             end
 
@@ -69,17 +70,16 @@ module Decidim
               # blocked_status_changed?
               false
             end
-            
+
             private
-            
+
             def attributes_changed?
               personal_url_changed? || about_changed?
             end
-            
+
             def blocked_status_changed?
               blocked_at_changed?(from: nil) || blocked_changed?(from: false)
             end
-            
           end
         end
       end

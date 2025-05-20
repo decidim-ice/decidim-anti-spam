@@ -7,7 +7,7 @@ module Decidim
         def initialize(condition)
           @condition = condition
         end
-        
+
         def call
           destroy_condition
 
@@ -26,8 +26,8 @@ module Decidim
         end
 
         def delete_condition_flow
-          conditions_flow.each { |cond_flow| cond_flow.destroy }
-        end 
+          conditions_flow.each(&:destroy)
+        end
       end
     end
   end

@@ -10,7 +10,6 @@ module Decidim
       module FlowValidator
         extend ActiveSupport::Concern
         included do
-
           validate :detect_spam!
 
           def detect_spam!
@@ -22,6 +21,7 @@ module Decidim
               active_conditions = run_conditions(flow.conditions, content_for_antispam)
 
               next if active_conditions.empty?
+
               before_antispam
               Decidim::SpamSignal::AntiSpamAction.call(
                 flow,

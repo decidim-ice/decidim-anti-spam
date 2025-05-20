@@ -23,7 +23,7 @@ module Decidim
 
       def input_field(name, type, **options)
         return hidden_field(name) if name.to_s == "handler_name"
-        
+
         case type
         when :date, :datetime, :time, :"decidim/attributes/localized_date"
           date_field name
@@ -39,7 +39,6 @@ module Decidim
       private
 
       def translated_input(name, _type, **_options)
-
         return translated :editor, name, rows: 5, aria: { label: name } if name.to_s.ends_with? "_html"
 
         translated :text_area, name, rows: 3
@@ -50,7 +49,7 @@ module Decidim
         return number_field name, aria: { label: name } if name.to_s.starts_with? "num_"
         return check_box name if name.to_s.starts_with?("is_") || name.to_s.ends_with?("enabled")
 
-        text_field name 
+        text_field name
       end
 
       def public_attributes
@@ -64,8 +63,9 @@ module Decidim
       end
 
       def field_attributes(attribute_name)
-        return {class: "field field--antispam field--#{attribute_name}"} unless conditional_display.key?(attribute_name.to_s) 
-        { 
+        return { class: "field field--antispam field--#{attribute_name}" } unless conditional_display.has_key?(attribute_name.to_s)
+
+        {
           data: {
             display_if: conditional_display[attribute_name.to_s]
           },

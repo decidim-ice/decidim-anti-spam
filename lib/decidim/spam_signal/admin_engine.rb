@@ -35,13 +35,13 @@ module Decidim
 
       initializer "decidim_spam_signal.admin_settings_menu" do
         Decidim.menu :admin_settings_menu do |menu|
-          menu.add_item :spam_signal, 
-                    I18n.t("menu.spam_signal", scope: "decidim.admin", default: "Spam Signal"),
-                    decidim_admin_spam_signal.generals_path,
-                    icon_name: "shield-line",
-                    position: 1.8,
-                    active: is_active_link?(decidim_admin_spam_signal.generals_path, :inclusive),
-                    if: defined?(current_user) && current_user&.read_attribute("admin")
+          menu.add_item :spam_signal,
+                        I18n.t("menu.spam_signal", scope: "decidim.admin", default: "Spam Signal"),
+                        decidim_admin_spam_signal.generals_path,
+                        icon_name: "shield-line",
+                        position: 1.8,
+                        active: is_active_link?(decidim_admin_spam_signal.generals_path, :inclusive),
+                        if: defined?(current_user) && current_user&.read_attribute("admin")
         end
       end
 

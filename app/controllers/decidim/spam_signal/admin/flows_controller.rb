@@ -13,7 +13,7 @@ module Decidim
         add_breadcrumb_item_from_menu :admin_settings_menu
 
         def tab_menu_name = :admin_spam_signal_menu
-        
+
         def index; end
 
         def pick; end
@@ -31,6 +31,20 @@ module Decidim
           end
         end
 
+        def edit
+          @trigger_type = flow.trigger_type
+          actions_form = actions(@trigger_type.constantize).map do |action_name|
+            Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(
+              {}.merge(*flow.action_settings)
+            )
+          end
+          @form ||= begin
+            form = FlowForm.from_model(flow)
+            form.action_settings = actions_form
+            form
+          end
+        end
+
         def create
           @trigger_type = params.require(:trigger_type)
           klass = @trigger_type.constantize
@@ -43,10 +57,10 @@ module Decidim
             form.conditions = conditions_from_params
             form
           end
-          
+
           if form.valid?
             @flow = Decidim::SpamSignal::Flow.create!(
-              organization: current_organization, 
+              organization: current_organization,
               trigger_type: @trigger_type,
               name: form.name,
               action_settings: form.action_settings
@@ -57,24 +71,10 @@ module Decidim
                 anti_spam_flow_id: @flow.id
               )
             end
-            redirect_to flows_path(flow), notice: t("decidim.spam_signal.admin.flows.create.success")
+            redirect_to flows_path(flow), notice: t(".success")
           else
             flash.now[:alert] = I18n.t("decidim.spam_signal.admin.flows.create.error")
             render :new
-          end          
-        end
-
-        def edit
-          @trigger_type = flow.trigger_type
-          actions_form = actions(@trigger_type.constantize).map do |action_name|
-            Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(
-              {}.merge(*flow.action_settings)
-            )
-          end
-          @form ||= begin
-            form = FlowForm.from_model(flow)
-            form.action_settings = actions_form
-            form
           end
         end
 
@@ -94,7 +94,7 @@ module Decidim
             clear_conditions
             @flow.update!(
               name: @form.name,
-              action_settings: @form.action_settings.map(&:attributes),
+              action_settings: @form.action_settings.map(&:attributes)
             )
             @form.conditions.map do |condition|
               Decidim::SpamSignal::FlowCondition.create!(
@@ -102,7 +102,7 @@ module Decidim
                 anti_spam_flow_id: @flow.id
               )
             end
-            redirect_to flows_path, notice: I18n.t("decidim.spam_signal.admin.flows.update.success") 
+            redirect_to flows_path, notice: I18n.t("decidim.spam_signal.admin.flows.update.success")
           else
             flash.now[:alert] = I18n.t("decidim.spam_signal.admin.flows.update.error")
             render :edit
@@ -110,9 +110,9 @@ module Decidim
         end
 
         def destroy
-          Flows::DestroyFlow.call(flow) do 
+          Flows::DestroyFlow.call(flow) do
             on(:ok) do
-              flash[:notice] = I18n.t("delete.success", scope: "decidim.spam_signal.admin.flows")
+              flash.now[:notice] = I18n.t("delete.success", scope: "decidim.spam_signal.admin.flows")
               render :index
             end
           end
@@ -121,18 +121,17 @@ module Decidim
         private
 
         def actions(klass)
-          actions_form = Decidim::SpamSignal.config.actions_registry.names.filter do |action_name|
+          Decidim::SpamSignal.config.actions_registry.names.filter do |action_name|
             klass.available_actions.include?(action_name)
           end
-          actions_form
         end
 
         def conditions_from_params
-          return [] unless params[:conditions].present?
-            
+          return [] if params[:conditions].blank?
+
           params.fetch(:conditions, {}).values.filter_map do |v|
             id = v["anti_spam_condition_id"]
-            ConditionForm.new(id: id) if id.present?
+            ConditionForm.new(id:) if id.present?
           end
         end
 
@@ -163,7 +162,7 @@ module Decidim
         end
 
         def available_conditions
-          available_conditions = Decidim::SpamSignal::Condition.all
+          Decidim::SpamSignal::Condition.all
         end
       end
     end
