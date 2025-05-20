@@ -11,18 +11,18 @@ module Decidim
       isolate_namespace Decidim::SpamSignal
 
       config.to_prepare do
-        Decidim::User.include(
+        Decidim::AccountForm.include(
           Decidim::SpamSignal::Flows::ProfileFlow::ProfileValidationFormOverrides
         )
         Decidim::Comments::CommentForm.include(
           Decidim::SpamSignal::Flows::CommentFlow::CommentValidationFormOverrides
         )
-        Decidim::AccountController.prepend(
-          Decidim::AccountControllerOverrides
-        )
-        Decidim::UpdateAccount.prepend(
-          Decidim::UpdateAccountOverrides
-        )
+        # Decidim::AccountController.prepend(
+        #   Decidim::AccountControllerOverrides
+        # )
+        # Decidim::UpdateAccount.prepend(
+        #   Decidim::UpdateAccountOverrides
+        # )
       end
 
       initializer "decidim_spam_signal.webpacker.assets_path" do

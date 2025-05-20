@@ -4,7 +4,7 @@ module Decidim
   module SpamSignal
     module Actions
       class ActionCommand < ApplicationCommand
-        attr_reader :errors, :error_key, :config, :suspicious_user, :justification, :admin_reporter, :reportable, :current_organization
+        attr_reader :errors, :error_keys, :config, :suspicious_user, :justification, :admin_reporter, :reportable, :current_organization
 
         def initialize(
           errors:,
@@ -12,7 +12,7 @@ module Decidim
           **options
         )
           @errors = errors
-          @error_key = options[:error_key]
+          @error_keys = options[:error_keys]
           @reportable = options[:reportable] || suspicious_user
           @suspicious_user = suspicious_user
           @current_organization = suspicious_user.organization

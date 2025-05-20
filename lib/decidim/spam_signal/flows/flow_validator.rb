@@ -29,7 +29,7 @@ module Decidim
                 errors:,
                 suspicious_user:,
                 suspicious_content: content_for_antispam,
-                error_key: spam_error_key
+                error_keys: spam_error_keys
               )
               after_antispam
             end
@@ -71,8 +71,8 @@ module Decidim
           # Exemple: "body" for the comment body.
           # @see https://guides.rubyonrails.org/active_record_validations.html
           # @see https://www.rubydoc.info/gems/activerecord/2.3.9/ActiveRecord/Errors
-          def spam_error_key
-            raise "#{self.class}#spam_error_key not implemented"
+          def spam_error_keys
+            raise "#{self.class}#spam_error_keys not implemented"
           end
 
           ##

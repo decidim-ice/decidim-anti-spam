@@ -20,9 +20,6 @@ require_relative "spam_signal/extractors/profile_extractor"
 
 require_relative "spam_signal/configuration"
 
-require_relative "overrides/account_controller_overrides"
-require_relative "overrides/update_account_overrides"
-
 module Decidim
   # This namespace holds the logic of the `SpamSignal` component. This component
   # allows users to create spam_signal in a participatory space.

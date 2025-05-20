@@ -67,7 +67,9 @@ module Decidim
         def edit
           @trigger_type = flow.trigger_type
           actions_form = actions(@trigger_type.constantize).map do |action_name|
-            Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_model(flow.action_settings)
+            Decidim::SpamSignal.config.actions_registry.form_for(action_name).from_params(
+              {}.merge(*flow.action_settings)
+            )
           end
           @form ||= begin
             form = FlowForm.from_model(flow)
@@ -89,11 +91,10 @@ module Decidim
             form
           end
           if @form.valid?
-            was_new = flow.invalid?
             clear_conditions
             @flow.update!(
               name: @form.name,
-              action_settings: flat_action_settings(@form.action_settings),
+              action_settings: @form.action_settings.map(&:attributes),
             )
             @form.conditions.map do |condition|
               Decidim::SpamSignal::FlowCondition.create!(
@@ -147,12 +148,6 @@ module Decidim
 
         def blank_condition
           Decidim::SpamSignal::Admin::FlowConditionForm.new(anti_spam_condition_id: flow.id)
-        end
-
-        def flat_action_settings(action_settings_form)
-          return action_settings_form.attributes || {} if action_settings_form.is_a?(Decidim::Form)
-          return action_settings_form.flatten.first || {} if action_settings_form.is_a?(Array)
-          action_settings_form || {}
         end
 
         def flow

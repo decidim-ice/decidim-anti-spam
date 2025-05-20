@@ -29,7 +29,7 @@ module Decidim
             validate :detect_spam!
 
             def current_organization
-              @current_organization ||= organization
+              @current_organization ||= context.current_organization
             end
 
             def antispam_trigger_type
@@ -37,38 +37,37 @@ module Decidim
             end
 
             def content_for_antispam
-              @content_for_antispam ||= Extractors::ProfileExtractor.extract(self, spam_config)
+              @content_for_antispam ||= Extractors::ProfileExtractor.extract(self)
             end
 
-            def spam_config
-            end 
-
-            def spam_error_key
-              :about
+            def spam_error_keys
+              [:about, :personal_url]
             end
 
             def reportable_content
-              self
+              context.current_user
             end
 
             def suspicious_user
-              self
+              context.current_user
             end
 
             ##
             # A condition has been met, we restore values
             # before doing actions. As blocking/locking will
             # save the user without validation in the process.
-            def before_antispam
-              self.about = self.about_was
-              self.personal_url = self.personal_url_was
+            def after_antispam
+              return unless errors.has_key? :about
+              self.about = suspicious_user.about_was 
+              self.personal_url = suspicious_user.personal_url_was
             end
 
             ##
             # Skip the flow if no content to test,
             # or if the user is updated to be blocked.
             def skip_antispam?
-              !attributes_changed? || blocked_status_changed? || (personal_url.blank? && about.blank?)
+              # blocked_status_changed?
+              false
             end
             
             private

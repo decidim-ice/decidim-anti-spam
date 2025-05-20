@@ -5,14 +5,6 @@ module Decidim
     module Actions
       class LockActionCommand < ActionCommand
         def call
-          if config["forbid_creation_enabled"] && error_key
-            errors.add(
-              error_key,
-              I18n.t("errors.spam",
-                     scope: "decidim.spam_signal",
-                     default: "this looks like spam.")
-            )
-          end
           unless suspicious_user.access_locked?
             hide_comment! if config["hide_comments_enabled"]
             report_user! if config["report_user_user_enabled"]

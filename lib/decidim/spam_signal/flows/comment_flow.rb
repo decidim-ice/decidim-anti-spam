@@ -46,8 +46,8 @@ module Decidim
               context.author
             end
 
-            def spam_error_key
-              :body
+            def spam_error_keys
+              [:body]
             end
 
             def reportable_content
@@ -55,7 +55,7 @@ module Decidim
             end
 
             def content_for_antispam
-              @content_for_antispam ||= Extractors::CommentExtractor.extract(self, spam_config)
+              @content_for_antispam ||= Extractors::CommentExtractor.extract(self)
             end
 
             def skip_antispam?

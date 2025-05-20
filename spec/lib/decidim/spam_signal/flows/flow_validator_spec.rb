@@ -21,8 +21,8 @@ describe Decidim::SpamSignal::Flows::FlowValidator do
 
     def suspicious_user; end
 
-    def spam_error_key
-      :test
+    def spam_error_keys
+      [:test]
     end
 
     def content_for_antispam
