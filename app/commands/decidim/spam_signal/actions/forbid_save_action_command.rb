@@ -11,9 +11,10 @@ module Decidim
           error_keys.each do |error_key|
             errors.add(
               error_key,
-              config["forbid_save_message_#{current_locale}"] || :invalid
+              :invalid
             )
           end
+          errors.add(:base, config["forbid_save_message_#{current_locale}"] || :invalid)
           broadcast(:restore_value)
         end
       end

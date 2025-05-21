@@ -41,11 +41,13 @@ module Decidim
             end
 
             def spam_error_keys
-              [:description]
+              [:description, :address, :location_hints, :registration_terms, :title,  :registration_url, :location]
             end
 
+            ##
+            # @deprecated
             def reportable_content
-              context.current_user
+              nil
             end
 
             def suspicious_user

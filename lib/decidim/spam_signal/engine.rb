@@ -17,12 +17,12 @@ module Decidim
         Decidim::Comments::CommentForm.include(
           Decidim::SpamSignal::Flows::CommentFlow::CommentValidationFormOverrides
         )
-        # Decidim::AccountController.prepend(
-        #   Decidim::AccountControllerOverrides
-        # )
-        # Decidim::UpdateAccount.prepend(
-        #   Decidim::UpdateAccountOverrides
-        # )
+        Decidim::Meetings::MeetingForm.include(
+          Decidim::SpamSignal::Flows::MeetingFlow::MeetingValidationFormOverrides
+        )
+        Decidim::Comments::CommentsController.include(
+          Decidim::SpamSignal::Overrides::CommentControllerOverrides
+        )
       end
 
       initializer "decidim_spam_signal.webpacker.assets_path" do
