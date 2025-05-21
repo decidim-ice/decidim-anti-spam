@@ -41,7 +41,7 @@ module Decidim
             end
 
             def spam_error_keys
-              [:description, :address, :location_hints, :registration_terms, :title,  :registration_url, :location]
+              [:description, :address, :location_hints, :registration_terms, :title, :registration_url, :location]
             end
 
             ##
@@ -58,8 +58,7 @@ module Decidim
             # A condition has been met, we restore values
             # before doing actions. As blocking/locking will
             # save the user without validation in the process.
-            def after_antispam
-            end
+            def after_antispam; end
 
             ##
             # Skip the flow if no content to test,
