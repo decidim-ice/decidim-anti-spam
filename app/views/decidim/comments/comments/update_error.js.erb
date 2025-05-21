@@ -1,0 +1,7 @@
+(function() {
+  const errorLabel = $("#editCommentModal<%= @comment.id %>-content .form-error")
+  errorLabel.html("<%= @form.errors.messages.values.join(", ") %>");
+  errorLabel.addClass("is-visible");
+  // re-open modal
+  window.Decidim.currentDialogs[`editCommentModal<%= @comment.id %>`].open();
+})();
