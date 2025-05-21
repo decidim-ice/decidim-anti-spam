@@ -9,7 +9,8 @@ module Decidim
       config_accessor(:available_flows) do
         [
           Decidim::SpamSignal::Flows::CommentFlow,
-          Decidim::SpamSignal::Flows::ProfileFlow
+          Decidim::SpamSignal::Flows::ProfileFlow,
+          Decidim::SpamSignal::Flows::MeetingFlow
         ]
       end
     end

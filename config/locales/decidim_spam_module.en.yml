@@ -88,6 +88,9 @@ en:
           profile_flow:
             title: "Update profile"
             description: "Update profile description"
+          meeting_flow:
+            title: "Creating or updating a meeting"
+            description: "Triggers when a meeting gets created or updated"
           comment_flow:
             title: "Creating or updating a Comment"
             description: "Triggers when a Comment gets created or updated"
