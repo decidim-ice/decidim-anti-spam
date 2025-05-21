@@ -117,7 +117,7 @@ Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
                      name: "authentication_flow_footer_setup",
                      insert_after: "erb[loud]:contains('footer_menu.render')",
                      text: <<~ERB
-                       <%#{" "}
+                       <%
                         antispam_authentication_flow = Decidim::SpamSignal::AuthenticationValidationForm.new.with_context(
                             current_organization: current_organization
                          )
@@ -133,7 +133,7 @@ Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
 
 Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
                      name: "authentication_flow_footer_footer_header",
-                     set_attributes: "erb[loud]:contains('layouts.decidim.user_menu.profile')",
+                     set_attributes: "nav:first",
                      attributes: { class: "<%= antispam_authentication_flow.errors.empty? ? 'spam-signal-valid' : 'spam-signal-invalid hidden' %>" })
 
 Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",

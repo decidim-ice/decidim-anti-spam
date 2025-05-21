@@ -29,7 +29,7 @@ module Decidim
             validate :detect_spam!
 
             def current_organization
-              @current_organization ||= reportable_content.organization
+              @current_organization ||= persisted? ? reportable_content.organization : context.current_organization
             end
 
             def antispam_trigger_type
@@ -45,11 +45,11 @@ module Decidim
             end
 
             def reportable_content
-              @reportable_content ||= Decidim::Proposals::Proposal.find(id)
+              @reportable_content ||= persisted? ? Decidim::Proposals::Proposal.find(id) : nil
             end
 
             def suspicious_user
-              reportable_content.authors.first
+              persisted? ? reportable_content.authors.first : context.current_user
             end
 
             ##
