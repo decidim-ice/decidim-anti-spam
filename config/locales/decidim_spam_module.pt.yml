@@ -32,10 +32,10 @@ pt:
         forbidden_tlds_form:
           forbidden_tlds_csv: "List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated"
         lock_settings_form:
-          report_user_user_enabled: "After locking the account, report it. The report won't send any email to admins"
+          sinalize_user_enabled: "After locking the account, report it. The report won't send any email to admins"
           hide_comments_enabled: "After locking the user, hide all its comments"
           forbid_creation_enabled: "Avoid user to save this data"
-        report_user_settings_form:
+        sinalize_settings_form:
           forbid_creation_enabled: "Avoid the user to save this data"
           send_emails_enabled: "Send email to admin after reports?"
       scans:
@@ -55,7 +55,7 @@ pt:
           and_word: " AND "
           if_word: "IF "
       cops:
-        report_user:
+        sinalize:
           name: "Report"
           description: "Report the user to the administrator"
         lock:
@@ -104,9 +104,11 @@ pt:
               rules_settings:
                 title: Rules
                 spam_section: "SPAM"
+                suspicious_section: "SUSPICIOUS"
               cop_settings:
                 title: Agents
                 spam_section: "WHEN SPAM"
+                suspicious_section: "WHEN SUSPICIOUS"
               comment_settings:
                 title: "Comments"
                 description: "Triggered when a participant save a new comment"
