@@ -29,6 +29,9 @@ module Decidim
         Decidim::ApplicationController.include(
           Decidim::ApplicationControllerOverrides
         )
+        Decidim::ApplicationHelper.include(
+          Decidim::SpamSignal::ApplicationHelperOverrides
+        )
       end
 
       initializer "decidim_spam_signal.webpacker.assets_path" do

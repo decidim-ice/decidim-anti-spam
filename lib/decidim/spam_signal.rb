@@ -27,6 +27,7 @@ require_relative "spam_signal/configuration"
 require_relative "spam_signal/overrides/comment_controller_overrides"
 
 require_relative "overrides/application_controller_overrides"
+require_relative "overrides/application_helper_overrides"
 
 module Decidim
   # This namespace holds the logic of the `SpamSignal` component. This component
@@ -43,6 +44,27 @@ module Decidim
 
     def self.configure
       yield config
+    end
+
+    def self.spam_actions_performed
+      Current.spam_actions_performed ||= []
+      Current.spam_actions_performed
+    end
+
+    def self.current_continent
+      Current.continent
+    end
+
+    def self.current_country
+      Current.country
+    end
+
+    def self.current_continent=(continent)
+      Current.continent = continent
+    end
+
+    def self.current_country=(country)
+      Current.country = country
     end
   end
 end

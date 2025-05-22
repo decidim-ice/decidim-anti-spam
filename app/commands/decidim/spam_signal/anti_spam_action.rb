@@ -18,6 +18,7 @@ module Decidim
       def call
         # Check available_actions of the flow,
         # and call them with the action_settings
+        return if flow.available_actions.empty?
 
         flow.available_actions.each do |action_name|
           action = Decidim::SpamSignal.config.actions_registry.command_for(action_name)
@@ -30,6 +31,7 @@ module Decidim
             **{}.merge(*flow.action_settings)
           )
         end
+        ::Decidim::SpamSignal.spam_actions_performed.push(*flow.available_actions)
       end
     end
   end

@@ -15,3 +15,11 @@ Deface::Override.new(
   insert_before: "erb[loud]:contains('stylesheet_pack_tag')",
   text: "<%= append_stylesheet_pack_tag 'admin_decidim_spam_signal_styles' %>"
 )
+
+# Add css for frontpage
+Deface::Override.new(
+  virtual_path: "layouts/decidim/_head",
+  name: "spam_signal_css_pack",
+  insert_before: "erb[loud]:contains('decidim_overrides')",
+  text: "<%= append_stylesheet_pack_tag 'decidim_spam_signal' %>"
+)
