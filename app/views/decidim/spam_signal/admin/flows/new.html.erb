@@ -9,7 +9,7 @@
     <%= render partial: "decidim/spam_signal/admin/flows/form", object: f, locals: { form: f , trigger_type: @trigger_type, form_object: flow_form } %>
     <div class="item__edit-sticky">
       <div class="item__edit-sticky-container">
-        <%= f.submit I18n.t("actions.create", scope: "decidim.spam_signal.admin.flows"), class: "button button__sm button__secondary" %>
+        <%= f.submit t("actions.create", scope: "decidim.spam_signal.admin.flows"), class: "button button__sm button__secondary" %>
       </div>
     </div>
   <% end %>

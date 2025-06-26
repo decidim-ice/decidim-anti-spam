@@ -1,7 +1,7 @@
 <div class="item_show__header">
   <h1 class="item_show__header-title">
-    <%= I18n.t("title", scope: "decidim.spam_signal.admin.conditions") %>
-    <%= link_to I18n.t("actions.add", scope: "decidim.spam_signal.admin.conditions"), pick_conditions_path, class: "button button__sm button__secondary" %>
+    <%= t("title", scope: "decidim.spam_signal.admin.conditions") %>
+    <%= link_to t("actions.add", scope: "decidim.spam_signal.admin.conditions"), pick_conditions_path, class: "button button__sm button__secondary" %>
   </h1>
 </div>
 
@@ -10,8 +10,8 @@
     <table class="table-list">
     <thead>
       <tr>
-        <th><%= I18n.t("models.condition.fields.name", scope: "decidim.spam_signal") %></th>
-        <th><%= I18n.t("models.condition.fields.condition_type", scope: "decidim.spam_signal") %></th>
+        <th><%= t("models.condition.fields.name", scope: "decidim.spam_signal") %></th>
+        <th><%= t("models.condition.fields.condition_type", scope: "decidim.spam_signal") %></th>
         <th></th>
       </tr>
     </thead>
@@ -21,5 +21,5 @@
     </table>
   </div>
 <% else %>
-  <p><%= I18n.t("no_conditions", scope: "decidim.spam_signal.admin.conditions") %></p>
+  <p><%= t("no_conditions", scope: "decidim.spam_signal.admin.conditions") %></p>
 <% end %>

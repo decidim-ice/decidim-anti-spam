@@ -5,7 +5,7 @@
       <button class="card-divider-button" data-open="true" data-controls="panel-title" type="button">
         <%= icon "arrow-right-s-line" %>
         <h2 class="h2 card-title">
-          <%= I18n.t("title", scope: "decidim.spam_signal.admin.generals") %>
+          <%= t("title", scope: "decidim.spam_signal.admin.generals") %>
         </h2>
       </button>
     </div>
@@ -13,9 +13,9 @@
       <div class="row column pt-4">
         <%= form.text_field :name, required: true %>
         <div class="pt-4">
-          <label> <%= I18n.t("triggered_by", scope: "decidim.spam_signal.admin.flow") %> </label>
+          <label> <%= t("triggered_by", scope: "decidim.spam_signal.admin.flow") %> </label>
           <div class="bg-[#E5E7EB] px-4 py-2 rounded">
-            <%= I18n.t("decidim.spam_signal.admin.flow.#{trigger_type.demodulize.underscore}.title") %></h4>
+            <%= t("decidim.spam_signal.admin.flow.#{trigger_type.demodulize.underscore}.title") %></h4>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
       <%= icon "arrow-right-s-line" %>
         <% if form_object.action_settings.any? %>
           <h2 class="h2 card-title">
-            <%= I18n.t("actions", scope: "decidim.spam_signal.admin.flows.form") %>
+            <%= t("actions", scope: "decidim.spam_signal.admin.flows.form") %>
           </h2>
     </button>
   </div>

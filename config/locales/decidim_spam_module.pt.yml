@@ -43,7 +43,7 @@ pt:
                   one: Condition used in one Flow
                   other: Condition used in %{count} Flows
                 confirm: Yes, delete the condition
-                content: |
+                content_html: |
                   <p>Deleting it will remove it from the above flows.</p>
                   <p>Are you sure you want to delete this condition?</p>
                 title: Delete Condition?

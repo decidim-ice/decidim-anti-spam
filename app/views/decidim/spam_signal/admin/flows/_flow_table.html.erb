@@ -6,15 +6,15 @@
       <td>
         <% if flow.conditions.empty? %>
           <%= icon "alert-line" %>
-          <%= link_to I18n.t("models.flow.fields.conditions.empty", scope: "decidim.spam_signal"), edit_flow_path(flow) %>
+          <%= link_to t("models.flow.fields.conditions.empty", scope: "decidim.spam_signal"), edit_flow_path(flow) %>
         <% end %>
       </td>
     <td>
-      <%= I18n.t("#{flow.trigger_type.demodulize.underscore}.title", scope: "decidim.spam_signal.admin.flow") %>
+      <%= t("#{flow.trigger_type.demodulize.underscore}.title", scope: "decidim.spam_signal.admin.flow") %>
     </td>
     <td class="table-list__actions">
-      <%= icon_link_to "pencil-line", edit_flow_path(flow), I18n.t("actions.edit", scope: "decidim.spam_signal.admin"), class: "action-icon--edit", method: :get, data: {} %>
-      <%= icon_link_to "delete-bin-line", flow, I18n.t("actions.destroy", scope: "decidim.spam_signal.admin"), class: "action-icon--remove", method: :delete, data: { confirm: I18n.t("actions.confirm_destroy", scope: "decidim.spam_signal.admin") } %>
+      <%= icon_link_to "pencil-line", edit_flow_path(flow), t("actions.edit", scope: "decidim.spam_signal.admin"), class: "action-icon--edit", method: :get, data: {} %>
+      <%= icon_link_to "delete-bin-line", flow, t("actions.destroy", scope: "decidim.spam_signal.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.spam_signal.admin") } %>
     </td>
   </tr>
 <% end %>
