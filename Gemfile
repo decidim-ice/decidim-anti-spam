@@ -20,13 +20,12 @@ gem "uglifier", "~> 4.1"
 gem "deface", ">= 1.8.1"
 
 group :development, :test do
+  gem "better_html"
   gem "brakeman", "~> 6.1"
   gem "byebug", "~> 11.0", platform: :mri
   gem "decidim-dev", DECIDIM_VERSION
-  gem "parallel_tests", "~> 4.2"
   gem "erb_lint"
-  gem "better_html"
-
+  gem "parallel_tests", "~> 4.2"
 end
 
 group :test do
