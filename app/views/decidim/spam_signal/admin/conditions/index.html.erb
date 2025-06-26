@@ -1,6 +1,6 @@
 <div class="item_show__header">
   <h1 class="item_show__header-title">
-    <%= I18n.t("title", scope: "decidim.spam_signal.admin.conditions") %> 
+    <%= I18n.t("title", scope: "decidim.spam_signal.admin.conditions") %>
     <%= link_to I18n.t("actions.add", scope: "decidim.spam_signal.admin.conditions"), pick_conditions_path, class: "button button__sm button__secondary" %>
   </h1>
 </div>
@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render partial: "condition_table", locals: { conditions: conditions } %>
+      <%= render partial: "condition_table", locals: { conditions: } %>
     </tbody>
     </table>
   </div>

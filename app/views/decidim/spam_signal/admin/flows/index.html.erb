@@ -1,6 +1,6 @@
 <div class="item_show__header">
   <h1 class="item_show__header-title">
-    <%= I18n.t("title", scope: "decidim.spam_signal.admin.flow") %> 
+    <%= I18n.t("title", scope: "decidim.spam_signal.admin.flow") %>
     <%= link_to I18n.t("actions.add", scope: "decidim.spam_signal.admin.flows") , pick_flows_path, class: "button button__sm button__secondary" %>
   </h1>
 </div>
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render partial: "flow_table", locals: { flows: flows } %>
+      <%= render partial: "flow_table", locals: { flows: } %>
     </tbody>
     </table>
   </div>

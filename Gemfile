@@ -24,6 +24,9 @@ group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem "decidim-dev", DECIDIM_VERSION
   gem "parallel_tests", "~> 4.2"
+  gem "erb_lint"
+  gem "better_html"
+
 end
 
 group :test do

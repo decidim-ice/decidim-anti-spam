@@ -1,10 +1,10 @@
 <div class="item_show__header">
   <h1 class="item_show__header-title">
-    <%= I18n.t("new.title", scope: "decidim.spam_signal.admin.conditions") %> 
+    <%= I18n.t("new.title", scope: "decidim.spam_signal.admin.conditions") %>
   </h1>
 </div>
 
 <div class="condition__content">
   <h2 class="condition__header-title"><%= I18n.t("new.second_title", scope: "decidim.spam_signal.admin.conditions") %> </h2>
-  <%= render partial: "pick_condition_form", locals: { available_conditions: available_conditions } %>
+  <%= render partial: "pick_condition_form", locals: { available_conditions:, form: @form } %>
 </div>

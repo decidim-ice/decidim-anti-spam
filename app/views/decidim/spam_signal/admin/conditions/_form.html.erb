@@ -1,10 +1,10 @@
-<%= hidden_field_tag :condition_type, @condition_type %>
+<%= hidden_field_tag :condition_type, condition_type %>
 <div class="form__wrapper">
   <div class="card pt-4">
     <div class="row column">
       <%= form.text_field :name, required: true, aria: { label: :name } %>
     </div>
-    <%= form.fields_for :settings, @condition_form do |condition_form| %>
+    <%= form.fields_for :settings, condition_form do |condition_form| %>
     <div class="row column">
       <%= condition_form.all_fields %>
     </div>

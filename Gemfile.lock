@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-spam_signal (0.2.0)
+    decidim-spam_signal (1.0.0)
       decidim-admin (>= 0.26, < 0.30)
       decidim-comments (>= 0.26, < 0.30)
       decidim-core (>= 0.26, < 0.30)
@@ -830,6 +830,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  better_html
   bootsnap (~> 1.4)
   brakeman (~> 6.1)
   byebug (~> 11.0)
@@ -839,6 +840,7 @@ DEPENDENCIES
   decidim-dev (~> 0.29.2)
   decidim-spam_signal!
   deface (>= 1.8.1)
+  erb_lint
   letter_opener_web (~> 2.0)
   listen (~> 3.1)
   parallel_tests (~> 4.2)

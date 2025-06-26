@@ -5,8 +5,9 @@ module Decidim
     module Admin
       class FlowsController < ApplicationController
         include Decidim::Admin::Concerns::HasTabbedMenu
+        attr_accessor :flow_form
 
-        helper_method :flows, :available_flows, :blank_condition, :available_conditions
+        helper_method :flows, :available_flows, :blank_condition, :available_conditions, :flow_form
 
         layout "decidim/admin/settings"
 
@@ -24,10 +25,10 @@ module Decidim
           actions_form = actions(klass).map do |action_name|
             Decidim::SpamSignal.config.actions_registry.form_for(action_name).new
           end
-          @form ||= begin
-            form = form(FlowForm).instance
-            form.action_settings = actions_form
-            form
+          @flow_form ||= begin
+            f = form(FlowForm).instance
+            f.action_settings = actions_form
+            f
           end
         end
 
@@ -40,10 +41,10 @@ module Decidim
               handler_name: @trigger_type
             )
           end
-          @form ||= begin
-            form = FlowForm.from_model(flow)
-            form.action_settings = actions_form
-            form
+          @flow_form ||= begin
+            f = FlowForm.from_model(flow)
+            f.action_settings = actions_form
+            f
           end
         end
 
@@ -55,21 +56,21 @@ module Decidim
               handler_name: @trigger_type
             )
           end
-          @form ||= begin
-            form = FlowForm.from_params(params.require(:flow))
-            form.action_settings = actions_form
-            form.conditions = conditions_from_params
-            form
+          @flow_form ||= begin
+            f = FlowForm.from_params(params.require(:flow))
+            f.action_settings = actions_form
+            f.conditions = conditions_from_params
+            f
           end
 
-          if @form.valid?
+          if @flow_form.valid?
             @flow = Decidim::SpamSignal::Flow.create!(
               organization: current_organization,
               trigger_type: @trigger_type,
-              name: @form.name,
-              action_settings: @form.action_settings.map(&:attributes)
+              name: @flow_form.name,
+              action_settings: @flow_form.action_settings.map(&:attributes)
             )
-            @form.conditions.map do |condition|
+            @flow_form.conditions.map do |condition|
               Decidim::SpamSignal::FlowCondition.create!(
                 anti_spam_condition_id: condition.id,
                 anti_spam_flow_id: @flow.id
@@ -90,19 +91,19 @@ module Decidim
               handler_name: @trigger_type
             )
           end
-          @form ||= begin
+          @flow_form ||= begin
             form = FlowForm.from_params(params.require(:flow))
             form.action_settings = actions_form
             form.conditions = conditions_from_params
             form
           end
-          if @form.valid?
+          if @flow_form.valid?
             clear_conditions
             @flow.update!(
-              name: @form.name,
-              action_settings: @form.action_settings.map(&:attributes)
+              name: @flow_form.name,
+              action_settings: @flow_form.action_settings.map(&:attributes)
             )
-            @form.conditions.map do |condition|
+            @flow_form.conditions.map do |condition|
               Decidim::SpamSignal::FlowCondition.create!(
                 anti_spam_condition_id: condition.id,
                 anti_spam_flow_id: @flow.id

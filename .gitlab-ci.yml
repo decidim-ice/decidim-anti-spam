@@ -50,7 +50,16 @@ ruby::rubocop:
   stage: lint
   script:
     - bundle
-    - bundle exec rubocop .
+    - bundle exec rubocop 
+
+ruby::erb:  
+  extends: .development_rules
+  image: ruby:3.2.2
+  stage: lint
+  script:
+    - bundle
+    - bundle exec erblint --lint-all --enable-all-linters
+
 ##
 # Lint crowdin.yml configuration file
 crowdin::lint:  
@@ -144,4 +153,4 @@ ruby::rspec:
     - RAILS_ENV=development bundle install -j $(nproc)
     - bundle exec rake test_app
   script:
-    - RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands
+    - RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb

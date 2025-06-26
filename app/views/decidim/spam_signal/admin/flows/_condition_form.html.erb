@@ -3,7 +3,7 @@
     <div class="card" data-component="accordion" id="accordion-condition">
       <div class="card-divider">
         <div class="relative flex justify-between items-center w-full">
-          <div class= "card-divider-button pb-4" data-open="true" data-controls="panel-condition" type="button">
+          <div class="card-divider-button pb-4" data-open="true" data-controls="panel-condition" type="button">
             <%= icon "arrow-right-s-line" %>
             <h2 class="h2 card-title">
               <%= I18n.t("title", scope: "decidim.spam_signal.admin.conditions") %>
@@ -15,22 +15,22 @@
           <div class="form_wrapper card">
             <div class="spam-signal-flow-conditions-items-list">
               <div class="spam-signal-flow-conditions-childs">
-              <% if @form.conditions %>
-                <% @form.conditions.each_with_index do | flow_condition, index | %>
+              <% if form.conditions %>
+                <% form.conditions.each_with_index do | flow_condition, index | %>
                   <%= fields_for :"conditions[#{index}]", flow_condition do |field_for_conditions| %>
-                    <%= render "condition_fields", f: field_for_conditions, flow_condition: flow_condition, available_conditions: %>
+                    <%= render "condition_fields", f: field_for_conditions, flow_condition:, available_conditions: %>
                   <% end %>
-                <% end %>      
+                <% end %>
               <% else %>
                 <%= fields_for :conditions, Decidim::SpamSignal::Admin::FlowConditionForm.new do |field_for_conditions| %>
                   <%= render "condition_fields", f: field_for_conditions, available_conditions: %>
                 <% end %>
-              <% end %>  
+              <% end %>
               </div>
             </div>
           </div>
-          <% if @form.errors.any? { |error| error.attribute == :conditions } %>
-            <% @form.errors[:conditions].each do |message| %>
+          <% if form.errors.any? { |error| error.attribute == :conditions } %>
+            <% form.errors[:conditions].each do |message| %>
               <small class="form-error is-visible pl-4">
                 <%= message %>
               </small>

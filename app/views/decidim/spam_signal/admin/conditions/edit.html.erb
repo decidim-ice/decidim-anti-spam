@@ -6,7 +6,7 @@
 </div>
 <div class="item__edit-form">
   <%= decidim_form_for @form, url: condition_path(@condition), html: { class: "form form-defaults" }, method: :put, builder: Decidim::SpamSignal::SpamSettingsFormBuilder do |f| %>
-    <%= render partial: "form", object: f, locals: { condition: @condition, form: @form } %>
+    <%= render partial: "form", object: f, locals: { condition_form: @condition_form, condition: @condition, form: @form, condition_type: @condition_type } %>
     <div class="item__edit-sticky">
       <div class="item__edit-sticky-container">
         <%= f.submit t(".update"), class: "button button__sm button__secondary" %>
@@ -14,4 +14,3 @@
     </div>
   <% end %>
 </div>
-

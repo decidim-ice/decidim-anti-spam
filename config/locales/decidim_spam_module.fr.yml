@@ -1,172 +1,174 @@
 ---
 fr:
-  activerecord:
-    models:
-      decidim/spam_signal/config:
-        one: "Anti-Spam Configuration"
-        other: "Anti-Spam Configurations"
-      decidim/spam_signal/rule:
-        one: "Rule"
-        other: "Rules"
-  devise:
-    failure:
-      locked: |
-        Your account is locked, an email has been sent with unlock instructions
-  activemodel:
-    attributes:
-      lock:
-        is_email_unlockable: "Can unlock its account by email"
   decidim:
     account:
       locked: Your account is locked, an email has been sent with unlock instructions
-    forms:
-      errors:
-        condition:
-          name: "This field is mandatory."
-          forbidden_tlds_csv: "This field is mandatory."
     spam_signal:
-      spam_signal_justification: |
-        Anti-Spam: This content has been hidden. The classification process is automatic, to fill a complaint, use our support email
-      errors:
-        spam: Our anti-spam flagged this content.
-      forms:
-        word_settings_form:
-          stop_list_words_csv: "Suspicious Words. Comma-separated"
-        allowed_tlds_form:
-          allowed_tlds_csv: "Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated"
-        forbidden_tlds_form:
-          forbidden_tlds_csv: "List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated"
-        lock_settings_form:
-          report_user_user_enabled: "After locking the account, report it. The report won't send any email to admins"
-          hide_comments_enabled: "After locking the user, hide all its comments"
-          forbid_creation_enabled: "Avoid user to save this data"
-        report_user_settings_form:
-          forbid_creation_enabled: "Avoid the user to save this data"
-          send_emails_enabled: "Send email to admin after reports?"
-      scans:
-        word:
-          name: "Dictionary"
-          description: "List of forbidden words"
-        allowed_tlds:
-          name: "Allowed TLDs"
-          description: "Allow a list of domain extension, and ban the others."
-        forbidden_tlds:
-          name: "Forbidden TLDs"
-          description: "Forbid a list of domain extension, allow all the others."
-        outputs:
-          forbidden_tlds_found: Forbidden domain extensions (TLDs) found
-          word_found: Word matches with dictionary
-          not_allowed_tlds_found: Not allowed domain extensions found
-          and_word: " AND "
-          if_word: "IF "
-      cops:
-        report_user:
-          name: "Report"
-          description: "Report the user to the administrator"
-        lock:
-          name: "Sign out & Lock"
-          description: "Sign Out the user, and the lock it's account. The user can log back to the platform after clicking in the instruction email"
       admin:
         actions:
-          save: "Save"
-          go_back: "Back to Spam Configuration"
-          remove: "Delete %{resource}"
-        cops:
-          notices:
-            bad_destroy: "An error occurs while deleting %{resource} agent"
-            destroy_ok: "The %{resource} agent has been deleted"
-            bad_update: "An error occurs while updating %{resource} agent"
-            update_ok: "The %{resource} agent is now active"
-            bad_create: "An error occurs while creating %{resource} agent"
-            create_ok: "The %{resource} is now active"
-            not_found: "Agent not found"
-          no_cops: "Do nothing"
-        scans:
-          notices:
-            bad_destroy: "An error occurs while deleting %{resource} scanner"
-            destroy_ok: "The %{resource} scanner has been deleted"
-            bad_update: "An error occurs while updating %{resource} scanner"
-            update_ok: "The %{resource} scanner is now active"
-            bad_create: "An error occurs while creating %{resource} scanner"
-            create_ok: "The %{resource} is now active"
-            not_found: "Scanner not found"
-        rules:
-          notices:
-            bad_destroy: "An error occurs while deleting the rule"
-            destroy_ok: "The rule has been deleted"
-            bad_update: "An error occurs while updating the rule"
-            update_ok: "The rule is now active"
-            bad_create: "An error occures while creating rule"
-            create_ok: "The rule is now active"
-            not_found: "Rule not found"
-            no_content: "No rules have been checked, delelete the rule instead saving an empty rule"
-        spam_filter_reports:
-          index:
-            headings:
-              title: "ANTI-SPAM"
-              scanner_settings:
-                title: Detection
-              rules_settings:
-                title: Rules
-                spam_section: "SPAM"
-                suspicious_section: "SUSPICIOUS"
-              cop_settings:
-                title: Agents
-                spam_section: "WHEN SPAM"
-                suspicious_section: "WHEN SUSPICIOUS"
-              comment_settings:
-                title: "Comments"
-                description: "Triggered when a participant save a new comment"
-              profile_settings:
-                title: "Profiles"
-                description: "Triggered when a participant save his/her profile."
-        comment_scans:
+          confirm_destroy: Confirm destroy
+          destroy: Destroy
+          edit: Edit
+        condition:
+          allowed_countries:
+            description: Allow a list of countries, detected by participant's IP address
+            title: Allowed Countries
+          allowed_tlds:
+            description: Allow a list of domain extension, forbid all the others.
+            title: Allowed Top-Level Domains
+          forbidden_continents:
+            description: Forbid a list of continents, detected by participant's IP address
+            title: Forbidden Continents
+          forbidden_countries:
+            description: Forbid a list of countries, detected by participant's IP address
+            title: Forbidden Countries
+          forbidden_tlds:
+            description: Forbid a list of domain extention, allow all the others.
+            title: Forbidden Top-Level Domains
+          official_account:
+            description: Allow official accounts only, forbid all others.
+            title: Official Account
+          title: Condition
+          word:
+            description: Forbin a list of words, allow all the others.
+            title: Forbidden Words
+        conditions:
+          actions:
+            add: Add
+            create: Create
+            delete:
+              modal:
+                confirm: Yes, delete the condition
+                content: |
+                  <p>Deleting it will remove it from the above flows.</p>
+                  <p>Are you sure you want to delete this condition?</p>
+                title: Delete Condition?
+          create:
+            error: Error creating condition
+            success: Conditions created successfully
+          delete:
+            success: Condition deleted
+          edit:
+            title: Edit Condition
+            update: Update
           new:
-            headings:
-              title: "New spam detection for comment creation"
-              choose_scan: "Chose a detection type"
+            second_title: Choose a detection type
+            title: New Condition
+          no_conditions: There are not conditions
+          title: Conditions
+          update:
+            format: Condition format error
+            invalid: Form invalid
+            success: Success
+        confirm_modal:
+          cancel: Cancel
+        flow:
+          authentication_flow:
+            description: Triggers when a visitor access the plateform
+            title: Signup and Signin
+          comment_flow:
+            description: Triggers when a Comment gets created or updated
+            title: Creating or updating a Comment
+          meeting_flow:
+            description: Triggers when a meeting gets created or updated
+            title: Creating or updating a meeting
+          profile_flow:
+            description: Update profile description
+            title: Update profile
+          proposal_flow:
+            description: Triggers when a proposal gets created or updated
+            title: Creating or updating a proposal
+          title: Flows
+        flows:
+          actions:
+            add: Add
+            create: Create
+          condition_fields:
+            remove: Remove
+          condition_form:
+            add_condition_item: Add condition item
+          create:
+            error: Error creating flow
+            success: Flow created successfully
+          delete:
+            success: Flow deleted
           edit:
-            headings:
-              title: "Edit %{scan} Scanner"
-              caption: "%{scan} configurations"
-        comment_rules:
+            title: Edit Flow
+            update: Update
+          form:
+            actions: Actions
           new:
-            headings:
-              title: "New %{type} rule"
-              caption: "Check the detections symbols required to fire the rule:"
-            description: "Fire %{type} agent if these are all TRUE"
-          edit:
-            description: "Fire %{type} agent if these are all TRUE"
-            headings:
-              caption: "Check at least on detection symbol required to fire the rule:"
-        comment_cops:
-          edit:
-            headings:
-              choose_cop: "Choose an agent active on %{type}"
-              title: "%{type} agent configuration"
-            form: "Customize %{type} Options"
-        profile_scans:
-          new:
-            headings:
-              title: "New spam detection for profile creation"
-              choose_scan: "Chose a detection type"
-          edit:
-            headings:
-              caption: "%{scan} configurations"
-              title: "Edit %{scan} Scanner"
-        profile_rules:
-          new:
-            headings:
-              title: "New %{type} rule"
-              caption: "Check the detections symbols required to fire the rule:"
-            description: "Fire %{type} agent if these are all TRUE"
-          edit:
-            description: "Fire %{type} agent if these are all TRUE"
-            headings:
-              caption: "Check at least on detection symbol required to fire the rule:"
-        profile_cops:
-          edit:
-            headings:
-              title: "%{type} agent configuration"
-              choose_cop: "Choose an agent active on %{type}"
-            form: "Customize %{type} Options"
+            title: New Flow
+          no_flows: There are not flows
+          update:
+            error: Error updating flow
+            success: Flow updated successfully
+        general:
+          new_condition: Start by creating a new condition
+          new_condition_item:
+            five: Save your changes
+            four: Configure your condition
+            one: Navigate to the Conditions tab
+            three: Choose a detection type
+            two: Add a new condition
+          new_flow: Use your condition in a new flow
+          new_flow_item:
+            five: Save your changes
+            four: Configure conditions and actions
+            one: Navigate to the Flows tab
+            three: Choose a trigger type
+            two: Add a new flow
+          title: General
+        generals:
+          title: General
+      forms:
+        allowed_tlds_form:
+          allowed_tlds_csv: Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated
+        allowed_tlds_settings_form:
+          allowed_tlds_csv: List of allowed Top-Level Domains. Comma-separated
+          placeholder: ".com, .eu"
+        forbid_save_settings_form:
+          forbid_save_enabled: Forbid save resource
+          forbid_save_message: If enabled, the resource will not be saved if the condition is met
+        forbidden_tlds_form:
+          forbidden_tlds_csv: List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated
+        forbidden_tlds_settings_form:
+          forbidden_tlds_csv: List of forbidden Top-Level Domains. Comma-separated
+          placeholder: ".finance, .porn"
+        hide_settings_form:
+          hide_enabled: Replace login and signup links by a message
+          hide_forbiden_page_message: Forbidden page message
+          hide_message: Message to display
+        lock_settings_form:
+          forbid_creation_enabled: Avoid user to save this data
+          hide_comments_enabled: After locking the user, hide all its comments
+          lock_enabled: Lock user
+          report_user_user_enabled: After locking the account, report it. The report won't send any email to admins
+        report_user_settings_form:
+          forbid_creation_enabled: Avoid the user to save this data
+          report_user_enabled: Report user
+          report_user_justification: Justification
+          report_user_send_email_to: Send email to
+          report_user_send_emails_enabled: Send email
+          send_emails_enabled: Send email to admin after reports?
+        valid_actions:
+          empty: Action settings are empty
+          invalid: Action settings are invalid
+        valid_conditions:
+          empty: Conditions are empty
+          invalid: Conditions are invalid
+        word_settings_form:
+          stop_list_words_csv: Suspicious Words. Comma-separated
+      models:
+        condition:
+          fields:
+            condition_type: Detection Type
+            name: Name
+        flow:
+          fields:
+            conditions:
+              empty: Error
+            name: Name
+            trigger_type: Trigger
+      report:
+        default_justification: This is user did something bad

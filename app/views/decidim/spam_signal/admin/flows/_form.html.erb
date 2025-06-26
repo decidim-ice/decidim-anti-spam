@@ -1,4 +1,4 @@
-<%= hidden_field_tag :trigger_type, @trigger_type %>
+<%= hidden_field_tag :trigger_type, trigger_type %>
 <div class="form__wrapper pb-6">
   <div class="card" data-component="accordion" id="accordion-title">
     <div class="card-divider">
@@ -13,9 +13,9 @@
       <div class="row column pt-4">
         <%= form.text_field :name, required: true %>
         <div class="pt-4">
-          <label> Triggered by </label>
+          <label> <%= I18n.t("triggered_by", scope: "decidim.spam_signal.admin.flow") %> </label>
           <div class="bg-[#E5E7EB] px-4 py-2 rounded">
-            <%= I18n.t("decidim.spam_signal.admin.flow.#{@trigger_type.demodulize.underscore}.title") %></h4>
+            <%= I18n.t("decidim.spam_signal.admin.flow.#{trigger_type.demodulize.underscore}.title") %></h4>
           </div>
         </div>
       </div>
@@ -23,13 +23,13 @@
   </div>
 </div>
 
-<%= render "decidim/spam_signal/admin/flows/condition_form" %>
+<%= render partial: "decidim/spam_signal/admin/flows/condition_form", locals: { form: flow_form } %>
 
 <div class="card" data-component="accordion" id="accordion-actions">
   <div class="card-divider">
     <button class="card-divider-button" data-open="true" data-controls="panel-actions" type="button">
       <%= icon "arrow-right-s-line" %>
-        <% if form.object.action_settings.any? %>
+        <% if form_object.action_settings.any? %>
           <h2 class="h2 card-title">
             <%= I18n.t("actions", scope: "decidim.spam_signal.admin.flows.form") %>
           </h2>
@@ -39,7 +39,7 @@
         <div class="form__wrapper pb-6">
           <div class="card pt-4">
             <div class="row column">
-              <% form.object.action_settings.each do |action_form| %>
+              <% form_object.action_settings.each do |action_form| %>
                 <%= form.fields_for :action_settings, action_form do |field_for_actions| %>
                   <%= render "decidim/spam_signal/admin/flows/action_form", f: field_for_actions %>
                 <% end %>
@@ -50,4 +50,3 @@
           <% end %>
   </div>
 </div>
-

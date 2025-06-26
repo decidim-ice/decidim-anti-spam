@@ -1,5 +1,5 @@
 <% available_flows.each do |flow_name| %>
-  <%= link_to new_flow_path(trigger_type: flow_name), class: "pick__buttons" do %> 
+  <%= link_to new_flow_path(trigger_type: flow_name), class: "pick__buttons" do %>
     <h4 class="pick__buttons-title">
       <%= I18n.t("decidim.spam_signal.admin.flow.#{flow_name.demodulize.underscore}.title") %>
     </h4>

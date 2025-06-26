@@ -7,13 +7,12 @@
     </button>
   </div>
     <% if defined?(flow_condition) && flow_condition %>
-      <%= f.select :anti_spam_condition_id, 
-                   available_conditions.collect { |c| ["#{c.name} (#{c.condition_type})", c.id] },
-                   { class: "anti-spam-condition", selected: flow_condition.id }
-                    %>
+      <%= f.select :anti_spam_condition_id,
+                   available_conditions.map { |c| ["#{c.name} (#{c.condition_type})", c.id] },
+                   { class: "anti-spam-condition", selected: flow_condition.id } %>
     <% else %>
-      <%= f.select :anti_spam_condition_id, 
-                   available_conditions.collect { |c| ["#{c.name} (#{c.condition_type})", c.id] },
+      <%= f.select :anti_spam_condition_id,
+                   available_conditions.map { |c| ["#{c.name} (#{c.condition_type})", c.id] },
                    { prompt: "Select a condition" },
                    { class: "anti-spam-condition", required: true } %>
     <% end %>

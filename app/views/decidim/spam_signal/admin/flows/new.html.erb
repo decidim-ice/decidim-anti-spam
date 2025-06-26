@@ -5,8 +5,8 @@
   </h1>
 </div>
 <div class="item__edit-form">
-  <%= form_with model: @form, url: flows_path, html: { class: "form form-defaults" }, method: :post, builder: Decidim::SpamSignal::SpamSettingsFormBuilder do |f| %>
-    <%= render partial: "form", object: f %>
+  <%= form_with model: flow_form, url: flows_path, html: { class: "form form-defaults" }, method: :post, builder: Decidim::SpamSignal::SpamSettingsFormBuilder do |f| %>
+    <%= render partial: "decidim/spam_signal/admin/flows/form", object: f, locals: { form: f , trigger_type: @trigger_type, form_object: flow_form } %>
     <div class="item__edit-sticky">
       <div class="item__edit-sticky-container">
         <%= f.submit I18n.t("actions.create", scope: "decidim.spam_signal.admin.flows"), class: "button button__sm button__secondary" %>

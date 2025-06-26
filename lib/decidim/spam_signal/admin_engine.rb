@@ -6,14 +6,6 @@ module Decidim
     class AdminEngine < ::Rails::Engine
       isolate_namespace Decidim::SpamSignal::Admin
       routes do
-        resources :config, only: [] do
-          resources :comment_scans
-          resources :comment_rules
-          resources :comment_cops, only: [:update, :edit, :destroy]
-          resources :profile_scans
-          resources :profile_rules
-          resources :profile_cops, only: [:update, :edit, :destroy]
-        end
         resources :generals, only: [:index]
         resources :conditions do
           collection do

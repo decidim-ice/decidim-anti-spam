@@ -1,5 +1,5 @@
 <% available_conditions.each do |condition_name| %>
-  <%= link_to new_condition_path(condition_type: condition_name.to_s), class: "pick__buttons" do %> 
+  <%= link_to new_condition_path(condition_type: condition_name.to_s), class: "pick__buttons" do %>
     <h4 class="pick__buttons-title">
       <%= t("#{condition_name.to_s}.title", scope: "decidim.spam_signal.admin.condition") %>
     </h4>

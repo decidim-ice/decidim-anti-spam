@@ -6,8 +6,8 @@
   </h1>
 </div>
 <div class="item__edit-form">
-  <%= decidim_form_for @form, url: flow_path(@flow), html: { class: "form form-defaults" }, method: :put, builder: Decidim::SpamSignal::SpamSettingsFormBuilder do |f| %>  
-    <%= render partial: "form", object: f, locals: { flow: @flow, form: @form } %>
+  <%= decidim_form_for flow_form, url: flow_path(@flow), html: { class: "form form-defaults" }, method: :put, builder: Decidim::SpamSignal::SpamSettingsFormBuilder do |f| %>
+    <%= render partial: "form", object: f, locals: { flow: @flow, form_object: flow_form, form: f, trigger_type: @trigger_type, condition_form: @condition_form } %>
     <div class="item__edit-sticky">
       <div class="item__edit-sticky-container">
         <%= f.submit t(".update"), class: "button button__sm button__secondary" %>

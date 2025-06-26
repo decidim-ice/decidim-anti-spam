@@ -7,9 +7,9 @@
       <%= I18n.t("#{condition.condition_type}.title", scope: "decidim.spam_signal.admin.condition") %>
     </td>
     <td class="table-list__actions">
-      <%= icon_link_to "pencil-line", edit_condition_path(condition), I18n.t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit", method: :get %>
+      <%= icon_link_to "pencil-line", edit_condition_path(condition), I18n.t("actions.edit", scope: "decidim.spam_signal.admin"), class: "action-icon--edit", method: :get %>
 
-      <button class="action-icon--remove" data-dialog-open=<%= condition.id %>>
+      <button class="action-icon--remove" data-dialog-open="<%= condition.id %>">
         <%= icon "delete-bin-line" %>
       </button>
     </td>
@@ -19,19 +19,19 @@
     <% if flow_conditions(condition).empty? %>
       <div><h3 class="h3"> <%= I18n.t("title", scope: "decidim.spam_signal.admin.conditions.actions.delete.modal") %> </h3></div>
     <% else %>
-      <div><h3 class="h3"> Condition used in <%= flow_conditions(condition).count %> Flow(s) </h3></div>
+      <div><h3 class="h3"> <%= I18n.t("condition_used_in", scope: "decidim.spam_signal.admin.conditions.actions.delete.modal", count: flow_conditions(condition).count) %> </h3></div>
       <div>
-        <% flow_conditions(condition).each do |flow| %> 
-          <p><%= link_to "#{flow.flow.name }", edit_flow_path(flow.flow.id), class: "underline text-secondary font-semibold" %></p>
-        <% end %> 
+        <% flow_conditions(condition).each do |flow| %>
+          <p><%= link_to "#{flow.flow.name}", edit_flow_path(flow.flow.id), class: "underline text-secondary font-semibold" %></p>
+        <% end %>
       </div>
       <div>
-        <%= I18n.t("content", scope: "decidim.spam_signal.admin.conditions.actions.delete.modal").html_safe %>
+        <%= I18n.t("content", scope: "decidim.spam_signal.admin.conditions.actions.delete.modal") %>
       </div>
     <% end %>
       <div class="flex justify-between pt-2">
-        <button class="button button__lg button__transparent-secondary" data-dialog-close=<%= condition.id %>>
-          <span><%= t("cancel", scope: "decidim.shared.confirm_modal") %></span>
+        <button class="button button__lg button__transparent-secondary" data-dialog-close="<%= condition.id %>">
+          <span><%= t("cancel", scope: "decidim.spam_signal.admin.confirm_modal") %></span>
         </button>
         <%= link_to condition, class: "button button__lg button__secondary", method: :delete do %>
           <%= icon "delete-bin-line" %>
