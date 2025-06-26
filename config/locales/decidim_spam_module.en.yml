@@ -66,7 +66,6 @@ en:
         confirm_modal:
           cancel: Cancel
         flow:
-          triggered_by: Triggered by
           authentication_flow:
             description: Triggers when a visitor access the plateform
             title: Signup and Signin
@@ -83,6 +82,7 @@ en:
             description: Triggers when a proposal gets created or updated
             title: Creating or updating a proposal
           title: Flows
+          triggered_by: Triggered by
         flows:
           actions:
             add: Add

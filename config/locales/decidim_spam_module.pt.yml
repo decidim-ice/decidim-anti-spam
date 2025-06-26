@@ -39,6 +39,9 @@ pt:
             create: Create
             delete:
               modal:
+                condition_used_in:
+                  one: Condition used in one Flow
+                  other: Condition used in %{count} Flows
                 confirm: Yes, delete the condition
                 content: |
                   <p>Deleting it will remove it from the above flows.</p>
@@ -80,6 +83,7 @@ pt:
             description: Triggers when a proposal gets created or updated
             title: Creating or updating a proposal
           title: Flows
+          triggered_by: Triggered by
         flows:
           actions:
             add: Add

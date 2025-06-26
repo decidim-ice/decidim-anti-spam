@@ -43,7 +43,6 @@ module Decidim
 
       initializer "decidim_spam_signal.register_icons" do
         Decidim.icons.register(name: "shield-line", icon: "shield-line", category: "system", description: "", engine: :spam_signal)
-        Decidim.icons.register(name: "information-line", icon: "information-line", category: "system", description: "", engine: :spam_signal)
         Decidim.icons.register(name: "search-eye-line", icon: "search-eye-line", category: "system", description: "", engine: :spam_signal)
         Decidim.icons.register(name: "guide-line", icon: "guide-line", category: "system", description: "", engine: :spam_signal)
       end
