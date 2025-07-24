@@ -98,10 +98,19 @@ Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
 Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
                      name: "authentication_flow_footer_signin",
                      set_attributes: "li:has(erb[loud]:contains('decidim.new_user_session_path'))",
-                     attributes: { class: "font-semibold underline <%= spam_reported?(:hide_authentication) && spam_reported? ? 'spam-signal-invalid hidden' : 'spam-signal-valid' %>" })
-
+                     attributes: { class: [
+                       "font-semibold",
+                       "underline",
+                       "<%= spam_reported?(:hide_authentication) && spam_reported? ? 'spam-signal-invalid hidden' : 'spam-signal-valid' %>"
+                     ].join(" ") })
 
 Deface::Override.new(virtual_path: "layouts/decidim/footer/_main_links",
                      name: "authentication_flow_footer_signup",
                      set_attributes: "li:has(erb[loud]:contains('decidim.new_user_registration_path'))",
-                     attributes: { class: "font-semibold underline <%= spam_reported?(:hide_authentication) && spam_reported? ? 'spam-signal-invalid hidden' : 'spam-signal-valid' %>" })
+                     attributes: {
+                       class: [
+                         "font-semibold",
+                         "underline",
+                         "<%= spam_reported?(:hide_authentication) && spam_reported? ? 'spam-signal-invalid hidden' : 'spam-signal-valid' %>"
+                       ].join(" ")
+                     })
