@@ -26,6 +26,10 @@ module Decidim
           "decidim.spam_signal.actions.#{handler_name}"
         end
 
+        def normalize_locale(locale)
+          locale.to_s.gsub("-", "__")
+        end
+
         def now_tag
           "\n[#{Time.zone.now.strftime("%d/%m/%Y %H:%M")}]"
         end

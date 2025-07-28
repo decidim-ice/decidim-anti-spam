@@ -26,7 +26,22 @@ module Decidim
         end
 
         def self.human_attribute_name(attr, options = {})
-          I18n.t("decidim.spam_signal.forms.#{name.demodulize.underscore}.#{attr}", **options)
+          attribute_without_locales = attr.to_s
+          current_locale = I18n.locale
+          matching_locale = current_locale
+          # Remove locales prefix if it is present
+          Decidim.available_locales.each do |locale|
+            normalized_locale = locale.to_s.gsub("-", "__")
+            if attribute_without_locales.end_with?("_#{normalized_locale}")
+              matching_locale = locale
+              attribute_without_locales =  attribute_without_locales.sub("_#{normalized_locale}", "")
+              break
+            end
+          end
+          # Return the human name in the matching locale for the attribute
+          I18n.with_locale(matching_locale) do
+            I18n.t("decidim.spam_signal.forms.#{name.demodulize.underscore}.#{attribute_without_locales}", **options)
+          end
         end
 
         def model_name

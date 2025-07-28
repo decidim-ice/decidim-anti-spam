@@ -3,8 +3,7 @@
 module Decidim
   module SpamSignal
     module Actions
-      class DummySettingsForm < Decidim::Form
-        include Decidim::SpamSignal::SettingsForm
+      class DummySettingsForm < ActionSettingsForm
       end
     end
   end

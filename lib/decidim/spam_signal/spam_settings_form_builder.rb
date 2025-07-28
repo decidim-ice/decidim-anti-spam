@@ -7,7 +7,9 @@ module Decidim
         available_locales = Decidim.available_locales
         non_localized_fields = public_attributes.reject do |key, _|
           localized_ref_present = available_locales.any? do |locale|
+            normalized_locale = locale.sub("-", "__")
             key_without_locale = key.sub("_#{locale}", "")
+            key_without_locale = key_without_locale.sub("_#{normalized_locale}", "")
             key_without_locale != key && (form_attributes.include?(key_without_locale) || form_attributes.include?(key_without_locale.to_sym))
           end
           localized_ref_present

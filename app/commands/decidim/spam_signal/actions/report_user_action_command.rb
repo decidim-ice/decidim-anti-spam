@@ -19,7 +19,7 @@ module Decidim
 
         def justification
           @justification ||= begin
-            user_defined = config["report_user_justification_#{current_locale}"]
+            user_defined = config["report_user_justification_#{normalize_locale(current_locale)}"]
             (user_defined.presence || I18n.t("decidim.spam_signal.report.default_justification"))
           end
         end

@@ -3,8 +3,7 @@
 module Decidim
   module SpamSignal
     module Actions
-      class HideSettingsForm < Decidim::Form
-        include Decidim::SpamSignal::SettingsForm
+      class HideSettingsForm < ActionSettingsForm
 
         translatable_attribute :hide_forbiden_page_message, String
         attribute :hide_enabled, Boolean, default: true
@@ -18,7 +17,7 @@ module Decidim
 
         def forbidden_page_message_present
           hide_forbiden_page_message.each do |key, val|
-            errors.add(:"hide_forbiden_page_message_#{key}", :blank) if val.blank?
+            errors.add(:"hide_forbiden_page_message_#{normalize_locale(key)}", :blank) if val.blank?
           end
         end
 
@@ -26,7 +25,7 @@ module Decidim
           return unless hide_enabled
 
           hide_message.each do |key, val|
-            errors.add(:"hide_message_#{key}", :blank) if val.blank?
+            errors.add(:"hide_message_#{normalize_locale(key)}", :blank) if val.blank?
           end
         end
       end

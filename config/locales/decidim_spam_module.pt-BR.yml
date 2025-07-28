@@ -1,0 +1,178 @@
+---
+pt-BR:
+  decidim:
+    account:
+      locked: Your account is locked, an email has been sent with unlock instructions
+    spam_signal:
+      admin:
+        actions:
+          confirm_destroy: Confirm destroy
+          destroy: Destroy
+          edit: Edit
+        condition:
+          allowed_countries:
+            description: Allow a list of countries, detected by participant's IP address
+            title: Allowed Countries
+          allowed_tlds:
+            description: Allow a list of domain extension, forbid all the others.
+            title: Allowed Top-Level Domains
+          forbidden_continents:
+            description: Forbid a list of continents, detected by participant's IP address
+            title: Forbidden Continents
+          forbidden_countries:
+            description: Forbid a list of countries, detected by participant's IP address
+            title: Forbidden Countries
+          forbidden_tlds:
+            description: Forbid a list of domain extention, allow all the others.
+            title: Forbidden Top-Level Domains
+          official_account:
+            description: Allow official accounts only, forbid all others.
+            title: Official Account
+          title: Condition
+          word:
+            description: Forbin a list of words, allow all the others.
+            title: Forbidden Words
+        conditions:
+          actions:
+            add: Add
+            create: Create
+            delete:
+              modal:
+                condition_used_in:
+                  one: Condition used in one Flow
+                  other: Condition used in %{count} Flows
+                confirm: Yes, delete the condition
+                content_html: |
+                  <p>Deleting it will remove it from the above flows.</p>
+                  <p>Are you sure you want to delete this condition?</p>
+                title: Delete Condition?
+          create:
+            error: Error creating condition
+            success: Conditions created successfully
+          delete:
+            success: Condition deleted
+          edit:
+            title: Edit Condition
+            update: Update
+          new:
+            second_title: Choose a detection type
+            title: New Condition
+          no_conditions: There are not conditions
+          title: Conditions
+          update:
+            format: Condition format error
+            invalid: Form invalid
+            success: Success
+        confirm_modal:
+          cancel: Cancel
+        flow:
+          authentication_flow:
+            description: Triggers when a visitor access the plateform
+            title: Signup and Signin
+          comment_flow:
+            description: Triggers when a Comment gets created or updated
+            title: Creating or updating a Comment
+          meeting_flow:
+            description: Triggers when a meeting gets created or updated
+            title: Creating or updating a meeting
+          profile_flow:
+            description: Update profile description
+            title: Update profile
+          proposal_flow:
+            description: Triggers when a proposal gets created or updated
+            title: Creating or updating a proposal
+          title: Flows
+          triggered_by: Triggered by
+        flows:
+          actions:
+            add: Add
+            create: Create
+          condition_fields:
+            remove: Remove
+          condition_form:
+            add_condition_item: Add condition item
+          create:
+            error: Error creating flow
+            success: Flow created successfully
+          delete:
+            success: Flow deleted
+          edit:
+            title: Edit Flow
+            update: Update
+          form:
+            actions: Actions
+          new:
+            title: New Flow
+          no_flows: There are not flows
+          update:
+            error: Error updating flow
+            success: Flow updated successfully
+        general:
+          new_condition: Start by creating a new condition
+          new_condition_item:
+            five: Save your changes
+            four: Configure your condition
+            one: Navigate to the Conditions tab
+            three: Choose a detection type
+            two: Add a new condition
+          new_flow: Use your condition in a new flow
+          new_flow_item:
+            five: Save your changes
+            four: Configure conditions and actions
+            one: Navigate to the Flows tab
+            three: Choose a trigger type
+            two: Add a new flow
+          title: General
+        generals:
+          title: General
+      forms:
+        allowed_tlds_form:
+          allowed_tlds_csv: Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated
+        allowed_tlds_settings_form:
+          allowed_tlds_csv: List of allowed Top-Level Domains. Comma-separated
+          placeholder: ".com, .eu"
+        forbid_save_settings_form:
+          forbid_save_enabled: Forbid save resource
+          forbid_save_message: If enabled, the resource will not be saved if the condition is met
+        forbidden_tlds_form:
+          forbidden_tlds_csv: List of forbidden TLDs (aka extensions, like `.finance`). Comma-separated
+        forbidden_tlds_settings_form:
+          forbidden_tlds_csv: List of forbidden Top-Level Domains. Comma-separated
+          placeholder: ".finance, .porn"
+        hide_settings_form:
+          hide_enabled: Replace login and signup links by a message
+          hide_forbiden_page_message: Forbidden page message
+          hide_message: Message to display
+        lock_settings_form:
+          forbid_creation_enabled: Avoid user to save this data
+          hide_comments_enabled: Hide all user comments on lock
+          lock_enabled: Lock user
+          report_user_user_enabled: After locking the account, report it. The report won't send any email to admins
+        report_user_settings_form:
+          forbid_creation_enabled: Avoid the user to save this data
+          report_user_enabled: Report user
+          report_user_justification: Justification
+          report_user_send_email_to: Send email to
+          report_user_send_emails_enabled: Send email
+          send_emails_enabled: Send email to admin after reports?
+        valid_actions:
+          empty: Action settings are empty
+          invalid: Action settings are invalid
+        valid_conditions:
+          empty: Conditions are empty
+          invalid: Conditions are invalid
+        word_settings_form:
+          stop_list_words_csv: Suspicious Words. One word per line
+      models:
+        condition:
+          fields:
+            condition_type: Detection Type
+            name: Name
+        flow:
+          fields:
+            conditions:
+              empty: Error
+            name: Name
+            trigger_type: Trigger
+      report:
+        default_justification: This is user did something bad

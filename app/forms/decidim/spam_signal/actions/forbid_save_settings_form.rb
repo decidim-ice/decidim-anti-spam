@@ -3,8 +3,7 @@
 module Decidim
   module SpamSignal
     module Actions
-      class ForbidSaveSettingsForm < Decidim::Form
-        include Decidim::SpamSignal::SettingsForm
+      class ForbidSaveSettingsForm < ActionSettingsForm
 
         attribute :forbid_save_enabled, Boolean, default: true
         translatable_attribute :forbid_save_message, String

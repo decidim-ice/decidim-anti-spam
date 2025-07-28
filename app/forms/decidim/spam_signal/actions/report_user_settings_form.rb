@@ -3,8 +3,7 @@
 module Decidim
   module SpamSignal
     module Actions
-      class ReportUserSettingsForm < Decidim::Form
-        include Decidim::SpamSignal::SettingsForm
+      class ReportUserSettingsForm < ActionSettingsForm
 
         attribute :report_user_enabled, Boolean, default: true
         translatable_attribute :report_user_justification, String
@@ -34,7 +33,7 @@ module Decidim
           return unless report_user_enabled
 
           report_user_justification.each do |key, val|
-            errors.add(:"report_user_justification_#{key}", :blank) if val.blank?
+            errors.add(:"report_user_justification_#{key.sub("-", "__")}", :blank) if val.blank?
           end
         end
       end
