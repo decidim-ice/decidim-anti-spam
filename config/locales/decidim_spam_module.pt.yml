@@ -2,7 +2,6 @@
 pt:
   decidim:
     account:
-      blocked: Blocked
       locked: Your account is locked, an email has been sent with unlock instructions
     spam_signal:
       admin:
@@ -146,7 +145,7 @@ pt:
           hide_message: Message to display
         lock_settings_form:
           forbid_creation_enabled: Avoid user to save this data
-          hide_comments_enabled: After locking the user, hide all its comments
+          hide_comments_enabled: Hide all user comments on lock
           lock_enabled: Lock user
           report_user_user_enabled: After locking the account, report it. The report won't send any email to admins
         report_user_settings_form:
@@ -163,7 +162,7 @@ pt:
           empty: Conditions are empty
           invalid: Conditions are invalid
         word_settings_form:
-          stop_list_words_csv: Suspicious Words. Add one word per line
+          stop_list_words_csv: Suspicious Words. One word per line
       models:
         condition:
           fields:

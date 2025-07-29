@@ -39,8 +39,8 @@ en:
             delete:
               modal:
                 condition_used_in:
-                  one: Condition used in one Flow
-                  other: Condition used in %{count} Flows
+                  one: Condition used in flow
+                  other: Condition used in %{count} flows
                 confirm: Yes, delete the condition
                 content_html: |
                   <p>Deleting it will remove it from the above flows.</p>
@@ -117,7 +117,7 @@ en:
             two: Add a new condition
           new_flow: Use your condition in a new flow
           new_flow_item:
-            five: Save your changes
+            five: Use your condition in a new flow
             four: Configure conditions and actions
             one: Navigate to the Flows tab
             three: Choose a trigger type
