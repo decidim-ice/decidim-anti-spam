@@ -2,7 +2,6 @@
 en:
   decidim:
     account:
-      blocked: Blocked
       locked: Your account is locked, an email has been sent with unlock instructions
     spam_signal:
       admin:
@@ -126,11 +125,6 @@ en:
           title: General
         generals:
           title: General
-      devise:
-        forbidden_page:
-          back_home: Back Home
-          default_message: Forbidden Page
-          title: Forbidden Page
       forms:
         allowed_tlds_form:
           allowed_tlds_csv: Llist of allowed tlds (aka extensions, like `.ch`). Comma seperated
