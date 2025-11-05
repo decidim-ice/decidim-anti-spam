@@ -1,0 +1,15 @@
+<td class="w-[40%] !text-left !pl-4">
+  <% moderation.reports.includes(:flows).each do |report| %>
+    <% report.flows.distinct.each do |flow| %>
+      <% trigger = flow.trigger_type.demodulize.underscore.tr("_", " ").capitalize %>
+      <% conditions = flow.conditions.flat_map do |condition| %>
+        <% [condition.name.strip, %>
+        <% "(#{condition.settings.except("id").keys.first.sub(/_[^_]+$/, "")})"]%>
+      <% end %>
+      <% conditions = conditions.join(" ") %>
+      <% rules = flow.action_settings.flat_map { |rule| rule.select { |_k, v| v == true }.keys.map { |k| k.sub(/_enabled$/, '').tr('_', ' ').capitalize }} %>
+      <% rules = rules.join(", ") %>
+      <p><%= with_tooltip(safe_join(["Trigger: #{trigger}", "Conditions: #{conditions}", "Rules: #{rules}"], tag.br + tag.br), class: :top) { link_to flow.name, "/admin/spam_signal/flows/#{flow.id}/edit" } %></p>
+    <% end %>
+  <% end %>
+</td>

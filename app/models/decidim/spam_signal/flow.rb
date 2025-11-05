@@ -8,6 +8,8 @@ module Decidim
       has_many :flow_conditions, class_name: "Decidim::SpamSignal::FlowCondition", foreign_key: :anti_spam_flow_id, dependent: :destroy
       has_many :conditions, through: :flow_conditions
 
+      has_many :user_report_flows, foreign_key: :decidim_user_report_id, class_name: "Decidim::SpamSignal::UserReportFlow", dependent: :destroy
+
       validates :trigger_type, presence: true
       validates :name, presence: true
 

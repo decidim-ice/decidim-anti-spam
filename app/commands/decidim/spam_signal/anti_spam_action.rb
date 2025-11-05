@@ -29,6 +29,7 @@ module Decidim
             suspicious_user:,
             error_keys:,
             current_organization:,
+            flow:,
             # Merge all the actions settings in one hash
             **{}.merge(*flow.action_settings)
           )

@@ -21,7 +21,6 @@ module Decidim
               current_organization:
             )
             @form.validate
-            spam_signal_origin_update
           end
 
           def create
@@ -33,7 +32,6 @@ module Decidim
               current_user:
             )
             @form.validate
-            spam_signal_origin_create
           end
         end
       end

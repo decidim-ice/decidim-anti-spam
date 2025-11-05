@@ -1,6 +1,11 @@
 ---
 en:
   decidim:
+    admin:
+      moderated_users:
+        index:
+          reason: Type
+          reports: Reports
     account:
       blocked: Blocked
       locked: Your account is locked, an email has been sent with unlock instructions

@@ -1,6 +1,11 @@
 ---
 fr:
   decidim:
+    admin:
+      moderated_users:
+        index:
+          reason: Type
+          reports: Signalements
     account:
       blocked: Bloqué
       locked: Votre compte est verrouillé, un e-mail a été envoyé avec les instructions de déverrouillage
