@@ -1,15 +1,15 @@
 ---
 en:
   decidim:
-    admin:
-      moderated_users:
-        index:
-          reason: Type
-          reports: Reports
-          flow: Flow
     account:
       blocked: Blocked
       locked: Your account is locked, an email has been sent with unlock instructions
+    admin:
+      moderated_users:
+        index:
+          flow: Flow
+          reason: Type
+          reports: Reports
     spam_signal:
       admin:
         actions:

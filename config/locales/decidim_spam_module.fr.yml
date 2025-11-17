@@ -1,20 +1,20 @@
 ---
 fr:
   decidim:
-    admin:
-      menu:
-        spam_signal:
-          general: General
-          conditions: Conditions
-          flows: Flux
-      moderated_users:
-        index:
-          reason: Type
-          reports: Signalements
-          flow: Flux
     account:
       blocked: Bloqué
       locked: Votre compte est verrouillé, un e-mail a été envoyé avec les instructions de déverrouillage
+    admin:
+      menu:
+        spam_signal:
+          conditions: Conditions
+          flows: Flux
+          general: General
+      moderated_users:
+        index:
+          flow: Flux
+          reason: Type
+          reports: Signalements
     spam_signal:
       admin:
         actions:
