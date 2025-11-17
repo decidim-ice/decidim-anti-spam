@@ -165,7 +165,13 @@ ignore_unused:
   - 'decidim.spam_signal.devise.forbidden_page.back_home'
   - 'decidim.spam_signal.devise.forbidden_page.default_message'
   - 'decidim.spam_signal.devise.forbidden_page.title'
-
+  - 'decidim.admin.moderated_users.index.flow'
+  - 'decidim.admin.moderated_users.index.reason'
+  - 'decidim.admin.moderated_users.index.reports'
+  - 'decidim.admin.menu.spam_signal.conditions'
+  - 'decidim.admin.menu.spam_signal.flows'
+  - 'decidim.admin.menu.spam_signal.general'
+  
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:
 #   all:
