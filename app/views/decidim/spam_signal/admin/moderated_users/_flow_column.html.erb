@@ -9,7 +9,7 @@
       <% conditions = conditions.join(" ") %>
       <% rules = flow.action_settings.flat_map { |rule| rule.select { |_k, v| v == true }.keys.map { |k| k.sub(/_enabled$/, '').tr('_', ' ').capitalize }} %>
       <% rules = rules.join(", ") %>
-      <p><%= with_tooltip(safe_join(["Trigger: #{trigger}", "Conditions: #{conditions}", "Rules: #{rules}"], tag.br + tag.br), class: :top) { link_to flow.name, "/admin/spam_signal/flows/#{flow.id}/edit" } %></p>
+      <p><%= with_tooltip(safe_join(["Trigger: #{trigger}", "Conditions: #{conditions}", "Rules: #{rules}"], tag.br + tag.br), class: :top) { link_to flow.name, "/admin/spam_signal/flows/#{flow.id}/edit", target: '_blank', rel: 'noopener noreferrer', data: { external_link: false } } %></p>
     <% end %>
   <% end %>
 </td>

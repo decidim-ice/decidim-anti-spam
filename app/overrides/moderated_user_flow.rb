@@ -4,7 +4,7 @@ Deface::Override.new(
   virtual_path: "decidim/admin/moderated_users/index",
   name: "add_th_flow_to_moderated_users",
   insert_after: "th:has(erb[loud]:contains('t(\".reason\")'))",
-  text: "<th class=\"w-[40%] !text-left !pl-4\"><%= \"Flow\" %></th>"
+  text: "<th class=\"w-[40%] !text-left !pl-4\"><%= t(\"decidim.admin.moderated_users.index.flow\") %></th>"
 )
 
 Deface::Override.new(
