@@ -159,6 +159,12 @@ ignore_missing:
   - 'decidim.spam_signal.devise.forbidden_page.default_message'
   - 'decidim.spam_signal.devise.forbidden_page.title'
   - 'decidim.account.blocked'
+  - 'decidim.admin.moderated_users.index.flow'
+  - 'decidim.admin.moderated_users.index.reason'
+  - 'decidim.admin.moderated_users.index.reports'
+  - 'decidim.admin.menu.spam_signal.conditions'
+  - 'decidim.admin.menu.spam_signal.flows'
+  - 'decidim.admin.menu.spam_signal.general'
 
 ## Consider these keys used:
 ignore_unused:
