@@ -1,6 +1,6 @@
 {
   "name": "decidim-module-spam_signal",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Decidim Anti Spam",
   "main": "svgo.config.js",
   "directories": {
