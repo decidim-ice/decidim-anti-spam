@@ -4,9 +4,9 @@ services:
     image: octree/decidim-dev:0.29
     entrypoint: ""
     volumes:
-      - .:/home/decidim/module
-      - bundle:/home/decidim/app/vendor
-      - node_modules:/home/decidim/app/node_modules
+      - .:/home/module
+      - bundle:/home/decidim/vendor
+      - node_modules:/home/decidim/node_modules
     environment:
       - PORT=3000
       - DATABASE_URL=postgresql://decidim:pleaseChangeMe@spam-signal-pg:5432/decidim
