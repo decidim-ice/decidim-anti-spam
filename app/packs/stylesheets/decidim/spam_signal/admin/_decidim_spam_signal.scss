@@ -26,7 +26,7 @@
 }
 
 .general.divider {
-  border-top: 1px solid #6B7280CC;
+  border-top: 1px solid #6b7280cc;
   margin-top: 20px;
 }
 
@@ -44,13 +44,13 @@
 
 /* Style for the button */
 .pick__buttons {
-    @apply w-full p-5 border-2 border-[#D1D5DB] hover:border-[#E0F2FECC] p-5 mb-2 hover:bg-[#E0F2FECC];
+  @apply w-full p-5 border-2 border-[#D1D5DB] hover:border-[#E0F2FECC] p-5 mb-2 hover:bg-[#E0F2FECC];
 
-    &-title {
-      @apply flex m-0 font-bold text-[#3B82F6]; 
-    }
+  &-title {
+    @apply flex m-0 font-bold text-[#3B82F6];
+  }
 
-    &-description {
-      @apply flex text-[#9CA3AF]; 
-    }
-} 
+  &-description {
+    @apply flex text-[#9CA3AF];
+  }
+}

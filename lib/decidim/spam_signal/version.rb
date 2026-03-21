@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Decidim
-  # This holds the decidim-meetings version.
+  # This holds the decidim-spam_signal version.
   module SpamSignal
     def self.version
       "1.0.6" # DO NOT UPDATE MANUALLY

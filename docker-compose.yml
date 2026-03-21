@@ -19,12 +19,13 @@ services:
     depends_on:
       - spam-signal-pg
     ports:
-      - 3000:3000
+      # Avoid clashing with another process bound to host :3000
+      - 3002:3000
     links:
       - spam-signal-pg
 
   spam-signal-pg:
-    image: postgres:15
+    image: postgres:17
     volumes:
       - spam_signal-pg-data:/var/lib/postgresql/data
     environment:
