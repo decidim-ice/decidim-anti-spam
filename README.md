@@ -61,8 +61,6 @@ docker compose exec spam_signal bash -lc 'cd /home/module/spec/decidim_dummy_app
 docker compose exec spam_signal bash -lc 'cd /home/module && unset DATABASE_URL && export RAILS_ENV=test && bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb'
 ```
 
-If something else is bound to host port `3000`, this project maps the Rails port to **`3002`** (see `docker-compose.yml`).
-
 ## License
 This engine is distributed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE.md).
 
