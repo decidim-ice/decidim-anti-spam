@@ -10,12 +10,12 @@ require_relative "#{base_path}lib/decidim/spam_signal/version"
 
 DECIDIM_VERSION = "~> 0.29.2"
 
+gem "bootsnap", "~> 1.4"
 gem "decidim", DECIDIM_VERSION
 gem "decidim-spam_signal", path: base_path
-
-gem "bootsnap", "~> 1.4"
 gem "puma", ">= 6.3.1"
 gem "uglifier", "~> 4.1"
+gem "uri", "1.1.1"
 
 gem "deface", ">= 1.8.1"
 

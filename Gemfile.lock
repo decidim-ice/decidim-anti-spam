@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-spam_signal (1.0.5)
+    decidim-spam_signal (1.0.6)
       decidim-admin (>= 0.27, < 0.30)
       decidim-comments (>= 0.27, < 0.30)
       decidim-core (>= 0.27, < 0.30)
@@ -773,7 +773,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.6.0)
     uniform_notifier (1.16.0)
-    uri (1.0.2)
+    uri (1.1.1)
     valid_email2 (4.0.6)
       activemodel (>= 3.2)
       mail (~> 2.5)
@@ -848,6 +848,7 @@ DEPENDENCIES
   rspec-rails (~> 6.0)
   rubocop-faker
   uglifier (~> 4.1)
+  uri (= 1.1.1)
   web-console (~> 4.2)
 
 BUNDLED WITH
