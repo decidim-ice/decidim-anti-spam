@@ -18,7 +18,7 @@ variables:
   POSTGRES_PASSWORD: "TEST-insecure_password"
 
 services:
-  - postgres:15
+  - postgres:17
   - redis:latest
 
 
@@ -50,7 +50,7 @@ ruby::rubocop:
   stage: lint
   script:
     - bundle
-    - bundle exec rubocop 
+    - bundle exec rubocop .
 
 ruby::erb:  
   extends: .development_rules
@@ -59,6 +59,14 @@ ruby::erb:
   script:
     - bundle
     - bundle exec erblint --lint-all --enable-all-linters
+
+node::prettier:
+  extends: .development_rules
+  image: node:20
+  stage: lint
+  script:
+    - yarn install --frozen-lockfile
+    - yarn format:check
 
 ##
 # Lint crowdin.yml configuration file
@@ -88,7 +96,7 @@ ruby::rubygem:
 # Upload new translation keys to crowdin
 crowdin::upload:
   stage: translate
-  image: node:18.20
+  image: node:20
   script:
     - npm install -g @crowdin/cli
     - crowdin upload -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
@@ -99,7 +107,7 @@ crowdin::upload:
 # crowndin translations.
 crowdin::merge_request:
   stage: translate
-  image: node:18.20
+  image: node:20
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" && $GITLAB_USER_ID != $TRANSLATIONBOT_ID'
       when: always
@@ -136,6 +144,7 @@ ruby::rspec:
     DATABASE_PASSWORD: "TEST-insecure_password"
     DATABASE_USERNAME: "decidim"
     DISABLED_DOCKER_COMPOSE: "true"
+    TRAEFIK_REDIS_URL: "redis://localhost:6379/1"
     NODE_MAJOR: 18
     SIMPLECOV: 1
     CI: 1

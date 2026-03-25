@@ -1,0 +1,15 @@
+# Crowdin — replace api_token / project_id via CI or local env as needed.
+#
+base_path: .
+base_url: https://api.crowdin.com
+api_token: "insecure_api_token"
+project_id: "project_id"
+
+preserve_hierarchy: true
+
+files: [
+  {
+    "source": "/config/locales/decidim_spam_module.en.yml",
+    "translation": "/config/locales/decidim_spam_module.%two_letters_code%.yml",
+  }
+]
