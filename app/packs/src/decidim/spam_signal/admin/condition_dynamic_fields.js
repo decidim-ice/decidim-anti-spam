@@ -18,11 +18,14 @@ const toggleDisabledAddConditionItem = () => {
 };
 
 const autoName = (conditionItemSelector, $field) => {
-  const $select = $field.find("select.anti-spam-condition")
-  if ($select.length) { 
-    $select.prop("name", `conditions[${$(conditionItemSelector).length}][anti_spam_condition_id]`)
+  const $select = $field.find("select.anti-spam-condition");
+  if ($select.length) {
+    $select.prop(
+      "name",
+      `conditions[${$(conditionItemSelector).length}][anti_spam_condition_id]`
+    );
   }
-}
+};
 
 const createDynamicFieldsForConditions = () => {
   createDynamicFields({
@@ -33,15 +36,14 @@ const createDynamicFieldsForConditions = () => {
     addFieldButtonSelector: addConditionItemSelector,
     removeFieldButtonSelector: removeConditionItemChildSelector,
     onAddField: ($field) => {
-      toggleDisabledAddConditionItem(),
-      autoName(conditionItemSelector, $field);
+      toggleDisabledAddConditionItem(), autoName(conditionItemSelector, $field);
     },
     onRemoveField: ($field) => {
       $field.remove();
       toggleDisabledAddConditionItem();
-    }
+    },
   });
-  toggleDisabledAddConditionItem()
+  toggleDisabledAddConditionItem();
 };
 
 $(function () {

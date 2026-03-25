@@ -39,6 +39,28 @@ This module is maintained by [Octree](https://octree.ch). We plan work and relea
 New ideas are welcome on our [feedback page](https://feedback.voca.city/?tags=decidim-anti-spam). We manage co-financing and release planning there.
 For technical aspects (contributions, code, issues), take a look at our [GitLab](https://git.octree.ch/decidim/vocacity/decidim-modules/decidim-module-spam_signal).
 
+## Development and checks (Docker)
+
+Toolchain versions match the **`spam_signal`** Compose image (`octree/decidim-dev`), not your laptop. **Do not run** `rubocop`, `erblint`, `rspec`, `prettier`, or `rake test_app` on the host unless you maintain a separate, documented setup.
+
+From the repository root:
+
+```bash
+docker compose up -d
+docker compose exec spam_signal bash -lc 'cd /home/module && bundle install'
+docker compose exec spam_signal bash -lc 'cd /home/module && bundle exec rubocop .'
+docker compose exec spam_signal bash -lc 'cd /home/module && bundle exec erblint --lint-all --enable-all-linters'
+docker compose exec spam_signal bash -lc 'cd /home/module && yarn install --frozen-lockfile && yarn format:check'
+```
+
+Generate the dummy app once (set `DISABLED_DOCKER_COMPOSE=true` so the Rake task does not restart Compose), then create the test database and run specs (unset `DATABASE_URL` so the dummy app’s `config/database.yml` is used):
+
+```bash
+docker compose exec spam_signal bash -lc 'cd /home/module && export DISABLED_DOCKER_COMPOSE=true && bundle exec rake test_app'
+docker compose exec spam_signal bash -lc 'cd /home/module/spec/decidim_dummy_app && unset DATABASE_URL && export DISABLE_SPRING=1 && RAILS_ENV=test bundle exec rails db:create db:migrate'
+docker compose exec spam_signal bash -lc 'cd /home/module && unset DATABASE_URL && export RAILS_ENV=test && bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb'
+```
+
 ## License
 This engine is distributed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE.md).
 
