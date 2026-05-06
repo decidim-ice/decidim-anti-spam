@@ -4,7 +4,7 @@ module Decidim
   # This holds the decidim-spam_signal version.
   module SpamSignal
     def self.version
-      "1.0.6" # DO NOT UPDATE MANUALLY
+      "1.0.7" # DO NOT UPDATE MANUALLY
     end
 
     def self.decidim_version
