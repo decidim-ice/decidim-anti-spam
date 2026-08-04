@@ -21,12 +21,17 @@ module Decidim
 
       initializer "decidim_spam_signal.admin_mount_routes" do
         Decidim::Core::Engine.routes do
-          mount Decidim::SpamSignal::AdminEngine, at: "/admin/spam_signal", as: "decidim_admin_spam_signal"
+          extend Decidim::Routes::LocaleRedirects
+          
+          scope "/:locale", **locale_scope_options do
+            mount Decidim::SpamSignal::AdminEngine, at: "/admin/spam_signal", as: "decidim_admin_spam_signal"
+          end
         end
       end
 
       initializer "decidim_spam_signal.admin_settings_menu" do
         Decidim.menu :admin_settings_menu do |menu|
+          byebug
           menu.add_item :spam_signal,
                         I18n.t("menu.spam_signal.title", scope: "decidim.admin", default: "Spam Signal"),
                         decidim_admin_spam_signal.generals_path,

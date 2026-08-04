@@ -1,7 +1,7 @@
 services:
   spam_signal:
     command: bash -c "sleep infinity"
-    image: octree/decidim-dev:0.29
+    image: octree/decidim-dev:0.32
     entrypoint: ""
     volumes:
       - .:/home/module
@@ -20,9 +20,13 @@ services:
       - spam-signal-pg
     ports:
       # Avoid clashing with another process bound to host :3000
-      - 3002:3000
+      - 3000:3000
+      - 3035:3035
     links:
       - spam-signal-pg
+    networks:
+      - private
+      - default
 
   spam-signal-pg:
     image: postgres:17
@@ -32,8 +36,14 @@ services:
       - POSTGRES_DATABASE=decidim
       - POSTGRES_USER=decidim
       - POSTGRES_PASSWORD=pleaseChangeMe
+    networks:
+      - private
 
 volumes:
   node_modules: {}
   bundle: {}
   spam_signal-pg-data: {}
+
+networks:
+  private:
+    internal: true

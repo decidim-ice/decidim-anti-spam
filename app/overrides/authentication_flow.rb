@@ -32,8 +32,7 @@ Deface::Override.new(virtual_path: "decidim/shared/_login_modal",
                      surround_contents: "erb[loud]:contains('decidim_form_for')",
                      closing_selector: "erb[silent]:contains('end')",
                      text: <<~ERB
-                       <%
-                         if spam_reported?(:hide_authentication) && spam_reported? %>
+                       <% if spam_reported?(:hide_authentication) && spam_reported? %>
                            <div data-dialog-container>
                              <%= icon "user-line", class: "w-6 h-6 text-gray fill-current" %>
                              <h3 id="dialog-title-loginModal" class="h3"><%= t("title", scope: "decidim.spam_signal.devise.forbidden_page") %></h3>
