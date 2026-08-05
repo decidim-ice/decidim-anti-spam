@@ -12,7 +12,6 @@ base_path = "../" if File.basename(__dir__) == "development_app"
 
 require_relative "#{base_path}lib/decidim/spam_signal/version"
 
-
 gem "bootsnap", "~> 1.4"
 gem "decidim", DECIDIM_VERSION
 gem "decidim-spam_signal", path: base_path

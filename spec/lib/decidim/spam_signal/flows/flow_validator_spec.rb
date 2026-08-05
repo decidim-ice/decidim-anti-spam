@@ -5,6 +5,7 @@ require "spec_helper"
 describe Decidim::SpamSignal::Flows::FlowValidator do
   class TestOverrideForm < Decidim::Form
     include Decidim::SpamSignal::Flows::FlowValidator
+
     def self.available_actions = ["dummy"]
 
     def self.available_conditions = ["dummy"]

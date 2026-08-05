@@ -58,16 +58,16 @@ Deface::Override.new(virtual_path: "layouts/decidim/header/_main_links_desktop",
                      replace: "erb[loud]:contains('link_to decidim.new_user_session_path')",
                      closing_selector: "erb[silent]:contains('end')",
                      text: <<~ERB
-                         <% if spam_reported?(:hide_authentication) %>
-                           <span class="form-error is-visible">
-                             <%= spam_errors.messages[:topbar].join(",") if spam_errors.any? %>
-                           </span>
-                         <% else %>
-                           <%= link_to decidim.new_user_session_path, class: "main-bar__links-desktop__item", "aria-label": t("layouts.decidim.header.log_in") do %>
-                             <%= icon "user-line" %><span><%= t("layouts.decidim.header.log_in") %></span>
-                           <% end %>
+                       <% if spam_reported?(:hide_authentication) %>
+                         <span class="form-error is-visible">
+                           <%= spam_errors.messages[:topbar].join(",") if spam_errors.any? %>
+                         </span>
+                       <% else %>
+                         <%= link_to decidim.new_user_session_path, class: "main-bar__links-desktop__item", "aria-label": t("layouts.decidim.header.log_in") do %>
+                           <%= icon "user-line" %><span><%= t("layouts.decidim.header.log_in") %></span>
                          <% end %>
-                        ERB
+                       <% end %>
+                     ERB
                     )
 
 # MOBILE

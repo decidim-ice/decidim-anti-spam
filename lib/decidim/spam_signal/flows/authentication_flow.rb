@@ -23,6 +23,7 @@ module Decidim
         class DummyUser
           include ::ActiveModel::Model
           include ::Decidim::SpamSignal::Flows::FlowValidator
+
           validate :detect_spam!
 
           attr_reader :current_organization, :current_user

@@ -5,6 +5,7 @@ module Decidim
     module Conditions
       class WordSettingsForm < Decidim::Form
         include Decidim::SpamSignal::SettingsForm
+
         attribute :stop_list_words_csv, String
         validates :stop_list_words_csv, presence: true
       end

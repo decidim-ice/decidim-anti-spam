@@ -8,6 +8,7 @@ module Decidim
       # attributes like body are form attributes
       module CommentFlow
         include ActiveSupport::Configurable
+
         ##
         # Available conditions for the comment flow.
         config_accessor(:available_conditions) do

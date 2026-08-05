@@ -5,6 +5,7 @@ module Decidim
     module Flows
       module ProposalFlow
         include ActiveSupport::Configurable
+
         config_accessor(:available_conditions) do
           [
             :forbidden_tlds,
@@ -30,6 +31,7 @@ module Decidim
 
           included do
             include ::Decidim::SpamSignal::Flows::FlowValidator
+
             validate :detect_spam!
 
             def current_organization

@@ -4,6 +4,7 @@ module Decidim
   module SpamSignal
     class AuthenticationValidationForm < Decidim::Form
       include ::Decidim::SpamSignal::Flows::FlowValidator
+
       validate :detect_spam!
 
       def current_organization
