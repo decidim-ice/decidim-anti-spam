@@ -46,7 +46,7 @@ services:
 # Lint ruby code
 ruby::rubocop:  
   extends: .development_rules
-  image: ruby:3.2.2
+  image: ruby:3.4.7
   stage: lint
   script:
     - bundle
@@ -54,7 +54,7 @@ ruby::rubocop:
 
 ruby::erb:  
   extends: .development_rules
-  image: ruby:3.2.2
+  image: ruby:3.4.7
   stage: lint
   script:
     - bundle
@@ -72,7 +72,7 @@ node::prettier:
 # Lint crowdin.yml configuration file
 crowdin::lint:  
   extends: .development_rules
-  image: node:20
+  image: node:22
   stage: lint
   script:
     - npm install -g @crowdin/cli
@@ -81,7 +81,7 @@ crowdin::lint:
 ##
 # Publish the gem un ruby gem.
 ruby::rubygem:
-  image: ruby:3.2.2
+  image: ruby:3.4.7
   stage: publish
   script:
     - echo "---" > .credentials
@@ -96,7 +96,7 @@ ruby::rubygem:
 # Upload new translation keys to crowdin
 crowdin::upload:
   stage: translate
-  image: node:20
+  image: node:22
   script:
     - npm install -g @crowdin/cli
     - crowdin upload -T $CROWDIN_PERSONAL_TOKEN -i $CROWDIN_PROJECT_ID --no-progress
@@ -107,7 +107,7 @@ crowdin::upload:
 # crowndin translations.
 crowdin::merge_request:
   stage: translate
-  image: node:20
+  image: node:22
   rules:
     - if: '$CI_COMMIT_BRANCH == "main" && $GITLAB_USER_ID != $TRANSLATIONBOT_ID'
       when: always
@@ -130,7 +130,7 @@ crowdin::merge_request:
 ##
 # Execute rspec and expose a spec report
 ruby::rspec:
-  image: ruby:3.2.2 
+  image: ruby:3.4.7
   stage: test
   extends: .development_rules
   artifacts:
