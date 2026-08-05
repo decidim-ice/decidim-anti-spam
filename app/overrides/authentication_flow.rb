@@ -55,9 +55,9 @@ Deface::Override.new(virtual_path: "decidim/shared/_login_modal",
 
 Deface::Override.new(virtual_path: "layouts/decidim/header/_main_links_desktop",
                      name: "replace_authentication_log_in",
-                     replace: "div:has(erb[loud]:contains('decidim.new_user_session_path'))",
+                     replace: "erb[loud]:contains('link_to decidim.new_user_session_path')",
+                     closing_selector: "erb[silent]:contains('end')",
                      text: <<~ERB
-                       <div>
                          <% if spam_reported?(:hide_authentication) %>
                            <span class="form-error is-visible">
                              <%= spam_errors.messages[:topbar].join(",") if spam_errors.any? %>
@@ -67,8 +67,7 @@ Deface::Override.new(virtual_path: "layouts/decidim/header/_main_links_desktop",
                              <%= icon "user-line" %><span><%= t("layouts.decidim.header.log_in") %></span>
                            <% end %>
                          <% end %>
-                       </div>
-                     ERB
+                        ERB
                     )
 
 # MOBILE

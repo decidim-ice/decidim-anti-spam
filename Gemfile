@@ -15,12 +15,12 @@ require_relative "#{base_path}lib/decidim/spam_signal/version"
 
 gem "bootsnap", "~> 1.4"
 gem "decidim", DECIDIM_VERSION
-#gem "decidim-spam_signal", path: base_path
+gem "decidim-spam_signal", path: base_path
 gem "puma", ">= 6.6"
 gem "uglifier", "~> 4.2"
 gem "uri", "1.1.1"
 
-gem "deface", ">= 1.9"
+gem "deface", "1.9.0", git: "https://github.com/froger/deface", branch: "fix/js-overrides"
 
 group :development, :test do
   gem "brakeman", "~> 6.1"
