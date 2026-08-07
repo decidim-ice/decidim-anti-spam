@@ -1,5 +1,12 @@
 ---
 fr:
+  activemodel:
+    errors:
+      models:
+        report_user_settings:
+          attributes:
+            report_user_send_email_to:
+              must_be_admin: L'e-mail doit correspondre à un administrateur existant
   decidim:
     account:
       blocked: Bloqué

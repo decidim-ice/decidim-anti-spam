@@ -5,6 +5,7 @@ module Decidim
     module Admin
       class ConditionsController < Decidim::SpamSignal::Admin::ApplicationController
         include Decidim::Admin::Concerns::HasTabbedMenu
+
         helper_method :conditions, :available_conditions
 
         layout "decidim/admin/settings"

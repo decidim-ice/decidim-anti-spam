@@ -1,7 +1,7 @@
 services:
   spam_signal:
     command: bash -c "sleep infinity"
-    image: octree/decidim-dev:0.29
+    image: octree/decidim-dev:0.32
     entrypoint: ""
     volumes:
       - .:/home/module
@@ -16,13 +16,18 @@ services:
       - DEV_MODULE=decidim-spam_signal
       - RAILS_ENV=development
       - DISABLED_DOCKER_COMPOSE=true # To run tests in docker
+      - DECIDIM_FORCE_SSL=false
+      - DISABLE_SPRING=1
     depends_on:
-      - spam-signal-pg
+      spam-signal-pg:
+        condition: service_healthy
     ports:
       # Avoid clashing with another process bound to host :3000
-      - 3002:3000
-    links:
-      - spam-signal-pg
+      - 3000:3000
+      - 3035:3035
+    networks:
+      - private
+      - default
 
   spam-signal-pg:
     image: postgres:17
@@ -32,8 +37,19 @@ services:
       - POSTGRES_DATABASE=decidim
       - POSTGRES_USER=decidim
       - POSTGRES_PASSWORD=pleaseChangeMe
+    networks:
+      - private
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U decidim"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   node_modules: {}
   bundle: {}
   spam_signal-pg-data: {}
+
+networks:
+  private:
+    internal: true

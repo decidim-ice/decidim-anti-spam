@@ -5,6 +5,7 @@ module Decidim
     module Conditions
       class AllowedTldsSettingsForm < Decidim::Form
         include Decidim::SpamSignal::SettingsForm
+
         attribute :allowed_tlds_csv, String
         validates :allowed_tlds_csv, presence: true
         METADATA = {

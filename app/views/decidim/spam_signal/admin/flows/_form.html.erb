@@ -1,6 +1,6 @@
 <%= hidden_field_tag :trigger_type, trigger_type %>
 <div class="form__wrapper pb-6">
-  <div class="card" data-component="accordion" id="accordion-title">
+  <div class="card" data-controller="accordion" id="accordion-title">
     <div class="card-divider">
       <button class="card-divider-button" data-open="true" data-controls="panel-title" type="button">
         <%= icon "arrow-right-s-line" %>
@@ -25,7 +25,7 @@
 
 <%= render partial: "decidim/spam_signal/admin/flows/condition_form", locals: { form: flow_form } %>
 
-<div class="card" data-component="accordion" id="accordion-actions">
+<div class="card" data-controller="accordion" id="accordion-actions">
   <div class="card-divider">
     <button class="card-divider-button" data-open="true" data-controls="panel-actions" type="button">
       <%= icon "arrow-right-s-line" %>

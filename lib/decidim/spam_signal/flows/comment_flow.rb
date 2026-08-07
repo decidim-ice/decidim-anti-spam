@@ -7,30 +7,33 @@ module Decidim
       # .context is the form context (user, organization, etc)
       # attributes like body are form attributes
       module CommentFlow
-        include ActiveSupport::Configurable
-        ##
-        # Available conditions for the comment flow.
-        config_accessor(:available_conditions) do
-          [
-            :forbidden_tlds,
-            :allowed_tlds,
-            :word,
-            :official_account,
-            :forbidden_continents,
-            :forbidden_countries,
-            :allowed_countries
-          ]
+        class << self
+          def config = self
+
+          def configure
+            yield self
+          end
         end
 
         ##
+        # Available conditions for the comment flow.
+        mattr_accessor :available_conditions, default: [
+          :forbidden_tlds,
+          :allowed_tlds,
+          :word,
+          :official_account,
+          :forbidden_continents,
+          :forbidden_countries,
+          :allowed_countries
+        ]
+
+        ##
         # Available actions for the comment flow.
-        config_accessor(:available_actions) do
-          [
-            :report,
-            :forbid_save,
-            :lock
-          ]
-        end
+        mattr_accessor :available_actions, default: [
+          :report,
+          :forbid_save,
+          :lock
+        ]
 
         module CommentValidationFormOverrides
           extend ActiveSupport::Concern

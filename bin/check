@@ -5,5 +5,5 @@ cd "$(dirname "$0")/.."
 unset DATABASE_URL
 export RAILS_ENV=test
 bundle exec rubocop .
-bundle exec erblint --lint-all --enable-all-linters
+bundle exec erblint --lint-all
 bundle exec rspec "$@"

@@ -4,25 +4,28 @@ module Decidim
   module SpamSignal
     module Flows
       module AuthenticationFlow
-        include ActiveSupport::Configurable
+        class << self
+          def config = self
 
-        config_accessor(:available_conditions) do
-          [
-            :forbidden_continents,
-            :forbidden_countries,
-            :allowed_countries
-          ]
+          def configure
+            yield self
+          end
         end
 
-        config_accessor(:available_actions) do
-          [
-            :hide_authentication
-          ]
-        end
+        mattr_accessor :available_conditions, default: [
+          :forbidden_continents,
+          :forbidden_countries,
+          :allowed_countries
+        ]
+
+        mattr_accessor :available_actions, default: [
+          :hide_authentication
+        ]
 
         class DummyUser
           include ::ActiveModel::Model
           include ::Decidim::SpamSignal::Flows::FlowValidator
+
           validate :detect_spam!
 
           attr_reader :current_organization, :current_user

@@ -4,6 +4,7 @@ module Decidim
   module SpamSignal
     module ApplicationHelperOverrides
       extend ActiveSupport::Concern
+
       included do
         def spam_reported?(symbol = nil)
           if symbol.present?

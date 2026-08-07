@@ -9,6 +9,7 @@ module Decidim
       # for example, insert in User to validate the user profile update.
       module FlowValidator
         extend ActiveSupport::Concern
+
         included do
           validate :detect_spam!
 
