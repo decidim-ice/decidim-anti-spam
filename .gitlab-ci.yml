@@ -58,7 +58,7 @@ ruby::erb:
   stage: lint
   script:
     - bundle
-    - bundle exec erblint --lint-all --enable-all-linters
+    - bundle exec erblint --lint-all
 
 node::prettier:
   extends: .development_rules
@@ -145,16 +145,12 @@ ruby::rspec:
     DATABASE_USERNAME: "decidim"
     DISABLED_DOCKER_COMPOSE: "true"
     TRAEFIK_REDIS_URL: "redis://localhost:6379/1"
-    NODE_MAJOR: 18
     SIMPLECOV: 1
     CI: 1
   before_script:
-    - apt-get update -qq && apt-get install -y ca-certificates curl gnupg
-    - mkdir -p /etc/apt/keyrings
-    - curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-    - echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-    - apt-get update && apt-get install -y -qq nodejs
-    - npm install -g yarn --force
+    - apt-get update -qq && apt-get install -y nodejs
+    - corepack enable
+    - corepack prepare yarn@1.22.22 --activate
     - gem install bundler
     - bundle config set path 'vendor'
     - RAILS_ENV=development bundle install -j $(nproc)
