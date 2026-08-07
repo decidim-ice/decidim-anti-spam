@@ -5,6 +5,7 @@ module Decidim
     module Admin
       class FlowsController < ApplicationController
         include Decidim::Admin::Concerns::HasTabbedMenu
+
         attr_accessor :flow_form
 
         helper_method :flows, :available_flows, :blank_condition, :available_conditions, :flow_form

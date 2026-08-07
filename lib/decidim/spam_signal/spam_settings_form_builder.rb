@@ -22,7 +22,7 @@ module Decidim
         safe_join(fields)
       end
 
-      def input_field(name, type, **options)
+      def input_field(name, type, **)
         return hidden_field(name) if name.to_s == "handler_name"
 
         case type
@@ -31,11 +31,11 @@ module Decidim
         when :integer, Integer
           number_field name
         when :hash
-          translated_input(name, type, **options)
+          translated_input(name, type, **)
         when :array
-          collection_check_boxes_input(name, type, **options)
+          collection_check_boxes_input(name, type, **)
         else
-          plain_text_input(name, type, **options)
+          plain_text_input(name, type, **)
         end
       end
 
@@ -57,7 +57,7 @@ module Decidim
 
       def collection_check_boxes_input(name, _type, **_options)
         value_method, text_method =
-          if form_options.all? { |el| el.is_a?(String) }
+          if form_options.all?(String)
             [:to_s, :humanize]
           else
             [:first, :last]

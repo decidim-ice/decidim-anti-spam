@@ -18,16 +18,20 @@ module Decidim
 
           @moderation.update(report_count: @moderation.report_count + 1)
 
-          user_report = user_reported? ? create_user_report : create_report
+          @user_report = user_reported? ? create_user_report : create_report
 
           return unless config["report_user_send_emails_enabled"]
 
-          admin_accountable = Decidim::User.find_by(
+          @admin_accountable = Decidim::User.find_by(
             admin: true,
             email: config["report_user_send_email_to"]
           )
 
-          Decidim::UserReportJob.perform_later(admin_accountable, user_report)
+          notify_admin
+        end
+
+        def notify_admin
+          UserReportMailer.notify(@admin_accountable, @user_report).deliver_later
         end
 
         def user_reported?

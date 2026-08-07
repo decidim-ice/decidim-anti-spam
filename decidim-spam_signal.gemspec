@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = ["hadrien@octree.ch", "renato@octree.ch"]
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/octree-gva/decidim-module-spam_signal"
-  s.required_ruby_version = ">= 3.2.2"
+  s.required_ruby_version = ">= 3.4.7"
 
   s.name = "decidim-spam_signal"
   s.summary = "A decidim spam_signal module"

@@ -1,0 +1,73 @@
+# Local GitLab CI parity (lint + rspec). Not for interactive development — use docker-compose.yml.
+#
+#   docker compose -f docker-compose.ci.yml run --rm --no-deps rubocop
+#   docker compose -f docker-compose.ci.yml run --rm --no-deps erblint
+#   docker compose -f docker-compose.ci.yml run --rm --no-deps prettier
+#   docker compose -f docker-compose.ci.yml run --rm rspec
+
+name: spam-signal-ci
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: decidim_test
+      POSTGRES_USER: decidim
+      POSTGRES_PASSWORD: TEST-insecure_password
+
+  redis:
+    image: redis:latest
+
+  rubocop:
+    image: ruby:3.4.7
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -lc "bundle && bundle exec rubocop ."
+
+  erblint:
+    image: ruby:3.4.7
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -lc "bundle && bundle exec erblint --lint-all"
+
+  prettier:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -lc "yarn install --frozen-lockfile && yarn format:check"
+
+  rspec:
+    image: ruby:3.4.7
+    working_dir: /app
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_USERNAME: decidim
+      DATABASE_PASSWORD: TEST-insecure_password
+      DISABLED_DOCKER_COMPOSE: "true"
+      DISABLE_SPRING: "1"
+      # Compose service hostname (GitLab CI uses localhost for linked services)
+      TRAEFIK_REDIS_URL: redis://redis:6379/1
+      SIMPLECOV: "1"
+      CI: "1"
+    command: >
+      bash -lc "
+        apt-get update -qq &&
+        apt-get install -y -qq ca-certificates curl gnupg libvips42 &&
+        curl -fsSL https://deb.nodesource.com/setup_22.x | bash - &&
+        apt-get install -y -qq nodejs &&
+        corepack enable &&
+        corepack prepare yarn@1.22.22 --activate &&
+        gem install bundler &&
+        bundle config set path vendor &&
+        RAILS_ENV=development bundle install -j $$(nproc) &&
+        bundle exec rake test_app &&
+        RAILS_ENV=test bundle exec rspec spec
+      "

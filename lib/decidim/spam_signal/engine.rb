@@ -39,6 +39,7 @@ module Decidim
           Decidim::SpamSignal::Overrides::UserReportOverrides
         )
       end
+
       initializer "decidim_spam_signal.middleware" do |app|
         app.config.middleware.insert_after Decidim::Middleware::CurrentOrganization, Decidim::SpamSignal::Middleware::AuthenticationValidation
       end

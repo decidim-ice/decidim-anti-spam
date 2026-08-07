@@ -41,16 +41,28 @@ For technical aspects (contributions, code, issues), take a look at our [GitLab]
 
 ## Development and checks (Docker)
 
-Toolchain versions match the **`spam_signal`** Compose image (`octree/decidim-dev`), not your laptop. **Do not run** `rubocop`, `erblint`, `rspec`, `prettier`, or `rake test_app` on the host unless you maintain a separate, documented setup.
+Who reads this: gem contributors running checks before a merge request.
 
-From the repository root:
+### GitLab CI locally (`docker-compose.ci.yml`)
+
+Same images and commands as `.gitlab-ci.yml` (`ruby:3.4.7`, `node:20`, `postgres:17`, `redis`). From the repository root:
+
+```bash
+docker compose -f docker-compose.ci.yml run --rm --no-deps rubocop
+docker compose -f docker-compose.ci.yml run --rm --no-deps erblint
+docker compose -f docker-compose.ci.yml run --rm --no-deps prettier
+docker compose -f docker-compose.ci.yml run --rm rspec
+```
+
+Crowdin / gem publish jobs need secrets and stay GitLab-only.
+
+### Interactive development (`docker-compose.yml`)
+
+Toolchain versions match the **`spam_signal`** Compose image (`octree/decidim-dev`), not your laptop. **Do not run** `rubocop`, `erblint`, `rspec`, `prettier`, or `rake test_app` on the host unless you maintain a separate, documented setup.
 
 ```bash
 docker compose up -d
 docker compose exec spam_signal bash -lc 'cd /home/module && bundle install'
-docker compose exec spam_signal bash -lc 'cd /home/module && bundle exec rubocop .'
-docker compose exec spam_signal bash -lc 'cd /home/module && bundle exec erblint --lint-all --enable-all-linters'
-docker compose exec spam_signal bash -lc 'cd /home/module && yarn install --frozen-lockfile && yarn format:check'
 ```
 
 Generate the dummy app once (set `DISABLED_DOCKER_COMPOSE=true` so the Rake task does not restart Compose), then create the test database and run specs (unset `DATABASE_URL` so the dummy app’s `config/database.yml` is used):

@@ -4,32 +4,36 @@ module Decidim
   module SpamSignal
     module Flows
       module ProfileFlow
-        include ActiveSupport::Configurable
-        config_accessor(:available_conditions) do
-          [
-            :forbidden_tlds,
-            :allowed_tlds,
-            :word,
-            :official_account,
-            :forbidden_continents,
-            :forbidden_countries,
-            :allowed_countries
-          ]
+        class << self
+          def config = self
+
+          def configure
+            yield self
+          end
         end
 
-        config_accessor(:available_actions) do
-          [
-            :report,
-            :forbid_save,
-            :lock
-          ]
-        end
+        mattr_accessor :available_conditions, default: [
+          :forbidden_tlds,
+          :allowed_tlds,
+          :word,
+          :official_account,
+          :forbidden_continents,
+          :forbidden_countries,
+          :allowed_countries
+        ]
+
+        mattr_accessor :available_actions, default: [
+          :report,
+          :forbid_save,
+          :lock
+        ]
 
         module ProfileValidationFormOverrides
           extend ActiveSupport::Concern
 
           included do
             include ::Decidim::SpamSignal::Flows::FlowValidator
+
             validate :detect_spam!
 
             def current_organization

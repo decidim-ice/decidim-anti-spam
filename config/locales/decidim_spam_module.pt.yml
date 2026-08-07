@@ -1,5 +1,12 @@
 ---
 pt:
+  activemodel:
+    errors:
+      models:
+        report_user_settings:
+          attributes:
+            report_user_send_email_to:
+              must_be_admin: The email must be an existing admin email
   decidim:
     account:
       blocked: Blocked
