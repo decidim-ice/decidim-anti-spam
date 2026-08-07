@@ -46,7 +46,6 @@ data:
     - <%= %x[bundle info decidim-pages --path].chomp %>/config/locales/%{locale}.yml
     - <%= %x[bundle info decidim-participatory_processes --path].chomp %>/config/locales/%{locale}.yml
     - <%= %x[bundle info decidim-proposals --path].chomp %>/config/locales/%{locale}.yml
-    - <%= %x[bundle info decidim-sortitions --path].chomp %>/config/locales/%{locale}.yml
     - <%= %x[bundle info decidim-surveys --path].chomp %>/config/locales/%{locale}.yml
     - <%= %x[bundle info decidim-system --path].chomp %>/config/locales/%{locale}.yml
     - <%= %x[bundle info decidim-verifications --path].chomp %>/config/locales/%{locale}.yml

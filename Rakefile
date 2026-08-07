@@ -57,7 +57,6 @@ task :test_app do
       "--path",
       "../..",
       "--skip_spring",
-      "--demo",
       "--force_ssl",
       "false",
       "--locales",

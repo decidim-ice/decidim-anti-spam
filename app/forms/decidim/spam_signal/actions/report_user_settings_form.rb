@@ -25,6 +25,7 @@ module Decidim
         def email_must_be_admin
           return if !report_user_send_emails_enabled || report_user_send_email_to.blank?
 
+          # i18n-tasks-use t("activemodel.errors.models.report_user_settings.attributes.report_user_send_email_to.must_be_admin")
           errors.add(:report_user_send_email_to, :must_be_admin) unless Decidim::User.find_by(admin: true, email: report_user_send_email_to)
         end
 
