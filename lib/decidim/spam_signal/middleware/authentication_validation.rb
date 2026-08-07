@@ -21,7 +21,8 @@ module Decidim
           ::Decidim::SpamSignal.current_continent = fetch_header("CONTINENT", "X-Continent")
 
           current_organization = env["decidim.current_organization"]
-          return [404, {}, []] if current_organization.blank?
+          return @app.call(env) if @request.path.start_with?("/system")
+          return [302, { "Location" => "/system" }, []] if current_organization.blank?
 
           current_user = env["warden"]&.user("user") || Decidim::User.new
           # Fire authentication with a dummy active model, to keep the same logic
