@@ -54,7 +54,7 @@ services:
     command:
       - /bin/bash
       - -c
-      - bin/ci-setup && unset DATABASE_URL && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
+      - bin/ci-setup && unset DATABASE_URL && rm -rf coverage && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
 
   rspec_apartment:
     image: ruby:3.2.2
@@ -75,7 +75,7 @@ services:
     command:
       - /bin/bash
       - -c
-      - bin/ci-setup && unset DATABASE_URL && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
+      - bin/ci-setup && unset DATABASE_URL && rm -rf coverage && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
 
 volumes:
   ci-vendor: {}

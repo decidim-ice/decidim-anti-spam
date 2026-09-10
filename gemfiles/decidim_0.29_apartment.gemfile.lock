@@ -721,7 +721,7 @@ GEM
     responders (3.2.1)
       actionpack (>= 7.0)
       railties (>= 7.0)
-    rexml (3.4.4)
+    rexml (3.4.0)
     ros-apartment (3.4.4)
       activerecord (>= 7.0.0, < 8.2)
       activesupport (>= 7.0.0, < 8.2)
@@ -918,6 +918,7 @@ DEPENDENCIES
   listen (~> 3.1)
   parallel_tests (~> 4.2)
   puma (>= 6.3.1)
+  rexml (= 3.4.0)
   ros-apartment (= 3.4.4)
   rspec-rails (~> 6.0)
   rubocop-faker
@@ -1142,7 +1143,7 @@ CHECKSUMS
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
   request_store (1.5.1) sha256=07a204d161590789f2b1d27f9f0eadcdecd6d868cb2f03240250e1bc747df78e
   responders (3.2.1) sha256=c2772970cbda654c0e772d852e5a851e82cd8e96f5fa958650861ba75b8ffa84
-  rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
+  rexml (3.4.0) sha256=efbea1efba7fa151158e0ee1e643525834da2d8eb4cf744aa68f6480bc9804b2
   ros-apartment (3.4.4) sha256=fd4d62cb771d80cb690662c229898b658c9fbb2ce5418f314e37e1f16b2aeeff
   rspec (3.13.2) sha256=206284a08ad798e61f86d7ca3e376718d52c0bc944626b2349266f239f820587
   rspec-cells (0.3.10) sha256=9b7f59439e17b1160771b7777128eced3830d3abf107f1db5f7fe52db5997d88

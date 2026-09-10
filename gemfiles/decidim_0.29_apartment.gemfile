@@ -17,6 +17,7 @@ gem "decidim-toggle",
     branch: "main"
 gem "deface", ">= 1.8.1"
 gem "puma", ">= 6.3.1"
+gem "rexml", "3.4.0"
 gem "ros-apartment", "3.4.4", require: "apartment"
 gem "uglifier", "~> 4.1"
 gem "uri", "1.1.1"

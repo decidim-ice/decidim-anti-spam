@@ -20,4 +20,5 @@ appraise "decidim-0.29-apartment" do
   gem "decidim-toggle",
       git: "https://git.octree.ch/decidim/vocacity/decidim-modules/decidim-toggle",
       branch: "main"
+  gem "rexml", "3.4.0"
 end
