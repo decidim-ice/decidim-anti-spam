@@ -61,6 +61,19 @@ docker compose exec spam_signal bash -lc 'cd /home/module/spec/decidim_dummy_app
 docker compose exec spam_signal bash -lc 'cd /home/module && unset DATABASE_URL && export RAILS_ENV=test && bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb'
 ```
 
+### Local GitLab CI parity
+
+`docker-compose.ci.yml` mirrors the GitLab `ruby::rspec` jobs (`ruby:3.2.2` + Postgres 17 + Redis). Prefer this for CI-shaped runs; use `docker-compose.yml` for interactive work.
+
+```bash
+docker compose -f docker-compose.ci.yml run --rm rspec
+docker compose -f docker-compose.ci.yml run --rm rspec_apartment
+```
+
+Do **not** run `rspec` and `rspec_apartment` in parallel: both regenerate `spec/decidim_dummy_app`.
+
+The apartment appraisal (`gemfiles/decidim_0.29_apartment.gemfile`) pulls `decidim-apartment` from GitLab (`participa-gem`, branch `feat/imports`) — not a local `path:` sibling. Regenerate the dummy when switching between vanilla and apartment.
+
 ## License
 This engine is distributed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE.md).
 

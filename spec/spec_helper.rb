@@ -14,6 +14,9 @@ require "decidim/spam_signal/test/factories"
 
 RSpec.configure do |config|
   config.before do
+    # decidim-core >= 0.29.7 organization factory hardcodes %w(en ca es).
+    I18n.available_locales = (I18n.available_locales.map(&:to_sym) | %i(en fr es ca)).uniq
+
     Decidim::SpamSignal.config.conditions_registry.clear
     Decidim::SpamSignal.config.actions_registry.clear
   end

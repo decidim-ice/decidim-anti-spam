@@ -1,0 +1,82 @@
+# Reproduces GitLab CI ruby::rspec (+ apartment): ruby:3.2.2 + postgres:17 + redis.
+# Usage:
+#   docker compose -f docker-compose.ci.yml run --rm rspec
+#   docker compose -f docker-compose.ci.yml run --rm rspec_apartment
+#
+# Do not run rspec and rspec_apartment in parallel — both write spec/decidim_dummy_app.
+# Not for interactive development — use docker-compose.yml.
+
+name: spam-signal-ci
+
+x-rspec-env: &rspec-env
+  DATABASE_HOST: postgres
+  DATABASE_PASSWORD: "TEST-insecure_password"
+  DATABASE_USERNAME: decidim
+  DISABLED_DOCKER_COMPOSE: "true"
+  TRAEFIK_REDIS_URL: "redis://redis:6379/1"
+  DECIDIM_AVAILABLE_LOCALES: en,fr,es,ca
+  NODE_MAJOR: "18"
+  SIMPLECOV: "1"
+  CI: "1"
+  DISABLE_SPRING: "1"
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: decidim_test
+      POSTGRES_USER: decidim
+      POSTGRES_PASSWORD: "TEST-insecure_password"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U decidim -d decidim_test"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:latest
+
+  rspec:
+    image: ruby:3.2.2
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ci-vendor:/app/vendor
+    shm_size: "2gb"
+    environment:
+      <<: *rspec-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    entrypoint: []
+    command:
+      - /bin/bash
+      - -c
+      - bin/ci-setup && unset DATABASE_URL && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
+
+  rspec_apartment:
+    image: ruby:3.2.2
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ci-vendor-apartment:/app/vendor
+    shm_size: "2gb"
+    environment:
+      <<: *rspec-env
+      BUNDLE_GEMFILE: gemfiles/decidim_0.29_apartment.gemfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    entrypoint: []
+    command:
+      - /bin/bash
+      - -c
+      - bin/ci-setup && unset DATABASE_URL && RAILS_ENV=test bundle exec rspec spec/models spec/lib spec/commands spec/i18n_spec.rb
+
+volumes:
+  ci-vendor: {}
+  ci-vendor-apartment: {}

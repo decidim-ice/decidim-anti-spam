@@ -20,6 +20,7 @@ gem "uri", "1.1.1"
 gem "deface", ">= 1.8.1"
 
 group :development, :test do
+  gem "appraisal", "~> 2.5", require: false
   gem "better_html"
   gem "brakeman", "~> 6.1"
   gem "byebug", "~> 11.0", platform: :mri
